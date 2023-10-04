@@ -1,8 +1,13 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
 const hbs = exphbs.create({ defaultLayout: false });
 
 const app = express();
+
+// BodyParser
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // Handlebars
 app.engine('handlebars', hbs.engine); 
