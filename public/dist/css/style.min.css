@@ -17303,6 +17303,50 @@ a .btn-delete{
     border-color: #B70404;
 }
 
+.btn-delete-confirm {
+    appearance: button;
+    background-color: #DA273B;
+    border: 1px solid #DA273B;
+    border-radius: 2px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-family: Graphik, -apple-system, system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.15;
+    overflow: visible;
+    padding: 0.375rem 0.75rem;
+    position: relative;
+    text-align: center;
+    text-transform: none;
+    transition: all 80ms ease-in-out;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: fit-content;
+    padding: 10px;
+}
+a .btn-delete-confirm{
+    color: white;
+}
+.btn-delete-confirm:disabled {
+    opacity: .5;
+}
+
+.btn-delete-confirm:focus {
+    outline: 0;
+}
+
+.btn-delete-confirm:hover {
+    background-color: #B70404;
+    border-color: #B70404;
+}
+
+.btn-delete-confirm:active {
+    background-color: #B70404;
+    border-color: #B70404;
+}
+
 
 .btn-update {
     appearance: button;
@@ -17347,5 +17391,7 @@ a .btn-update{
     background-color: #379237;
     border-color: #379237;
 }
+
+
 
 
