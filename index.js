@@ -5,8 +5,9 @@ const hbs = exphbs.create({ defaultLayout: false });
 const path = require('path');
 const session = require('express-session');
 const flash = require('connect-flash');
-const categoryRouter = require('./routers/category.admin.router.js');
 
+const categoryRouter = require('./routers/category.admin.router.js');
+const discountRouter = require('./routers/discount.admin.router.js');
 const app = express();
 
 // express-session - flash message
@@ -36,6 +37,7 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 app.use('/admin', categoryRouter);
+app.use('/admin', discountRouter);
 
 const port = 3000;
 app.listen(port, () => {
