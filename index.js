@@ -9,7 +9,7 @@ const categoryRouter = require('./routers/category.admin.router.js');
 
 const app = express();
 
-// Session - flash message
+// express-session - flash message
 app.use(session({
   secret: 'unisex-app',
   saveUninitialized: true,
@@ -22,16 +22,16 @@ app.use(function (req, res, next) {
   next();
 });
 
-// BodyParser
+// body-parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// Handlebars
+// express-handlebars
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 app.use(express.static(path.join(__dirname, '/public')));
 
-// Routing
+// routers
 app.get('/', (req, res) => {
   res.render('index');
 });

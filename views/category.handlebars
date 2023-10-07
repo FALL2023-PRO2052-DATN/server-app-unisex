@@ -302,13 +302,13 @@
                                     <div class="form-group">
                                         <label for="image-upload" class="title-form">ID</label>
                                         <input name="id_danh_muc" type="text" data-toggle="tooltip" title=""
-                                            class="form-control" id="id_danh_muc_update" placeholder="Ví dụ: 01"
+                                            class="form-control" id="id_danh_muc_update_input" placeholder="Ví dụ: 01"
                                             required="" data-original-title="A Tooltip for the input !" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label for="image-upload" class="title-form">Tên danh mục</label>
                                         <input name="ten_danh_muc" type="text" data-toggle="tooltip" title=""
-                                            class="form-control" id="ten_danh_muc_update"
+                                            class="form-control" id="ten_danh_muc_update_input"
                                             placeholder="Ví dụ: Áo thun nam" required=""
                                             data-original-title="A Tooltip for the input !">
                                     </div>
@@ -338,7 +338,7 @@
                                 <p>Bạn có muốn xoá danhh mục sản phẩm ?</p>
                             </div>
                             <form action="/admin/category/delele" class="modal-footer" method="POST">
-                                <input type="hidden" id="id_danh_muc_delete" name="id_danh_muc">
+                                <input type="hidden" id="id_danh_muc_delete_input" name="id_danh_muc">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
                                 <button type="submit" class="btn-delete-confirm" style="color: white;">Xoá</button>
                             </form>

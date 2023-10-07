@@ -1,5 +1,6 @@
 const database = require('../database/database.js');
 
+// Lấy danh sách danh mục sản phẩm
 const pageCategory = (req, res) => {
     const query = `
         SELECT
@@ -22,7 +23,7 @@ const pageCategory = (req, res) => {
         res.render('category', { data });
     });
 }
-
+// Thêm danh mục sản phẩm
 const create = (req, res) => {
     const { ten_danh_muc } = req.body;
     const query = `INSERT INTO DanhMuc (ten_danh_muc) VALUES (?)`;
@@ -36,7 +37,7 @@ const create = (req, res) => {
         res.redirect('/admin/category');
     });
 }
-
+// Cập nhật danh mục sản phẩm
 const update = (req, res) => {
     const { id_danh_muc, ten_danh_muc } = req.body;
     const query = `UPDATE DanhMuc SET ten_danh_muc =? WHERE id=?`;
@@ -53,7 +54,7 @@ const update = (req, res) => {
         res.redirect('/admin/category');
     });
 }
-
+// Xoá danh mục sản phẩm
 const remove = (req, res) => {
     const { id_danh_muc } = req.body;
     const query = `UPDATE DanhMuc SET hienThi = 0 WHERE id=?`;
@@ -64,7 +65,7 @@ const remove = (req, res) => {
         }
 
         if (result.affectedRows === 0) {
-            req.flash('error', 'Xoá danh mục không thành công. Vui lòng thử lại !')
+            req.flash('error', 'Xoá danh mục không thành công. Vui lòng thử lại!')
         } else {
             req.flash('success', 'Xoá danh mục thành công')
         }

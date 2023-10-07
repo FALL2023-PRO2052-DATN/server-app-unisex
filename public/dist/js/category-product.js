@@ -6,10 +6,10 @@ updateButtons.forEach(function (updateButton) {
         const jsonData = updateButton.getAttribute('data-json');
         const jsonObject = JSON.parse(jsonData);
 
-        const id_danh_muc_update = document.querySelector(`#id_danh_muc_update`);
-        const ten_danh_muc_update = document.querySelector(`#ten_danh_muc_update`);
-        id_danh_muc_update.value = jsonObject.id_danh_muc;
-        ten_danh_muc_update.value = jsonObject.ten_danh_muc;
+        const id_danh_muc_update_input = document.querySelector(`#id_danh_muc_update_input`);
+        const ten_danh_muc_update_input = document.querySelector(`#ten_danh_muc_update_input`);
+        id_danh_muc_update_input.value = jsonObject.id_danh_muc;
+        ten_danh_muc_update_input.value = jsonObject.ten_danh_muc;
     });
 });
 
@@ -18,9 +18,9 @@ const deleteButtons = document.querySelectorAll('.btn-delete');
 deleteButtons.forEach(function (deleteButton) {
     deleteButton.addEventListener('click', function (event) {
         //Lấy dữ liệu từ data-id của .button-delete
-        const id = event.target.getAttribute('data-id');
-        const id_danh_muc_delete = document.querySelector(`#id_danh_muc_delete`);
-        id_danh_muc_delete.value = id;
+        const id = deleteButton.getAttribute('data-id');
+        const id_danh_muc_delete_input = document.querySelector(`#id_danh_muc_delete_input`);
+        id_danh_muc_delete_input.value = id;
     });
 });
 
