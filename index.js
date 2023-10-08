@@ -8,7 +8,8 @@ const path = require('path');
 
 const categoryRouter = require('./routers/category.admin.router.js');
 const discountRouter = require('./routers/discount.admin.router.js');
-const sizeRouter = require('./routers/size.admin.router.js')
+const sizeRouter = require('./routers/size.admin.router.js');
+const bannerRouter = require('./routers/banner.admin.router.js');
 
 const app = express();
 
@@ -41,6 +42,7 @@ app.get('/', (req, res) => {
 app.use('/admin', categoryRouter);
 app.use('/admin', discountRouter);
 app.use('/admin', sizeRouter);
+app.use('/admin', bannerRouter);
 
 const port = 3000;
 app.listen(port, () => {

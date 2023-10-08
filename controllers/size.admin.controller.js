@@ -21,7 +21,7 @@ const create = (req, res) => {
         if (err) {
             req.flash('error', 'Thêm kích thước không thành công!')
         } else {
-            req.flash('success', 'Thêm danh mục thành công')
+            req.flash('success', 'Thêm kích thước thành công')
         }
         res.redirect('/admin/size');
     });
