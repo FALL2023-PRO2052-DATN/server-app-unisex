@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/logo-icon.svg">
-    <title>Danh sách mã giảm giá</title>
+    <title>Danh sách kích thước</title>
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="/assets/extra-libs/multicheck/multicheck.css">
     <link href="/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
@@ -159,7 +159,7 @@
                                 href="banner.html" aria-expanded="false"><i class="mdi mdi-image-multiple"></i><span
                                     class="hide-menu">Hình ảnh banner</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="category.html" aria-expanded="false"><i class="mdi mdi-file-document"></i><span
+                                href="/admin/category" aria-expanded="false"><i class="mdi mdi-file-document"></i><span
                                     class="hide-menu">Danh mục sản phẩm</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark"
                                 href="javascript:void(0)" aria-expanded="false"><i
@@ -172,7 +172,7 @@
                                 <li class="sidebar-item"><a href="form-wizard.html" class="sidebar-link"><i
                                             class="mdi mdi-table-edit"></i><span class="hide-menu"> Tồn kho </span></a>
                                 </li>
-                                <li class="sidebar-item"><a href="size-product.html" class="sidebar-link"><i
+                                <li class="sidebar-item"><a href="/admin/size" class="sidebar-link"><i
                                             class="mdi mdi-move-resize"></i><span class="hide-menu"> Kích thước sản phẩm
                                         </span></a></li>
                             </ul>
@@ -181,7 +181,7 @@
                                 href="tables.html" aria-expanded="false"><i class="mdi mdi-truck"></i><span
                                     class="hide-menu">Đơn hàng</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="/admin/discount" aria-expanded="false"><i class="mdi mdi-blur-linear"></i><span
+                                href="discount.html" aria-expanded="false"><i class="mdi mdi-blur-linear"></i><span
                                     class="hide-menu">Mã giảm giá</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="pages-buttons.html" aria-expanded="false"><i
@@ -212,9 +212,10 @@
             <!-- ============================================================== -->
             <!-- Container fluid  -->
             <!-- ============================================================== -->
-            <!-- Thông báo khi thao tác với tác vụ CRUD --->
-
             <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
                 {{#if success}}
                 <div class="alert alert-success" role="alert">
                     {{success}}
@@ -225,44 +226,40 @@
                     {{error}}
                 </div>
                 {{/if}}
-                <!-- ============================================================== -->
-                <!-- Start Page Content -->
-                <!-- ============================================================== -->
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body-cus">
-                                <h5 class="card-title m-b-0">Danh sách mã giảm giá</h5>
+                                <h5 class="card-title m-b-0">Danh sách kích thước</h5>
                                 <button type="button" class="button-26" data-toggle="modal"
-                                    data-target="#add-discount-modal" data-whatever="@mdo">Thêm mã giảm giá</button>
+                                    data-target="#add-size-modal" data-whatever="@mdo">Thêm kích thước</button>
                             </div>
                             <table class="table">
                                 <thead>
                                     <tr>
                                         <th scope="col">ID</th>
-                                        <th scope="col">Mã code</th>
-                                        <th scope="col">Giá trị</th>
+                                        <th scope="col">Tên kích thước (Size)</th>
+                                        <th scope="col">Mô tả</th>
                                         <th scope="col">Tác vụ</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {{#each data}}
                                     <tr>
-                                        <th scope="row" style="width: 10%;">UNI_GG_{{this.id}}</th>
-                                        <td style="width: 30%;">{{this.code}}</td>
-                                        <td style="width: 30%;">Giảm {{this.gia_tri}}%</td>
+                                        <th scope="row" style="width: 10%;">UNI_KT_{{this.id}}</th>
+                                        <td style="width: 30%;">Size {{this.ten_kich_thuoc}}</td>
+                                        <td style="width: 30%;">{{this.mo_ta_chi_tiet}}</td>
                                         <td style="width: 30%;">
                                             <button type="button" class="btn-update" data-toggle="modal"
-                                                data-target="#update-discount-modal"
-                                                data-json='{
-                                                    "id": "{{this.id}}", 
-                                                    "code": "{{this.code}}", 
-                                                    "gia_tri": "{{this.gia_tri}}"
-                                                    }'>
+                                                data-target="#update-size-modal" data-json='{
+                                                                "id": "{{this.id}}",
+                                                                "ten_kich_thuoc": "{{this.ten_kich_thuoc}}",
+                                                                "mo_ta_chi_tiet": "{{this.mo_ta_chi_tiet}}"
+                                                            }'>
                                                 Cập nhật
                                             </button>
                                             <button type="button" class="btn-delete" data-toggle="modal"
-                                                data-target="#delete-discount-modal" data-id="{{this.id}}">
+                                                data-target="#delete-size-modal" data-id="{{this.id}}">
                                                 Xoá
                                             </button>
                                         </td>
@@ -273,31 +270,28 @@
                         </div>
                     </div>
                 </div>
-                <!--Modal thêm mã giảm giá-->
-                <div class="modal fade" id="add-discount-modal" tabindex="-1" role="dialog"
+                <!--Modal thêm kích thước-->
+                <div class="modal fade" id="add-size-modal" tabindex="-1" role="dialog"
                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Thêm mã giảm giá</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Thêm kích thước</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form id="image-upload-form" action="/admin/discount/add" method="POST">
+                                <form id="image-upload-form" action="/admin/size/add" method="POST">
                                     <div class="form-group">
-                                        <label for="image-upload" class="title-form">Mã code</label>
+                                        <label for="image-upload" class="title-form">Tên kích thước</label>
                                         <input type="text" data-toggle="tooltip" title="" class="form-control"
-                                            id="validationDefault05" placeholder="Ví dụ: UNISEX-30" required=""
-                                            data-original-title="A Tooltip for the input !" name="code">
+                                            id="validationDefault05" placeholder="Ví dụ: M" required=""
+                                            name="ten_kich_thuoc" data-original-title="A Tooltip for the input !">
                                     </div>
                                     <div class="form-group">
-                                        <label for="image-upload" class="title-form">Giá trị giảm giá</label>
-                                        <input type="number" data-toggle="tooltip" title="" class="form-control"
-                                            id="validationDefault05" placeholder="Ví dụ: 10%" required=""
-                                            data-original-title="A Tooltip for the input !" name="gia_tri" min="1"
-                                            max="100">
+                                        <label for="image-upload" class="title-form">Mô tả</label>
+                                        <textarea name="mo_ta_chi_tiet" class="form-control"></textarea>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
@@ -307,56 +301,54 @@
                                     </div>
                                 </form>
                             </div>
-
                         </div>
                     </div>
                 </div>
+                <!--Xử lý ở trong file size.js-->
                 <!--Modal cập nhật mã giảm giá-->
-                <div class="modal fade" id="update-discount-modal" tabindex="-1" role="dialog"
+                <div class="modal fade" id="update-size-modal" tabindex="-1" role="dialog"
                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Cập nhật mã giảm giá</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Cập nhật kích thước</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form id="image-upload-form" action="/admin/discount/update" method="POST">
+                                <form id="image-upload-form" action="/admin/size/update" method="POST">
                                     <div class="form-group">
                                         <label for="image-upload" class="title-form">ID</label>
                                         <input type="text" data-toggle="tooltip" title="" class="form-control"
-                                            id="id_giam_gia_update_input" placeholder="Ví dụ: 1" required=""
-                                            name="id_giam_gia" data-original-title="A Tooltip for the input !"
+                                            id="id_kich_thuoc_update_input" placeholder="Ví dụ: 1" required=""
+                                            name="id_kich_thuoc" data-original-title="A Tooltip for the input !"
                                             readonly>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="image-upload" class="title-form">Mã code</label>
+                                        <label for="image-upload" class="title-form">Tên kích thước</label>
                                         <input type="text" data-toggle="tooltip" title="" class="form-control"
-                                            id="code_update_input" placeholder="Ví dụ: UNISEX-30" required=""
-                                            name="code" data-original-title="A Tooltip for the input !">
+                                            id="ten_kich_thuoc_update_input" placeholder="Ví dụ: M" required=""
+                                            name="ten_kich_thuoc" data-original-title="A Tooltip for the input !">
+                                        <label for="image-upload" class="title-form">Mô tả</label>
+
+                                        <textarea id="mo_ta_chi_tiet_update_input" name="mo_ta_chi_tiet"
+                                            class="form-control"></textarea>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Huỷ</button>
+                                            <button style="color: white;" type="submit" class="button-26"
+                                                id="upload-image">Lưu</button>
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="image-upload" class="title-form">Giá trị giảm giá</label>
-                                        <input type="number" data-toggle="tooltip" title="" class="form-control"
-                                            id="gia_tri_update_input" placeholder="Ví dụ: 10%" required="" min="1"
-                                            name="gia_tri" max="100" data-original-title="A Tooltip for the input !">
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-dismiss="modal">Huỷ</button>
-                                        <button style="color: white;" type="submit" class="button-26"
-                                            id="upload-image">Lưu</button>
-                                    </div>
+
                                 </form>
                             </div>
+
                         </div>
                     </div>
                 </div>
-                <!---Xử lý dữ liệu ở file discount.js-->
-                <!--Modal xoá mã giảm giá-->
-                <div class="modal" tabindex="-1" role="dialog" id="delete-discount-modal">
+                <!--Xử lý ở trong file size.js-->
+                <!--Modal xoá. danh mục-->
+                <div class="modal" tabindex="-1" role="dialog" id="delete-size-modal">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -366,13 +358,14 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <p>Bạn có muốn xoá mã giảm giá?</p>
+                                <p>Bạn có muốn xoá kích thước?</p>
                             </div>
-                            <form action="/admin/discount/delete" method="POST">
+                            <form action="/admin/size/delete" method="POST">
                                 <div class="modal-footer">
-                                    <input type="hidden" id="id_giam_gia_delete_input" name="id_giam_gia">
+                                    <input type="hidden" name="id_kich_thuoc" id="id_kich_thuoc_delete_input">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
-                                    <button type="submit" class="btn-delete-confirm" style="color: white;">Xoá</button>
+                                    <button href="#" type="submit" class="btn-delete-confirm"
+                                        style="color: white;">Xoá</button>
                                 </div>
                             </form>
                         </div>
@@ -436,7 +429,7 @@
          ****************************************/
         $('#zero_config').DataTable();
     </script>
-    <script src="/dist/js/discount.js"></script>
+    <script src="/dist/js/size.js"></script>
 </body>
 
 </html>

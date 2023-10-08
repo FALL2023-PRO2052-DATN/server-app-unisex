@@ -1,13 +1,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
-const hbs = exphbs.create({ defaultLayout: false });
-const path = require('path');
 const session = require('express-session');
 const flash = require('connect-flash');
+const hbs = exphbs.create({ defaultLayout: false });
+const path = require('path');
 
 const categoryRouter = require('./routers/category.admin.router.js');
 const discountRouter = require('./routers/discount.admin.router.js');
+const sizeRouter = require('./routers/size.admin.router.js')
+
 const app = express();
 
 // express-session - flash message
@@ -19,7 +21,7 @@ app.use(session({
 app.use(flash());
 app.use(function (req, res, next) {
   res.locals.success = req.flash('success'),
-  res.locals.error = req.flash('error')
+    res.locals.error = req.flash('error')
   next();
 });
 
@@ -38,6 +40,7 @@ app.get('/', (req, res) => {
 });
 app.use('/admin', categoryRouter);
 app.use('/admin', discountRouter);
+app.use('/admin', sizeRouter);
 
 const port = 3000;
 app.listen(port, () => {

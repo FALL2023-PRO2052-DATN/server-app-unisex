@@ -7,13 +7,13 @@ updateButtons.forEach(function (updateButton) {
         const jsonData = updateButton.getAttribute('data-json');
         const jsonObject = JSON.parse(jsonData);
 
-        const id_giam_gia_update_input = document.querySelector(`#id_giam_gia_update_input`);
-        const code_update_input = document.querySelector(`#code_update_input`);
-        const gia_tri_update_input = document.querySelector(`#gia_tri_update_input`);
+        const id_kich_thuoc_update_input = document.querySelector(`#id_kich_thuoc_update_input`);
+        const ten_kich_thuoc_update_input = document.querySelector(`#ten_kich_thuoc_update_input`);
+        const mo_ta_chi_tiet_update_input = document.querySelector(`#mo_ta_chi_tiet_update_input`);
 
-        id_giam_gia_update_input.value = jsonObject.id;
-        code_update_input.value = jsonObject.code;
-        gia_tri_update_input.value = jsonObject.gia_tri;
+        id_kich_thuoc_update_input.value = jsonObject.id;
+        ten_kich_thuoc_update_input.value = jsonObject.ten_kich_thuoc;
+        mo_ta_chi_tiet_update_input.value = jsonObject.mo_ta_chi_tiet;
     });
 });
 // Xử lý nút xoá danh mục của từng item
@@ -22,8 +22,8 @@ deleteButtons.forEach(function (deleteButton) {
     deleteButton.addEventListener('click', function (event) {
         //Lấy dữ liệu từ data-id của .button-delete
         const id = deleteButton.getAttribute('data-id');
-        const id_giam_gia_delete_input = document.querySelector(`#id_giam_gia_delete_input`);
-        id_giam_gia_delete_input.value = id;
+        const id_kich_thuoc_delete_input = document.querySelector(`#id_kich_thuoc_delete_input`);
+        id_kich_thuoc_delete_input.value = id;
     });
 });
 

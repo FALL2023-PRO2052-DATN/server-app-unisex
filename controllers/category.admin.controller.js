@@ -23,6 +23,7 @@ const pageCategory = (req, res) => {
         res.render('category', { data });
     });
 }
+
 // Thêm danh mục sản phẩm
 const create = (req, res) => {
     const { ten_danh_muc } = req.body;
@@ -37,6 +38,7 @@ const create = (req, res) => {
         res.redirect('/admin/category');
     });
 }
+
 // Cập nhật danh mục sản phẩm
 const update = (req, res) => {
     const { id_danh_muc, ten_danh_muc } = req.body;
@@ -46,14 +48,16 @@ const update = (req, res) => {
         if (err) {
             return console.log(err);
         }
+
         if (result.affectedRows === 0) {
-            req.flash('error', 'Thêm danh mục không thành công. Vui lòng thử lại !')
+            req.flash('error', 'Cập danh mục không thành công. Vui lòng thử lại !')
         } else {
             req.flash('success', 'Cập nhật danh mục thành công')
         }
         res.redirect('/admin/category');
     });
 }
+
 // Xoá danh mục sản phẩm
 const remove = (req, res) => {
     const { id_danh_muc } = req.body;
