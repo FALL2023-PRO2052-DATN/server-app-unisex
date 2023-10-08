@@ -2,7 +2,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const fileInput = document.getElementById("bannerImage");
     const previewImage = document.getElementById("previewImage");
-
     fileInput.addEventListener("change", function () {
         if (fileInput.files.length > 0) {
             const selectedImage = fileInput.files[0];
@@ -19,7 +18,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     const alerts = document.querySelectorAll('.alert');
-
     alerts.forEach(function(alert) {
         setTimeout(function() {
             alert.style.display = 'none';

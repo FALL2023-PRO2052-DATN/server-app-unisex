@@ -1,15 +1,9 @@
 const multer = require('multer');
 const database = require('../database/database.js');
+const cloudinary = require('../cloud/cloudinary.js');
 
 // Upload image
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, './public/uploads');
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + '-' + file.originalname);
-    },
-});
+const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 // Danh sách banner
@@ -34,17 +28,25 @@ const create = (req, res) => {
                 req.flash('error', 'Vui lòng chọn ảnh khi banner');
                 return res.redirect('/admin/banner');
             }
-
-            const anh_banner = `/uploads/` + req.file.filename;
-            const query = `INSERT INTO Banner (anh_banner) VALUES (?)`;
-            database.con.query(query, [anh_banner], function (err, result) {
-                if (err) {
-                    req.flash('error', 'Thêm banner không thành công!')
-                } else {
-                    req.flash('success', 'Thêm banner thành công')
+            
+            const imageBuffer = req.file.buffer;
+            cloudinary.uploader.upload_stream({ folder: 'cloud-images/', resource_type: 'image' }, (error, result) => {
+                if (error) {
+                    console.error(error);
+                    return res.status(500).send('Error uploading image to Cloudinary.');
                 }
-                res.redirect('/admin/banner');
-            });
+
+                const anh_banner = result.url;
+                const query = `INSERT INTO Banner (anh_banner) VALUES (?)`;
+                database.con.query(query, [anh_banner], function (err, result) {
+                    if (err) {
+                        req.flash('error', 'Thêm banner không thành công!')
+                    } else {
+                        req.flash('success', 'Thêm banner thành công')
+                    }
+                    res.redirect('/admin/banner');
+                });
+            }).end(imageBuffer);
         }
     });
 }
@@ -68,7 +70,7 @@ const remove = (req, res) => {
 }
 
 module.exports = {
-    pageBaner: pageBanner,
+    pageBanner,
     create,
     remove
 }
