@@ -226,6 +226,11 @@
                     {{error}}
                 </div>
                 {{/if}}
+                {{#if warning}}
+                <div class="alert alert-warning" role="alert">
+                    {{warning}}
+                </div>
+                {{/if}}
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
@@ -324,22 +329,24 @@
                                             id="id_kich_thuoc_update_input" placeholder="Ví dụ: 1" required=""
                                             name="id_kich_thuoc" data-original-title="A Tooltip for the input !"
                                             readonly>
+                                    </div>
+                                    <div class="form-group">
                                         <label for="image-upload" class="title-form">Tên kích thước</label>
                                         <input type="text" data-toggle="tooltip" title="" class="form-control"
                                             id="ten_kich_thuoc_update_input" placeholder="Ví dụ: M" required=""
                                             name="ten_kich_thuoc" data-original-title="A Tooltip for the input !">
+                                    </div>
+                                    <div class="form-group">
                                         <label for="image-upload" class="title-form">Mô tả</label>
-
                                         <textarea id="mo_ta_chi_tiet_update_input" name="mo_ta_chi_tiet"
                                             class="form-control"></textarea>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">Huỷ</button>
-                                            <button style="color: white;" type="submit" class="button-26"
-                                                id="upload-image">Lưu</button>
-                                        </div>
                                     </div>
-
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Huỷ</button>
+                                        <button style="color: white;" type="submit" class="button-26"
+                                            id="upload-image">Lưu</button>
+                                    </div>
                                 </form>
                             </div>
 

@@ -47,18 +47,29 @@ const update = (req, res) => {
 // Xoá kích thước
 const remove = (req, res) => {
     const { id_kich_thuoc } = req.body;
-    const query = `UPDATE KichThuoc SET hienThi = 0 WHERE id=?`;
-
-    database.con.query(query, [id_kich_thuoc], function (err, result) {
+    const checkQuery = `SELECT * FROM KichThuoc_SanPham WHERE kich_thuoc_id =? AND hienThi = 1`
+    database.con.query(checkQuery, [id_kich_thuoc], function (err, productSizes) {
         if (err) {
             return console.log(err);
         }
-        if (result.affectedRows === 0) {
-            req.flash('error', 'Xoá kích thước không thành công. Vui lòng thử lại!')
+        if (productSizes.length === 0) {
+            const query = `UPDATE KichThuoc SET hienThi = 0 WHERE id=?`;
+
+            database.con.query(query, [id_kich_thuoc], function (err, result) {
+                if (err) {
+                    return console.log(err);
+                }
+                if (result.affectedRows === 0) {
+                    req.flash('error', 'Xoá kích thước không thành công. Vui lòng thử lại!')
+                } else {
+                    req.flash('success', 'Xoá kích thước thành công');
+                }
+                res.redirect('/admin/size');
+            });            
         } else {
-            req.flash('success', 'Xoá kích thước thành công');
+            req.flash('warning', 'Xoá kích thước không thành công. Đã có sản phẩm thuộc kích thước này');
+            res.redirect('/admin/size');
         }
-        res.redirect('/admin/size');
     });
 }
 
