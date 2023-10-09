@@ -36,3 +36,14 @@ deleteButtons.forEach(function (deleteButton) {
         id_banner_delete_input.value = id;
     });
 });
+
+// Hiển thị cảnh báo 
+const addButton = document.getElementById('addButton');
+addButton.addEventListener('click', function (event) {
+    //Lấy dữ liệu từ data-id của .button-delete
+    document.getElementById('loading-alert').style.display = 'block';
+
+    setTimeout(() =>{
+        document.getElementById('loading-alert').style.display = 'none';
+    }, 20000);
+});
