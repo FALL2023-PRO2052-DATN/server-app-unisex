@@ -25,7 +25,7 @@ deleteButtons.forEach(function (deleteButton) {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Ẩn các thông báo đang hiện thị sau 2 giây hiển thị
+    // Ẩn các thông báo đang hiện thị sau 4 giây hiển thị
     const alerts = document.querySelectorAll('.alert');
 
     alerts.forEach(function(alert) {
