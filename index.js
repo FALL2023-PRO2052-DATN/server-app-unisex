@@ -10,6 +10,7 @@ const categoryRouter = require('./routers/category.admin.router.js');
 const discountRouter = require('./routers/discount.admin.router.js');
 const sizeRouter = require('./routers/size.admin.router.js');
 const bannerRouter = require('./routers/banner.admin.router.js');
+const productRouter = require('./routers/product.admin.router.js');
 
 const app = express();
 
@@ -33,7 +34,31 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // express-handlebars
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
+hbs.handlebars.registerHelper('equal', require('handlebars-helper-equal'));
 app.use(express.static(path.join(__dirname, '/public')));
+
+// Hàm kiểm tra kích thước
+hbs.handlebars.registerHelper('checkSize', function (kich_thuoc, options) {
+  if (kich_thuoc === null || kich_thuoc === '') {
+    return 'Không có kích thước';
+  } else {
+    return kich_thuoc;
+  }
+});
+
+// Chuyển định dạng số tiền
+hbs.handlebars.registerHelper('formatCurrency', function (value) {
+  if (typeof value !== 'number') {
+    return value;
+  }
+
+  const formattedValue = new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND',
+  }).format(value);
+
+  return formattedValue;
+});
 
 // routers
 app.get('/', (req, res) => {
@@ -43,6 +68,7 @@ app.use('/admin', categoryRouter);
 app.use('/admin', discountRouter);
 app.use('/admin', sizeRouter);
 app.use('/admin', bannerRouter);
+app.use('/admin', productRouter);
 
 const port = 3000;
 app.listen(port, () => {
