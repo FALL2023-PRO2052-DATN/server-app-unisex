@@ -27,6 +27,34 @@ const pageProduct = (req, res) => {
     });
 }
 
+// Xoá sản phẩm
+const remove = (req, res) =>{
+    const {id_san_pham} = req.body;
+    const query = `UPDATE SanPham SET hienThi = 0 WHERE id=?`;
+
+    database.con.query(query, [id_san_pham], function (err, result) {
+        if (err) {
+            return console.log(err);
+        }
+
+        if (result.affectedRows === 0) {
+            req.flash('error', 'Xoá sản không thành công. Vui lòng thử lại!');
+        } else {
+            // Xoá quản lý tồn kho thuộc sản phẩm đó
+            const query = `UPDATE KichThuoc_SanPham SET hienThi = 0 WHERE san_pham_id=?`;
+        
+            database.con.query(query, [id_san_pham], function (err, result) {
+                if (err) {
+                    return console.log(err);
+                }
+                req.flash('success', 'Xoá sản phẩm thành công');
+                res.redirect('/admin/product');
+            });
+        }
+    });
+}
+
 module.exports = {
-    pageProduct
+    pageProduct,
+    remove
 }
