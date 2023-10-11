@@ -28,17 +28,15 @@ const create = (req, res) => {
                 req.flash('error', 'Vui lòng chọn ảnh khi banner');
                 return res.redirect('/admin/banner');
             }
-            
+
             const imageBuffer = req.file.buffer;
-            cloudinary.uploader.upload_stream({ folder: 'cloud-images/', resource_type: 'image' }, (error, result) => {
-                if (error) {
-                    console.error(error);
-                    return res.status(500).send('Error uploading image to Cloudinary.');
+            cloudinary.uploadImageToCloudinary(imageBuffer, (err, imageUrl) => {
+                if (err) {
+                    return res.status(500).send('Tải hình banner không thành công' + err);
                 }
 
-                const anh_banner = result.url;
                 const query = `INSERT INTO Banner (anh_banner) VALUES (?)`;
-                database.con.query(query, [anh_banner], function (err, result) {
+                database.con.query(query, [imageUrl], function (err, result) {
                     if (err) {
                         req.flash('error', 'Thêm banner không thành công!')
                     } else {
@@ -46,7 +44,7 @@ const create = (req, res) => {
                     }
                     res.redirect('/admin/banner');
                 });
-            }).end(imageBuffer);
+            })
         }
     });
 }

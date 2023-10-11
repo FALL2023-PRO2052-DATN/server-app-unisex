@@ -14,6 +14,20 @@ con.connect(function (err) {
     console.log("Kết nối Database thành công!");
 });
 
+// Truy xuất dữ liệu
+const queryDatabase = (query, values) => {
+    return new Promise((resolve, reject) => {
+        con.query(query, values, (err, results, fields) => {
+            if (err) {
+                reject(err);
+                return;
+            } 
+            resolve(results);
+        });
+    });
+};
+
 module.exports = {
-    con
+    con,
+    queryDatabase
 }
