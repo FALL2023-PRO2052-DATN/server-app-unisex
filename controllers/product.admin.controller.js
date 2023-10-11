@@ -132,16 +132,16 @@ const create = (req, res) => {
                     // Thêm sản phẩm thành công thì sẽ tiến hành thêm kích thước sản phẩm để quản lý tồn kho
                     const sizes = countries || [0];
                     const id_san_pham = result.insertId;
-
-                    sizes.forEach((size) => {
-                        const sizeValues = [size, id_san_pham, so_luong];
-                        const sizeQuery = `INSERT INTO KichThuoc_SanPham (kich_thuoc_id, san_pham_id, so_luong_ton_kho) VALUES (?, ?, ?)`;
-                        database.con.query(sizeQuery, sizeValues, (err) => {
+                    
+                    for (const size of sizes) {
+                        const values = [size, id_san_pham, so_luong];
+                        const query = `INSERT INTO KichThuoc_SanPham (kich_thuoc_id, san_pham_id, so_luong_ton_kho) VALUES (?, ?, ?)`
+                        database.con.query(query, values, function (err, data, fields) {
                             if (err) {
-                                console.log(err);
-                            }
+                                return console.log(err);
+                            };
                         });
-                    });
+                    }
 
                     req.flash('success', 'Thêm sản phẩm thành công');
                     res.redirect('/admin/product/add');
