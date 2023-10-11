@@ -260,7 +260,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{#each data}}
+                                    {{#each banners}}
                                     <tr>
                                         <th scope="row" style="width: 20%;">UNI_BN_{{this.id}}</th>
                                         <td style="width: 300px; height: auto;"><img id="img-table-cus"
@@ -308,9 +308,15 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">Đóng</button>
-                                        <button id="addButton" type="submit" class="button-26" style="color: white;">Thêm mới</button>
+                                        <button id="addButton" type="submit" class="button-26"
+                                            style="color: white;">Thêm mới</button>
                                     </div>
-                                    <div class="alert alert-warning" role="alert" style="display: none;" id="loading-alert">
+                                    <div class="alert alert-warning" role="alert" style="display: none;"
+                                        id="alert-iamge-warning">
+                                        Vui lòng chọn ảnh banner
+                                    </div>
+                                    <div class="alert alert-warning" role="alert" style="display: none;"
+                                        id="loading-alert">
                                         Đang xử lý thêm banner vui lòng chờ...
                                     </div>
                                 </form>
@@ -361,8 +367,7 @@
             <!-- footer -->
             <!-- ============================================================== -->
             <footer class="footer text-center">
-                All Rights Reserved by Matrix-admin. Designed and Developed by
-                <a href="https://wrappixel.com">WrapPixel</a>.
+                Unisex Store - Thời trang cho mọi người <a href="">Unisex.com</a>.
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->

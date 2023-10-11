@@ -1,74 +1,70 @@
 const multer = require('multer');
-const database = require('../database/database.js');
+const bannerModel = require('../models/banner.admin.model.js')
 const cloudinary = require('../cloud/cloudinary.js');
 
-// Upload image
+// Set up upload image
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-// Danh sách banner
-const pageBanner = (req, res) => {
-    const query = `SELECT * FROM Banner WHERE hienThi = 1`;
-
-    database.con.query(query, function (err, data, fields) {
-        if (err) {
-            return console.log(err);
-        };
-        res.render('banner', { data });
-    });
+const pageBanner = async (req, res) => {
+    try {
+        const banners = await bannerModel.getAll();
+        return res.render('banner', { banners });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send('Server error: ' + error.message);
+    }
 }
 
-// Thêm banner 
-const create = (req, res) => {
+const insertBanner = async (req, res) => {
     upload.single('image')(req, res, (err) => {
         if (err) {
             console.error(err);
-        } else {
-            if (!req.file) {
-                req.flash('error', 'Vui lòng chọn ảnh khi banner');
-                return res.redirect('/admin/banner');
+            return;
+        }
+        if (!req.file) {
+            return;
+        }
+
+        const imageBuffer = req.file.buffer;
+        // Tải ảnh lên Cloudinary
+        cloudinary.uploadImageToCloudinary(imageBuffer, async (err, imageUrl) => {
+            if (err) {
+                return res.status(500).send('Tải hình lên cloudinary lỗi' + err);
             }
 
-            const imageBuffer = req.file.buffer;
-            cloudinary.uploadImageToCloudinary(imageBuffer, (err, imageUrl) => {
-                if (err) {
-                    return res.status(500).send('Tải hình banner không thành công' + err);
-                }
-
-                const query = `INSERT INTO Banner (anh_banner) VALUES (?)`;
-                database.con.query(query, [imageUrl], function (err, result) {
-                    if (err) {
-                        req.flash('error', 'Thêm banner không thành công!')
-                    } else {
-                        req.flash('success', 'Thêm banner thành công')
-                    }
-                    res.redirect('/admin/banner');
-                });
-            })
-        }
+            try {
+                await bannerModel.insert(imageUrl);
+                req.flash('success', 'Thêm banner thành công.');
+                res.redirect('/admin/banner');
+            } catch (error) {
+                console.error(error);
+                return res.status(500).send('Server error: ' + error.message);
+            }
+        })
     });
 }
 
-// Xoá banner
-const remove = (req, res) => {
-    const { id_banner } = req.body;
-    const query = `UPDATE Banner SET hienThi = 0 WHERE id=?`;
+const removeBanner = async (req, res) => {
+    try {
+        const { id_banner } = req.body;
+        const results = await bannerModel.remove(id_banner);
 
-    database.con.query(query, [id_banner], function (err, result) {
-        if (err) {
-            return console.log(err);
+        if (results.affectedRows === 0) {
+            req.flash('error', 'Xoá banner không thành công.');
+        }else{
+            req.flash('success', 'Xoá banner thành công.');
         }
-        if (result.affectedRows === 0) {
-            req.flash('error', 'Xoá banner không thành công. Vui lòng thử lại!')
-        } else {
-            req.flash('success', 'Xoá banner thành công');
-        }
+
         res.redirect('/admin/banner');
-    });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send('Server error: ' + error.message);
+    }
 }
 
 module.exports = {
     pageBanner,
-    create,
-    remove
+    insertBanner,
+    removeBanner
 }

@@ -17,6 +17,25 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    const addButton = document.getElementById('addButton');
+    addButton.addEventListener('click', function (event) {
+        //Lấy dữ liệu từ data-id của .button-delete
+        if (fileInput.files.length === 0) {
+            // Hiển thị alert khi không chọn ảnh
+            document.getElementById('alert-iamge-warning').style.display = 'block';
+
+            setTimeout(() => {
+                document.getElementById('alert-iamge-warning').style.display = 'none';
+            }, 4000);
+        }else{
+            document.getElementById('loading-alert').style.display = 'block';
+
+            setTimeout(() => {
+                document.getElementById('loading-alert').style.display = 'none';
+            }, 20000);
+        }
+    });
+
     const alerts = document.querySelectorAll('.alert');
     alerts.forEach(function(alert) {
         setTimeout(function() {
@@ -35,15 +54,4 @@ deleteButtons.forEach(function (deleteButton) {
         const id_banner_delete_input = document.querySelector(`#id_banner_delete_input`);
         id_banner_delete_input.value = id;
     });
-});
-
-// Hiển thị cảnh báo 
-const addButton = document.getElementById('addButton');
-addButton.addEventListener('click', function (event) {
-    //Lấy dữ liệu từ data-id của .button-delete
-    document.getElementById('loading-alert').style.display = 'block';
-
-    setTimeout(() =>{
-        document.getElementById('loading-alert').style.display = 'none';
-    }, 20000);
 });
