@@ -19,7 +19,7 @@ const insertDiscount = async (req, res) => {
         const isCodeExist = discounts.some((discount) => discount.code === codeDiscount);
 
         if (isCodeExist) {
-            req.flash('warning', 'Thêm không thành công. Mã code giảm giá đã tồn tại');
+            req.flash('warning', 'Thêm mã giảm giá không thành công. Mã code giảm giá đã tồn tại');
         } else {
             const data = { codeDiscount, valueDiscount };
             await discountModel.insert(data);
@@ -41,7 +41,7 @@ const updateDiscount = async (req, res) => {
         // Lấy danh sách mã giảm giá trừ mã giảm giá hiện tại
         const discountsExceptCurrent = discounts.filter((discount) => discount.id !== parseInt(idDiscount, 10));
 
-        // Kiểm tra mã giảm giá khi cập nhật cón tồn tạị  hay không
+        // Kiểm tra mã giảm giá khi cập nhật cón tồn tại trong discountsExceptCurrent
         const isCodeExist = discountsExceptCurrent.some((discount) => discount.code === codeDiscount);
 
         if (isCodeExist) {

@@ -249,7 +249,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{#each data}}
+                                    {{#each sizes}}
                                     <tr>
                                         <th scope="row" style="width: 10%;">UNI_KT_{{this.id}}</th>
                                         <td style="width: 30%;">Size {{this.ten_kich_thuoc}}</td>
@@ -292,11 +292,11 @@
                                         <label for="image-upload" class="title-form">Tên kích thước</label>
                                         <input type="text" data-toggle="tooltip" title="" class="form-control"
                                             id="validationDefault05" placeholder="Ví dụ: M" required=""
-                                            name="ten_kich_thuoc" data-original-title="A Tooltip for the input !">
+                                            name="nameSize" data-original-title="A Tooltip for the input !">
                                     </div>
                                     <div class="form-group">
                                         <label for="image-upload" class="title-form">Mô tả</label>
-                                        <textarea name="mo_ta_chi_tiet" class="form-control"></textarea>
+                                        <textarea name="description" class="form-control"></textarea>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
@@ -327,18 +327,18 @@
                                         <label for="image-upload" class="title-form">ID</label>
                                         <input type="text" data-toggle="tooltip" title="" class="form-control"
                                             id="id_kich_thuoc_update_input" placeholder="Ví dụ: 1" required=""
-                                            name="id_kich_thuoc" data-original-title="A Tooltip for the input !"
+                                            name="idSize" data-original-title="A Tooltip for the input !"
                                             readonly>
                                     </div>
                                     <div class="form-group">
                                         <label for="image-upload" class="title-form">Tên kích thước</label>
                                         <input type="text" data-toggle="tooltip" title="" class="form-control"
                                             id="ten_kich_thuoc_update_input" placeholder="Ví dụ: M" required=""
-                                            name="ten_kich_thuoc" data-original-title="A Tooltip for the input !">
+                                            name="nameSize" data-original-title="A Tooltip for the input !">
                                     </div>
                                     <div class="form-group">
                                         <label for="image-upload" class="title-form">Mô tả</label>
-                                        <textarea id="mo_ta_chi_tiet_update_input" name="mo_ta_chi_tiet"
+                                        <textarea id="mo_ta_chi_tiet_update_input" name="description"
                                             class="form-control"></textarea>
                                     </div>
                                     <div class="modal-footer">
@@ -369,7 +369,7 @@
                             </div>
                             <form action="/admin/size/delete" method="POST">
                                 <div class="modal-footer">
-                                    <input type="hidden" name="id_kich_thuoc" id="id_kich_thuoc_delete_input">
+                                    <input type="hidden" name="idSize" id="id_kich_thuoc_delete_input">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
                                     <button href="#" type="submit" class="btn-delete-confirm"
                                         style="color: white;">Xoá</button>

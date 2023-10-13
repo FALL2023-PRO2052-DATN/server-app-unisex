@@ -1,81 +1,94 @@
-const database = require('../database/database.js');
+const sizeModel = require('../models/size.admin.model.js');
 
-// Lấy danh sách kích thước
-const pageSize = (req, res) => {
-    const query = `SELECT * FROM KichThuoc WHERE hienThi = 1`;
-    
-    database.con.query(query, function (err, data, fields) {
-        if (err) {
-            return console.log(err);
-        };
-        res.render('size', { data });
-    });
+const pageSize = async (req, res) => {
+    try {
+        const sizes = await sizeModel.getAll();
+        res.render('size', { sizes });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server error: ' + error);
+    }
 }
 
-// Thêm kích thước
-const create = (req, res) => {
-    const { ten_kich_thuoc, mo_ta_chi_tiet } = req.body;
-    const query = `INSERT INTO KichThuoc (ten_kich_thuoc, mo_ta_chi_tiet) VALUES (?, ?)`;
+const insertSize = async (req, res) => {
+    try {
+        const { nameSize, description } = req.body;
+        const sizes = await sizeModel.getAll();
 
-    database.con.query(query, [ten_kich_thuoc, mo_ta_chi_tiet], function (err, result) {
-        if (err) {
-            req.flash('error', 'Thêm kích thước không thành công!')
+        // Kiểm tra kích thước tồn tại hay chưa
+        const isSizeExist = sizes.some((size) => size.ten_kich_thuoc === nameSize);
+
+        if (isSizeExist) {
+            req.flash('warning', 'Thêm kích thước không thành công. Tên kích thước đã tồn tại');
         } else {
-            req.flash('success', 'Thêm kích thước thành công')
+            const data = { nameSize, description };
+            await sizeModel.insert(data);
+            req.flash('success', 'Thêm kích thước thành công');
         }
+
         res.redirect('/admin/size');
-    });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server error: ' + error);
+    }
 }
 
-// Cập nhật kích thước
-const update = (req, res) => {
-    const { id_kich_thuoc, ten_kich_thuoc, mo_ta_chi_tiet } = req.body;
-    const query = `UPDATE KichThuoc SET ten_kich_thuoc=?, mo_ta_chi_tiet=? WHERE id=?`;
 
-    database.con.query(query, [ten_kich_thuoc, mo_ta_chi_tiet, id_kich_thuoc], function (err, result) {
-        if (err) {
-            return console.log(err);
-        }
-        if (result.affectedRows === 0) {
-            req.flash('error', 'Cập nhật kích thước không thành công. Vui lòng thử lại!');
+const updateSize = async (req, res) => {
+    try {
+        const { idSize, nameSize, description } = req.body;
+        const sizes = await sizeModel.getAll();
+
+        // Lấy danh sách kích thước ngoại trừ kích thước hiện tại
+        const sizesExceptCurrent = sizes.filter((size) => size.id !== parseInt(idSize, 10));
+
+        // Kiểm tra tên kích thước tồn tại trong danh sách kích thước sizesExceptCurrent
+        const isSizeExist = sizesExceptCurrent.some((size) => size.ten_kich_thuoc === nameSize);
+
+        if (isSizeExist) {
+            req.flash('warning', 'Cập nhật kích thước không thành công. Tên kích thước đã tồn tại');
         } else {
+            const data = { 
+                idSize, 
+                nameSize, 
+                description 
+            };
+            await sizeModel.update(data);
             req.flash('success', 'Cập nhật kích thước thành công');
         }
-        res.redirect('/admin/size');
-    });
-}
-// Xoá kích thước
-const remove = (req, res) => {
-    const { id_kich_thuoc } = req.body;
-    const checkQuery = `SELECT * FROM KichThuoc_SanPham WHERE kich_thuoc_id =? AND hienThi = 1`
-    database.con.query(checkQuery, [id_kich_thuoc], function (err, productSizes) {
-        if (err) {
-            return console.log(err);
-        }
-        if (productSizes.length === 0) {
-            const query = `UPDATE KichThuoc SET hienThi = 0 WHERE id=?`;
 
-            database.con.query(query, [id_kich_thuoc], function (err, result) {
-                if (err) {
-                    return console.log(err);
-                }
-                if (result.affectedRows === 0) {
-                    req.flash('error', 'Xoá kích thước không thành công. Vui lòng thử lại!')
-                } else {
-                    req.flash('success', 'Xoá kích thước thành công');
-                }
-                res.redirect('/admin/size');
-            });            
+        res.redirect('/admin/size');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server error: ' + error);
+    }
+}
+
+const removeSize = async (req, res) => {
+    try {
+        const { idSize } = req.body;
+        
+        // Kiểm tra có sản phẩm nào thuộc kích thước hay không
+        const productsWithSize = await sizeModel.getProductsBySize(idSize);
+
+        if (productsWithSize.length === 0) {
+            await sizeModel.remove(idSize);
+            req.flash('success', 'Xoá kích thước thành công.');
         } else {
             req.flash('warning', 'Xoá kích thước không thành công. Đã có sản phẩm thuộc kích thước này');
-            res.redirect('/admin/size');
         }
-    });
+
+        res.redirect('/admin/size');
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server error: ' + error);
+    }
 }
 
 module.exports = {
     pageSize,
-    create,
-    update,
-    remove
+    insertSize,
+    updateSize,
+    removeSize
 }
