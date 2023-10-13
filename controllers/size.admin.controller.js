@@ -79,7 +79,6 @@ const removeSize = async (req, res) => {
         }
 
         res.redirect('/admin/size');
-
     } catch (error) {
         console.error(error);
         res.status(500).send('Server error: ' + error);
