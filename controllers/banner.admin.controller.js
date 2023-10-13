@@ -48,14 +48,8 @@ const insertBanner = async (req, res) => {
 const removeBanner = async (req, res) => {
     try {
         const { id_banner } = req.body;
-        const results = await bannerModel.remove(id_banner);
-
-        if (results.affectedRows === 0) {
-            req.flash('error', 'Xoá banner không thành công.');
-        }else{
-            req.flash('success', 'Xoá banner thành công.');
-        }
-
+        await bannerModel.remove(id_banner);
+        req.flash('success', 'Xoá banner thành công.');
         res.redirect('/admin/banner');
     } catch (error) {
         console.error(error);
