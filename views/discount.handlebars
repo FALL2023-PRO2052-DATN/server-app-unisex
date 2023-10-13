@@ -225,6 +225,11 @@
                     {{error}}
                 </div>
                 {{/if}}
+                {{#if warning}}
+                <div class="alert alert-warning" role="alert">
+                    {{warning}}
+                </div>
+                {{/if}}
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
@@ -246,15 +251,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{#each data}}
+                                    {{#each discounts}}
                                     <tr>
                                         <th scope="row" style="width: 10%;">UNI_GG_{{this.id}}</th>
                                         <td style="width: 30%;">{{this.code}}</td>
                                         <td style="width: 30%;">Giảm {{this.gia_tri}}%</td>
                                         <td style="width: 30%;">
                                             <button type="button" class="btn-update" data-toggle="modal"
-                                                data-target="#update-discount-modal"
-                                                data-json='{
+                                                data-target="#update-discount-modal" data-json='{
                                                     "id": "{{this.id}}", 
                                                     "code": "{{this.code}}", 
                                                     "gia_tri": "{{this.gia_tri}}"
@@ -290,13 +294,13 @@
                                         <label for="image-upload" class="title-form">Mã code</label>
                                         <input type="text" data-toggle="tooltip" title="" class="form-control"
                                             id="validationDefault05" placeholder="Ví dụ: UNISEX-30" required=""
-                                            data-original-title="A Tooltip for the input !" name="code">
+                                            data-original-title="A Tooltip for the input !" name="codeDiscount">
                                     </div>
                                     <div class="form-group">
                                         <label for="image-upload" class="title-form">Giá trị giảm giá</label>
                                         <input type="number" data-toggle="tooltip" title="" class="form-control"
                                             id="validationDefault05" placeholder="Ví dụ: 10%" required=""
-                                            data-original-title="A Tooltip for the input !" name="gia_tri" min="1"
+                                            data-original-title="A Tooltip for the input !" name="valueDiscount" min="1"
                                             max="100">
                                     </div>
                                     <div class="modal-footer">
@@ -328,20 +332,20 @@
                                         <label for="image-upload" class="title-form">ID</label>
                                         <input type="text" data-toggle="tooltip" title="" class="form-control"
                                             id="id_giam_gia_update_input" placeholder="Ví dụ: 1" required=""
-                                            name="id_giam_gia" data-original-title="A Tooltip for the input !"
-                                            readonly>
+                                            name="idDiscount" data-original-title="A Tooltip for the input !" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label for="image-upload" class="title-form">Mã code</label>
                                         <input type="text" data-toggle="tooltip" title="" class="form-control"
                                             id="code_update_input" placeholder="Ví dụ: UNISEX-30" required=""
-                                            name="code" data-original-title="A Tooltip for the input !">
+                                            name="codeDiscount" data-original-title="A Tooltip for the input !">
                                     </div>
                                     <div class="form-group">
                                         <label for="image-upload" class="title-form">Giá trị giảm giá</label>
                                         <input type="number" data-toggle="tooltip" title="" class="form-control"
                                             id="gia_tri_update_input" placeholder="Ví dụ: 10%" required="" min="1"
-                                            name="gia_tri" max="100" data-original-title="A Tooltip for the input !">
+                                            name="valueDiscount" max="100"
+                                            data-original-title="A Tooltip for the input !">
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
@@ -370,7 +374,7 @@
                             </div>
                             <form action="/admin/discount/delete" method="POST">
                                 <div class="modal-footer">
-                                    <input type="hidden" id="id_giam_gia_delete_input" name="id_giam_gia">
+                                    <input type="hidden" id="id_giam_gia_delete_input" name="idDiscount">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
                                     <button type="submit" class="btn-delete-confirm" style="color: white;">Xoá</button>
                                 </div>
@@ -396,8 +400,7 @@
             <!-- footer -->
             <!-- ============================================================== -->
             <footer class="footer text-center">
-                All Rights Reserved by Matrix-admin. Designed and Developed by <a
-                    href="https://wrappixel.com">WrapPixel</a>.
+                Unisex Store - Thời trang cho mọi người <a href="">Unisex.com</a>.
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->
