@@ -11,6 +11,7 @@ const discountRouter = require('./routers/discount.admin.router.js');
 const sizeRouter = require('./routers/size.admin.router.js');
 const bannerRouter = require('./routers/banner.admin.router.js');
 const productRouter = require('./routers/product.admin.router.js');
+const productSizeRouter = require('./routers/product-size.admin.router.js');
 
 const app = express();
 
@@ -70,6 +71,7 @@ app.use('/admin', discountRouter);
 app.use('/admin', sizeRouter);
 app.use('/admin', bannerRouter);
 app.use('/admin', productRouter);
+app.use('/admin', productSizeRouter)
 
 const port = 3000;
 app.listen(port, () => {
