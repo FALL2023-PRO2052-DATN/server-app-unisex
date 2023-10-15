@@ -295,7 +295,7 @@
                                     <div class="form-group">
                                         <label for="image-upload" class="title-form">Số lượng hiện tại</label>
                                         <input type="number" data-toggle="tooltip" title="" class="form-control" min="0"
-                                            id="quantityProductSizeInput" placeholder="20" required="" name="quantityProduct"
+                                            id="quantityProductSizeInput" placeholder="20" required="" name="quantity"
                                             data-original-title="A Tooltip for the input !">
                                         <input type="hidden" id="idProductSizeUpdateInput" name="idProductSize">
                                     </div>
@@ -326,7 +326,7 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
                                 <form action="/admin/product-size/delete" method="POST">
-                                    <input type="text" name="idProductSize" id="idProductSizeInput">
+                                    <input type="hidden" name="idProductSize" id="idProductSizeInput">
                                     <button href="#" type="submit" class="btn-delete-confirm"
                                         style="color: white;">Xoá</button>
                                 </form>
