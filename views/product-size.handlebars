@@ -243,8 +243,7 @@
                                     <tr>
                                         <th scope="col">ID</th>
                                         <th scope="col">Ảnh</th>
-                                        <th scope="col">Tên sản phẩm</th>
-                                        <th scope="col">Kích thước</th>
+                                        <th scope="col">Phiên bản sản phẩm</th>
                                         <th scope="col">Có thể bán</th>
                                         <th scope="col">Tồn kho</th>
                                         <th scope="col">Tác vụ</th>
@@ -254,11 +253,10 @@
                                     {{#each productSizes}}
                                     <tr>
                                         <th scope="row" style="width: 5%;">{{this.id}}</th>
-                                        <td style="width: 10%;"><img id="img-table-cus" src="{{this.anh_dai_dien}}"
+                                        <td style="width: 5%;"><img id="img-table-cus" src="{{this.anh_dai_dien}}"
                                                 alt="Hình ảnh"></td>
                                         </td>
-                                        <td style="width: 10%;">{{this.ten_san_pham}}</td>
-                                        <td style="width: 10%;"> Size {{this.ten_kich_thuoc}} </td>
+                                        <td style="width: 10%;">{{this.ten_san_pham}} - {{this.ten_kich_thuoc}}</td>
                                         <td style="width: 10%;">{{this.so_luong_ton_kho}}</td>
                                         <td style="width: 10%;">{{this.so_luong_ton_kho}}</td>
                                         <td style="width: 10%;">
