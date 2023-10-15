@@ -16,20 +16,20 @@ const getAll = async () => {
     return await database.queryDatabase(query, []);
 }
 
-const insert = async (nameCategory) => {
+const insert = async (name) => {
     const query = `INSERT INTO DanhMuc (ten_danh_muc) VALUES (?)`;
-    return await database.queryDatabase(query, [nameCategory]);
+    return await database.queryDatabase(query, [name]);
 }
 
 const update = async (data) => {
-    const values = [data.nameCategory, data.idCategory];
+    const values = [data.name, data.id];
     const query = `UPDATE DanhMuc SET ten_danh_muc =? WHERE id=?`;
     return await database.queryDatabase(query, values);
 }
 
-const remove = async (idCategory) => {
+const remove = async (id) => {
     const query = 'UPDATE DanhMuc SET hienThi = 0 WHERE id = ?';
-    return await database.queryDatabase(query, idCategory);
+    return await database.queryDatabase(query, id);
 }
 
 module.exports = {

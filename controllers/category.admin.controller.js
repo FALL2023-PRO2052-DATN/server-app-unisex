@@ -1,10 +1,14 @@
 const categoryModel = require('../models/category.admin.model.js');
 const productModel = require('../models/product.admin.model.js');
 
+const isCategoryExist = (categories, name) => {
+    return categories.some((category) => category.ten_danh_muc === name);
+}
+
 const pageCategory = async (req, res) => {
     try {
-        const categorys = await categoryModel.getAll();
-        res.render('category', { categorys });
+        const categories = await categoryModel.getAll();
+        res.render('category', { categories });
     } catch (error) {
         console.error(error);
         res.status(500).send('Server error: ' + error.message);
@@ -13,13 +17,13 @@ const pageCategory = async (req, res) => {
 
 const insertCategory = async (req, res) => {
     try {
-        const { nameCategory } = req.body;
-        const categorys = await categoryModel.getAll();
+        const { name } = req.body;
+        const categories = await categoryModel.getAll();
 
-        if (isCategoryExist(categorys, nameCategory)) {
+        if (isCategoryExist(categories, name)) {
             req.flash('warning', 'Thêm danh mục không thành công. Tên danh mục đã tồn tại.');
         } else {
-            await categoryModel.insert(nameCategory);
+            await categoryModel.insert(name);
             req.flash('success', 'Thêm danh mục thành công.');
         }
 
@@ -32,18 +36,18 @@ const insertCategory = async (req, res) => {
 
 const updateCategory = async (req, res) => {
     try {
-        const { idCategory, nameCategory } = req.body;
-        const categorys = await categoryModel.getAll();
+        const { id, name } = req.body;
+        const categories = await categoryModel.getAll();
 
-        // Lấy danh sách danh mục ngoại trừ danh mục hiện tại
-        const categorysExceptCurrent = categorys.filter((category) => category.id_danh_muc !== parseInt(idCategory, 10));
+        const categoryToUpdate = categories.find((category) => category.id_danh_muc === parseInt(id, 10));
+        const categoriesExceptCurrent = categories.filter((category) => category !== categoryToUpdate);
 
-        if (isCategoryExist(categorysExceptCurrent, nameCategory)) {
-            req.flash('warning', 'Cập nhật không thành cồng. Tên danh mục đã tồn tại.');
+        if (isCategoryExist(categoriesExceptCurrent, name)) {
+            req.flash('warning', 'Cập nhật không thành công. Tên danh mục đã tồn tại.');
         } else {
-            const data = { idCategory, nameCategory };
+            const data = { id, name };
             await categoryModel.update(data);
-            req.flash('success', 'Cập nhật danh mục thành công');
+            req.flash('success', 'Cập nhật danh mục thành công.');
         }
 
         res.redirect('/admin/category');
@@ -55,15 +59,15 @@ const updateCategory = async (req, res) => {
 
 const removeCategory = async (req, res) => {
     try {
-        const { idCategory } = req.body;
-        const products = await productModel.getAllByCategoryId(idCategory);
+        const EMPTY_COUNT = 0;
+        const { id } = req.body;
+        const products = await productModel.getAllByCategoryId(id);
 
-        // Kiểm tra có sản phẩm nào thuộc danh mục hay không
-        if (products.length > 0) {
-            req.flash('warning', 'Không thể xoá danh mục. Đã có sản phẩm thuộc danh mục này!');
+        if (products.length > EMPTY_COUNT) {
+            req.flash('warning', 'Không thể xóa danh mục. Đã có sản phẩm thuộc danh mục này.');
         } else {
-            await categoryModel.remove(idCategory);
-            req.flash('success', 'Xoá danh mục thành công.');
+            await categoryModel.remove(id);
+            req.flash('success', 'Xóa danh mục thành công.');
         }
 
         res.redirect('/admin/category');
@@ -72,11 +76,6 @@ const removeCategory = async (req, res) => {
         res.status(500).send('Server error: ' + error.message);
     }
 };
-
-// Kiểm tra danh mục tồn tại
-const isCategoryExist = (categorys, nameCategory) => {
-    return categorys.some((category) => category.ten_danh_muc === nameCategory);
-}
 
 module.exports = {
     pageCategory,

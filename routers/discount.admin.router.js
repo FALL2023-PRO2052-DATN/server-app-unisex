@@ -1,5 +1,4 @@
-const express = require('express');
-const router = express.Router();
+const router = require('express').Router();
 const discountController = require('../controllers/discount.admin.controller.js');
 
 router.get('/discount', discountController.pageDiscount);

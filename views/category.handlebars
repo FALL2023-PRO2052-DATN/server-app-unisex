@@ -154,7 +154,7 @@
                     <div class="col-12">
                         <div class="card" style="padding: 20px;">
                             <div class="card-body-cus">
-                                <h5 class="card-title m-b-0">Danh sách danh mục ({{categorys.length}})</h5>
+                                <h5 class="card-title m-b-0">Danh sách danh mục ({{categories.length}})</h5>
                                 <button type="button" class="button-26" data-toggle="modal" data-target="#exampleModal"
                                     data-whatever="@mdo">Thêm danh mục sản phẩm</button>
                             </div>
@@ -169,7 +169,7 @@
                                 </thead>
                                 <tbody>
                                     <!-- Lấy danh sách danh mục --->
-                                    {{#each categorys}}
+                                    {{#each categories}}
                                     <tr>
                                         <th scope="row" style="width: 10%;">{{this.id_danh_muc}}</th>
                                         <td style="width: 30%;">{{this.ten_danh_muc}}</td>
@@ -209,7 +209,7 @@
                                     <div class="form-group">
                                         <label for="image-upload" class="title-form">Tên danh mục</label>
                                         <input type="text" data-toggle="tooltip" title="" class="form-control"
-                                            name="nameCategory" id="validationDefault05"
+                                            name="name" id="validationDefault05"
                                             placeholder="Ví dụ: Áo thun nam" required=""
                                             data-original-title="A Tooltip for the input !">
 
@@ -241,13 +241,13 @@
                                 <form id="image-upload-form" action="/admin/category/update" method="POST">
                                     <div class="form-group">
                                         <label for="image-upload" class="title-form">ID</label>
-                                        <input name="idCategory" type="text" data-toggle="tooltip" title=""
+                                        <input name="id" type="text" data-toggle="tooltip" title=""
                                             class="form-control" id="id_danh_muc_update_input" placeholder="Ví dụ: 01"
                                             required="" data-original-title="A Tooltip for the input !" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label for="image-upload" class="title-form">Tên danh mục</label>
-                                        <input name="nameCategory" type="text" data-toggle="tooltip" title=""
+                                        <input name="name" type="text" data-toggle="tooltip" title=""
                                             class="form-control" id="ten_danh_muc_update_input"
                                             placeholder="Ví dụ: Áo thun nam" required=""
                                             data-original-title="A Tooltip for the input !">
@@ -278,7 +278,7 @@
                                 <p>Bạn có muốn xoá danhh mục sản phẩm ?</p>
                             </div>
                             <form action="/admin/category/delele" class="modal-footer" method="POST">
-                                <input type="hidden" id="id_danh_muc_delete_input" name="idCategory">
+                                <input type="hidden" id="id_danh_muc_delete_input" name="id">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
                                 <button type="submit" class="btn-delete-confirm" style="color: white;">Xoá</button>
                             </form>

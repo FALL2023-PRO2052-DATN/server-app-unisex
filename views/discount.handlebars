@@ -299,13 +299,13 @@
                                         <label for="image-upload" class="title-form">Mã code</label>
                                         <input type="text" data-toggle="tooltip" title="" class="form-control"
                                             id="validationDefault05" placeholder="Ví dụ: UNISEX-30" required=""
-                                            data-original-title="A Tooltip for the input !" name="codeDiscount">
+                                            data-original-title="A Tooltip for the input !" name="code">
                                     </div>
                                     <div class="form-group">
                                         <label for="image-upload" class="title-form">Giá trị giảm giá</label>
                                         <input type="number" data-toggle="tooltip" title="" class="form-control"
                                             id="validationDefault05" placeholder="Ví dụ: 10%" required=""
-                                            data-original-title="A Tooltip for the input !" name="valueDiscount" min="1"
+                                            data-original-title="A Tooltip for the input !" name="value" min="1"
                                             max="100">
                                     </div>
                                     <div class="modal-footer">
@@ -337,19 +337,19 @@
                                         <label for="image-upload" class="title-form">ID</label>
                                         <input type="text" data-toggle="tooltip" title="" class="form-control"
                                             id="id_giam_gia_update_input" placeholder="Ví dụ: 1" required=""
-                                            name="idDiscount" data-original-title="A Tooltip for the input !" readonly>
+                                            name="id" data-original-title="A Tooltip for the input !" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label for="image-upload" class="title-form">Mã code</label>
                                         <input type="text" data-toggle="tooltip" title="" class="form-control"
                                             id="code_update_input" placeholder="Ví dụ: UNISEX-30" required=""
-                                            name="codeDiscount" data-original-title="A Tooltip for the input !">
+                                            name="code" data-original-title="A Tooltip for the input !">
                                     </div>
                                     <div class="form-group">
                                         <label for="image-upload" class="title-form">Giá trị giảm giá</label>
                                         <input type="number" data-toggle="tooltip" title="" class="form-control"
                                             id="gia_tri_update_input" placeholder="Ví dụ: 10%" required="" min="1"
-                                            name="valueDiscount" max="100"
+                                            name="value" max="100"
                                             data-original-title="A Tooltip for the input !">
                                     </div>
                                     <div class="modal-footer">
@@ -379,7 +379,7 @@
                             </div>
                             <form action="/admin/discount/delete" method="POST">
                                 <div class="modal-footer">
-                                    <input type="hidden" id="id_giam_gia_delete_input" name="idDiscount">
+                                    <input type="hidden" id="id_giam_gia_delete_input" name="id">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
                                     <button type="submit" class="btn-delete-confirm" style="color: white;">Xoá</button>
                                 </div>

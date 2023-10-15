@@ -1,5 +1,4 @@
-const express = require('express');
-const router = express.Router();
+const router = require('express').Router();
 const productSizeController = require('../controllers/product-size.admin.controller.js');
 
 router.get('/product-size', productSizeController.pageProductSize);

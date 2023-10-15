@@ -1,5 +1,4 @@
-const express = require('express');
-const router = express.Router();
+const router = require('express').Router();
 const sizeController = require('../controllers/size.admin.controller.js');
 
 router.get('/size', sizeController.pageSize);

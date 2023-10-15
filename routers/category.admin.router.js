@@ -1,5 +1,4 @@
-const express = require('express');
-const router = express.Router();
+const router = require('express').Router();
 const categoryController = require('../controllers/category.admin.controller.js');
 
 router.get('/category', categoryController.pageCategory);

@@ -1,9 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
+const hbs = exphbs.create({ defaultLayout: false });
 const session = require('express-session');
 const flash = require('connect-flash');
-const hbs = exphbs.create({ defaultLayout: false });
 const path = require('path');
 
 const categoryRouter = require('./routers/category.admin.router.js');
@@ -37,6 +37,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 hbs.handlebars.registerHelper('equal', require('handlebars-helper-equal'));
+
+// public file
 app.use(express.static(path.join(__dirname, '/public')));
 
 // Hàm kiểm tra kích thước

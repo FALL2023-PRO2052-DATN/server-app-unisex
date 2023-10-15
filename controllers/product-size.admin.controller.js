@@ -2,8 +2,8 @@ const productSizeModel = require('../models/product-size.admin.model.js');
 
 const pageProductSize = async (req, res) => {
     try {
-        const productSizes = await productSizeModel.getAll();
-        res.render('product-size', { productSizes });
+        const productsSize = await productSizeModel.getAll();
+        res.render('product-size', { productsSize });
     } catch (error) {
         console.error(error);
         res.status(500).send('Server error: ' + error.message);
@@ -12,8 +12,8 @@ const pageProductSize = async (req, res) => {
 
 const updateQuantityProductSize = async (req, res) => {
     try {
-        const { idProductSize, quantity } = req.body;
-        await productSizeModel.updateQuatity(idProductSize, quantity);
+        const { id, quantity } = req.body;
+        await productSizeModel.updateQuatity(id, quantity);
         req.flash('success', 'Cập nhật nhập số lượng sản phẩm thành công');
         res.redirect('/admin/product-size');
     } catch (error) {
@@ -24,9 +24,8 @@ const updateQuantityProductSize = async (req, res) => {
 
 const removeProductSize = async (req, res) => {
     try {
-        const { idProductSize } = req.body;
-        console.log(idProductSize);
-        await productSizeModel.removeById(idProductSize);
+        const { id } = req.body;
+        await productSizeModel.removeById(id);
         req.flash('success', 'Xoá kích thước sản phẩm thành công.');
         res.redirect('/admin/product-size');
     } catch (error) {

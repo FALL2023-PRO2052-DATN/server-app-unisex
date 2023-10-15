@@ -6,20 +6,20 @@ const getAll = async () => {
 }
 
 const insert = async (data) => {
-    const values = [data.nameSize, data.description];
+    const values = [data.name, data.description];
     const query = `INSERT INTO KichThuoc (ten_kich_thuoc, mo_ta_chi_tiet) VALUES (?, ?)`;
     return await database.queryDatabase(query, values);
 }
 
 const update = async (data) => {
-    const values = [data.nameSize, data.description, data.idSize];
+    const values = [data.name, data.description, data.id];
     const query = `UPDATE KichThuoc SET ten_kich_thuoc=?, mo_ta_chi_tiet=? WHERE id=?`;
     return await database.queryDatabase(query, values);
 }
 
-const remove = async (idSize) => {
+const remove = async (id) => {
     const query = `UPDATE KichThuoc SET hienThi = 0 WHERE id=?`;
-    return await database.queryDatabase(query, [idSize]);
+    return await database.queryDatabase(query, [id]);
 }
 
 module.exports = {

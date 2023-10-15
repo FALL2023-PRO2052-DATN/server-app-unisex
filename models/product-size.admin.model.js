@@ -27,10 +27,10 @@ const insert = async (data) => {
     return await database.queryDatabase(query, values);
 }
 
-const updateQuatity = async (idProductSize, quantity) => {
+const updateQuatity = async (id, quantity) => {
     const values = [
         quantity,
-        idProductSize
+        id
     ];
     const query = `UPDATE KichThuoc_SanPham SET so_luong_ton_kho=? WHERE id=?`;
     return await database.queryDatabase(query, values);
@@ -46,9 +46,9 @@ const removeById = async (id) => {
     return await database.queryDatabase(query, [id]);
 }
 
-const getAllBySizeId = async (idSize) => {
+const getAllBySizeId = async (id) => {
     const query = `SELECT * FROM KichThuoc_SanPham WHERE kich_thuoc_id =? AND hienThi = 1`
-    return await database.queryDatabase(query, [idSize]);
+    return await database.queryDatabase(query, [id]);
 }
 
 module.exports = {
