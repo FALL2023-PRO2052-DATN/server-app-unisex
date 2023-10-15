@@ -1,10 +1,15 @@
-// Xử lý các nút cập nhật
-// Xử lý các nút cập nhật
-const updateButtons = document.querySelectorAll('.btn-update');
-updateButtons.forEach(function (updateButton) {
-    updateButton.addEventListener('click', function (event) {
+const table = document.querySelector('#myTable');
+
+table.addEventListener('click', function (event) {
+    if (event.target.classList.contains('btn-delete')) {
+        const id = event.target.getAttribute('data-id');
+        const id_giam_gia_delete_input = document.querySelector(`#id_giam_gia_delete_input`);
+        id_giam_gia_delete_input.value = id;
+    }
+
+    if (event.target.classList.contains('btn-update')) {
         // Chuyển json thành object .Lấy dữ liệu từ data-json của .button update
-        const jsonData = updateButton.getAttribute('data-json');
+        const jsonData = event.target.getAttribute('data-json');
         const jsonObject = JSON.parse(jsonData);
 
         const id_giam_gia_update_input = document.querySelector(`#id_giam_gia_update_input`);
@@ -14,17 +19,7 @@ updateButtons.forEach(function (updateButton) {
         id_giam_gia_update_input.value = jsonObject.id;
         code_update_input.value = jsonObject.code;
         gia_tri_update_input.value = jsonObject.gia_tri;
-    });
-});
-// Xử lý nút xoá danh mục của từng item
-const deleteButtons = document.querySelectorAll('.btn-delete');
-deleteButtons.forEach(function (deleteButton) {
-    deleteButton.addEventListener('click', function (event) {
-        //Lấy dữ liệu từ data-id của .button-delete
-        const id = deleteButton.getAttribute('data-id');
-        const id_giam_gia_delete_input = document.querySelector(`#id_giam_gia_delete_input`);
-        id_giam_gia_delete_input.value = id;
-    });
+    }
 });
 
 document.addEventListener('DOMContentLoaded', function () {

@@ -1,20 +1,16 @@
+const table = document.querySelector('#myTable');
 
-// Xử lý nút xoá danh mục của từng item
-const deleteButtons = document.querySelectorAll('.btn-delete');
-deleteButtons.forEach(function (deleteButton) {
-    deleteButton.addEventListener('click', function (event) {
+table.addEventListener('click', function (event) {
+    if (event.target.classList.contains('btn-delete')) {
         //Lấy dữ liệu từ data-id của .button-delete
-        const id = deleteButton.getAttribute('data-id');
+        const id = event.target.getAttribute('data-id');
         const idProductSizeInput = document.querySelector(`#idProductSizeInput`);
         idProductSizeInput.value = id;
-    });
-});
+    }
 
-const updateButtons = document.querySelectorAll('.btn-update');
-updateButtons.forEach(function (updateButton) {
-    updateButton.addEventListener('click', function (event) {
+    if (event.target.classList.contains('btn-update')) {
         // Chuyển json thành object .Lấy dữ liệu từ data-json của .button update
-        const jsonData = updateButton.getAttribute('data-json');
+        const jsonData = event.target.getAttribute('data-json');
         const jsonObject = JSON.parse(jsonData);
 
         const idProductSizeUpdateInput = document.querySelector(`#idProductSizeUpdateInput`);
@@ -22,7 +18,7 @@ updateButtons.forEach(function (updateButton) {
 
         quantityProductSizeInput.value = parseInt(jsonObject.so_luong_ton_kho, 10);
         idProductSizeUpdateInput.value = jsonObject.id;
-    });
+    }
 });
 
 document.addEventListener('DOMContentLoaded', function () {

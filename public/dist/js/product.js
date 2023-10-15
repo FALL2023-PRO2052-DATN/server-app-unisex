@@ -1,11 +1,11 @@
-const deleteButtons = document.querySelectorAll('.btn-delete');
-deleteButtons.forEach(function (deleteButton) {
-    deleteButton.addEventListener('click', function (event) {
-        //Lấy dữ liệu từ data-id của .button-delete
-        const id = deleteButton.getAttribute('data-id');
-        const id_san_pham_delete_input = document.querySelector(`#id_san_pham_delete_input`);
+const table = document.querySelector('#myTable');
+
+table.addEventListener('click', function (event) {
+    if (event.target.classList.contains('btn-delete')) {
+        const id = event.target.getAttribute('data-id');
+        const id_san_pham_delete_input = document.querySelector('#id_san_pham_delete_input');
         id_san_pham_delete_input.value = id;
-    });
+    }
 });
 
 document.addEventListener('DOMContentLoaded', function () {

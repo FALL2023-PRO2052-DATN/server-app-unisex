@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
             setTimeout(() => {
                 document.getElementById('alert-iamge-warning').style.display = 'none';
             }, 4000);
-        }else{
+        } else {
             document.getElementById('loading-alert').style.display = 'block';
 
             setTimeout(() => {
@@ -37,21 +37,19 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     const alerts = document.querySelectorAll('.alert');
-    alerts.forEach(function(alert) {
-        setTimeout(function() {
+    alerts.forEach(function (alert) {
+        setTimeout(function () {
             alert.style.display = 'none';
         }, 4000);
     });
 });
 
 // Xử lý nút xoá 
-// Xử lý nút xoá danh mục của từng item
-const deleteButtons = document.querySelectorAll('.btn-delete');
-deleteButtons.forEach(function (deleteButton) {
-    deleteButton.addEventListener('click', function (event) {
-        //Lấy dữ liệu từ data-id của .button-delete
-        const id = deleteButton.getAttribute('data-id');
+const table = document.querySelector('#myTable');
+table.addEventListener('click', function (event) {
+    if (event.target.classList.contains('btn-delete')) {
+        const id = event.target.getAttribute('data-id');
         const id_banner_delete_input = document.querySelector(`#id_banner_delete_input`);
         id_banner_delete_input.value = id;
-    });
+    }
 });
