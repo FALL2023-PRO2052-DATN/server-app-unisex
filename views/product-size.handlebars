@@ -174,7 +174,7 @@
                                             class="mdi mdi-format-list-bulleted"></i><span class="hide-menu"> Danh sách
                                             sản phẩm </span></a></li>
                                 <li class="sidebar-item"><a href="/admin/product-size" class="sidebar-link"><i
-                                            class="mdi mdi-table-edit"></i><span class="hide-menu"> Tồn kho </span></a>
+                                            class="mdi mdi-table-edit"></i><span class="hide-menu"> Quản lý kho </span></a>
                                 </li>
                                 <li class="sidebar-item"><a href="/admin/size" class="sidebar-link"><i
                                             class="mdi mdi-move-resize"></i><span class="hide-menu"> Kích thước sản phẩm
@@ -242,10 +242,11 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">ID</th>
-                                        <th scope="col">Hình ảnh sản phẩm</th>
+                                        <th scope="col">Ảnh</th>
                                         <th scope="col">Tên sản phẩm</th>
                                         <th scope="col">Kích thước</th>
-                                        <th scope="col">Số lượng</th>
+                                        <th scope="col">Có thể bán</th>
+                                        <th scope="col">Tồn kho</th>
                                         <th scope="col">Tác vụ</th>
                                     </tr>
                                 </thead>
@@ -258,6 +259,7 @@
                                         </td>
                                         <td style="width: 10%;">{{this.ten_san_pham}}</td>
                                         <td style="width: 10%;"> Size {{this.ten_kich_thuoc}} </td>
+                                        <td style="width: 10%;">{{this.so_luong_ton_kho}}</td>
                                         <td style="width: 10%;">{{this.so_luong_ton_kho}}</td>
                                         <td style="width: 10%;">
                                             <button type="button" class="btn-update" style="color: white;"
