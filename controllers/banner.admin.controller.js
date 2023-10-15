@@ -22,7 +22,9 @@ const insertBanner = async (req, res) => {
             console.error(err);
             return;
         }
+
         if (!req.file) {
+            console.error('Null image');
             return;
         }
 
@@ -39,21 +41,21 @@ const insertBanner = async (req, res) => {
                 res.redirect('/admin/banner');
             } catch (error) {
                 console.error(error);
-                return res.status(500).send('Server error: ' + error.message);
+                res.status(500).send('Server error: ' + error.message);
             }
-        })
+        });
     });
 }
 
 const removeBanner = async (req, res) => {
     try {
-        const { id_banner } = req.body;
-        await bannerModel.remove(id_banner);
+        const { id } = req.body;
+        await bannerModel.remove(id);
         req.flash('success', 'Xoá banner thành công.');
         res.redirect('/admin/banner');
     } catch (error) {
         console.error(error);
-        return res.status(500).send('Server error: ' + error.message);
+        res.status(500).send('Server error: ' + error.message);
     }
 }
 

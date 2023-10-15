@@ -233,7 +233,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body-cus">
-                                <h5 class="card-title m-b-0">Danh sách banner</h5>
+                                <h5 class="card-title m-b-0">Danh sách banner ({{banners.length}})</h5>
                                 <button type="button" class="button-26" data-toggle="modal" data-target="#exampleModal">
                                     Thêm banner
                                 </button>
@@ -250,7 +250,7 @@
                                     {{#each banners}}
                                     <tr>
                                         <th scope="row" style="width: 20%;">UNI_BN_{{this.id}}</th>
-                                        <td style="width: 300px; height: auto;"><img id="img-table-cus"
+                                        <td style="width: 400px; height: 200px ;"><img id="img-table-cus"
                                                 src="{{this.anh_banner}}" alt="Hình ảnh" /></td>
                                         <td>
                                             <button type="button" class="btn-delete" data-toggle="modal"
@@ -277,7 +277,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="/admin/banner/add" method="POST" enctype="multipart/form-data">
+                                <form action="/admin/banner/create" method="POST" enctype="multipart/form-data">
                                     <div class="form-group">
                                         <div class="mb-3">
                                             <label for="formFileMultiple" class="title-form">
@@ -327,7 +327,7 @@
                             <div class="modal-footer">
                                 <form action="/admin/banner/delete" method="POST">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
-                                    <input type="hidden" id="id_banner_delete_input" name="id_banner" />
+                                    <input type="hidden" id="id_banner_delete_input" name="id" />
                                     <button href="#" type="submit" class="btn-delete-confirm"
                                         style="color: white;">Xoá</button>
                                 </form>
