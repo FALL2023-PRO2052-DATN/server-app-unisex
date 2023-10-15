@@ -32,15 +32,9 @@ const remove = async (idCategory) => {
     return await database.queryDatabase(query, idCategory);
 }
 
-const getProductsByIdCategory = async (idCategory) => {
-    const query = 'SELECT * FROM SanPham WHERE danh_muc_id = ? AND hienThi = 1';
-    return await database.queryDatabase(query, [idCategory]);
-}
-
 module.exports = {
     getAll,
     insert,
     update,
-    remove,
-    getProductsByIdCategory
+    remove
 }

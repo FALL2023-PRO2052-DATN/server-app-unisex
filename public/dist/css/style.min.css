@@ -1961,8 +1961,6 @@ pre code {
 }
 
 .table {
-    margin-right: 20px;
-    margin-left: 20px;
     margin-bottom: 1rem;
     background-color: transparent;
 }
@@ -17234,9 +17232,6 @@ label {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    margin-top: 20px;
-    margin-right: 20px;
-    margin-left: 20px;
     margin-bottom: 20px;
 }
 

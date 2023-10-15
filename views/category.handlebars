@@ -15,6 +15,7 @@
     <link rel="stylesheet" type="text/css" href="/assets/extra-libs/multicheck/multicheck.css">
     <link href="/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
     <link href="/dist/css/style.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -77,15 +78,15 @@
                 </div>
             </nav>
         </header>
-         <aside class="left-sidebar" data-sidebarbg="skin5">
+        <aside class="left-sidebar" data-sidebarbg="skin5">
             <!-- Sidebar scroll-->
             <div class="scroll-sidebar">
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav" class="p-t-30">
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="/" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span
-                                    class="hide-menu">Tổng quan</span></a>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/"
+                                aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Tổng
+                                    quan</span></a>
                         </li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="/admin/banner" aria-expanded="false"><i class="mdi mdi-image-multiple"></i><span
@@ -151,13 +152,13 @@
                 {{/if}}
                 <div class="row">
                     <div class="col-12">
-                        <div class="card">
+                        <div class="card" style="padding: 20px;">
                             <div class="card-body-cus">
-                                <h5 class="card-title m-b-0">Danh sách danh mục</h5>
+                                <h5 class="card-title m-b-0">Danh sách danh mục ({{categorys.length}})</h5>
                                 <button type="button" class="button-26" data-toggle="modal" data-target="#exampleModal"
                                     data-whatever="@mdo">Thêm danh mục sản phẩm</button>
                             </div>
-                            <table class="table">
+                            <table class="table" id="myTable" style="width: 100%;">
                                 <thead>
                                     <tr>
                                         <th scope="col">ID</th>
@@ -170,7 +171,7 @@
                                     <!-- Lấy danh sách danh mục --->
                                     {{#each categorys}}
                                     <tr>
-                                        <th scope="row" style="width: 10%;">UNI_DM_{{this.id_danh_muc}}</th>
+                                        <th scope="row" style="width: 10%;">{{this.id_danh_muc}}</th>
                                         <td style="width: 30%;">{{this.ten_danh_muc}}</td>
                                         <td style="width: 30%;">{{this.so_luong_san_pham}} sản phẩm</td>
                                         <td style="width: 30%;">
@@ -204,7 +205,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form id="image-upload-form" action="/admin/category/add" method="POST">
+                                <form id="image-upload-form" action="/admin/category/create" method="POST">
                                     <div class="form-group">
                                         <label for="image-upload" class="title-form">Tên danh mục</label>
                                         <input type="text" data-toggle="tooltip" title="" class="form-control"
@@ -311,7 +312,7 @@
         /****************************************
          *       Basic Table                   *
          ****************************************/
-        $('#zero_config').DataTable();
+        $('#myTable').DataTable();
     </script>
     <!-- Danh mục sản phẩm JS -->
     <script src="/dist/js/category-product.js"></script>

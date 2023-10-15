@@ -14,6 +14,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="/assets/extra-libs/multicheck/multicheck.css">
     <link href="/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css">
     <link href="/dist/css/style.min.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -81,15 +82,15 @@
                 </div>
             </nav>
         </header>
-          <aside class="left-sidebar" data-sidebarbg="skin5">
+        <aside class="left-sidebar" data-sidebarbg="skin5">
             <!-- Sidebar scroll-->
             <div class="scroll-sidebar">
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav" class="p-t-30">
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="/" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span
-                                    class="hide-menu">Tổng quan</span></a>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/"
+                                aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Tổng
+                                    quan</span></a>
                         </li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="/admin/banner" aria-expanded="false"><i class="mdi mdi-image-multiple"></i><span
@@ -155,12 +156,12 @@
                 {{/if}}
                 <div class="row">
                     <div class="col-12">
-                        <div class="card">
+                        <div class="card" style="padding: 20px;">
                             <div class="card-body-cus">
                                 <h5 class="card-title m-b-0">Danh sách sản phẩm</h5>
                                 <a href="/admin/product/add" class="button-26" style="color: white;">Thêm sản phẩm</a>
                             </div>
-                            <table class="table">
+                            <table class="table" id="myTable" style="width: 100%;">
                                 <thead>
                                     <tr>
                                         <th scope="col">ID</th>
@@ -179,7 +180,7 @@
                                 <tbody>
                                     {{#each products}}
                                     <tr>
-                                        <th scope="row" style="width: 5%;">UNI_SP_{{this.san_pham_id}}</th>
+                                        <th scope="row" style="width: 5%;">{{this.san_pham_id}}</th>
                                         <td style="width: 10%;"><img id="img-table-cus" src="{{this.hinh_anh}}"
                                                 alt="Hình ảnh"></td>
                                         </td>
@@ -229,15 +230,17 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
                                 <form action="/admin/product/delete" method="post">
-                                <input type="hidden" id="id_san_pham_delete_input" name="id_san_pham">
-                                <button href="#" type="submit" class="btn-delete-confirm" style="color: white;">Xoá</button>
+                                    <input type="hidden" id="id_san_pham_delete_input" name="id_san_pham">
+                                    <button href="#" type="submit" class="btn-delete-confirm"
+                                        style="color: white;">Xoá</button>
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            </footer> <footer class="footer text-center">
+            </footer>
+            <footer class="footer text-center">
                 Unisexx Sotre - Thời trang cho mọi người <a href="">Unisex.com</a>.
             </footer>
         </div>
@@ -263,7 +266,7 @@
         /****************************************
          *       Basic Table                   *
          ****************************************/
-        $('#zero_config').DataTable();
+        $('#myTable').DataTable();
     </script>
     <script src="/dist/js/product.js"></script>
 
