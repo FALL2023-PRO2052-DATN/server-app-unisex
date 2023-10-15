@@ -1,4 +1,5 @@
 const sizeModel = require('../models/size.admin.model.js');
+const productSizeModel = require('../models/product-size.admin.model.js');
 
 const pageSize = async (req, res) => {
     try {
@@ -15,10 +16,7 @@ const insertSize = async (req, res) => {
         const { nameSize, description } = req.body;
         const sizes = await sizeModel.getAll();
 
-        // Kiểm tra kích thước tồn tại hay chưa
-        const isSizeExist = sizes.some((size) => size.ten_kich_thuoc === nameSize);
-
-        if (isSizeExist) {
+        if (isSizeExist(sizes, nameSize)) {
             req.flash('warning', 'Thêm kích thước không thành công. Tên kích thước đã tồn tại');
         } else {
             const data = { nameSize, description };
@@ -29,7 +27,7 @@ const insertSize = async (req, res) => {
         res.redirect('/admin/size');
     } catch (error) {
         console.error(error);
-        res.status(500).send('Server error: ' + error);
+        res.status(500).send('Server error: ' + error.message);
     }
 }
 
@@ -42,16 +40,13 @@ const updateSize = async (req, res) => {
         // Lấy danh sách kích thước ngoại trừ kích thước hiện tại
         const sizesExceptCurrent = sizes.filter((size) => size.id !== parseInt(idSize, 10));
 
-        // Kiểm tra tên kích thước tồn tại trong danh sách kích thước sizesExceptCurrent
-        const isSizeExist = sizesExceptCurrent.some((size) => size.ten_kich_thuoc === nameSize);
-
-        if (isSizeExist) {
+        if (isSizeExist(sizesExceptCurrent, nameSize)) {
             req.flash('warning', 'Cập nhật kích thước không thành công. Tên kích thước đã tồn tại');
         } else {
-            const data = { 
-                idSize, 
-                nameSize, 
-                description 
+            const data = {
+                idSize,
+                nameSize,
+                description
             };
             await sizeModel.update(data);
             req.flash('success', 'Cập nhật kích thước thành công');
@@ -60,16 +55,14 @@ const updateSize = async (req, res) => {
         res.redirect('/admin/size');
     } catch (error) {
         console.error(error);
-        res.status(500).send('Server error: ' + error);
+        res.status(500).send('Server error: ' + error.message);
     }
 }
 
 const removeSize = async (req, res) => {
     try {
         const { idSize } = req.body;
-        
-        // Kiểm tra có sản phẩm nào thuộc kích thước hay không
-        const productsWithSize = await sizeModel.getProductsBySize(idSize);
+        const productsWithSize = await productSizeModel.getAllBySizeId(idSize);
 
         if (productsWithSize.length === 0) {
             await sizeModel.remove(idSize);
@@ -81,8 +74,13 @@ const removeSize = async (req, res) => {
         res.redirect('/admin/size');
     } catch (error) {
         console.error(error);
-        res.status(500).send('Server error: ' + error);
+        res.status(500).send('Server error: ' + error.message);
     }
+}
+
+// Kiểm tra kích thước tồn tại
+const isSizeExist = (sizes, nameSize) => {
+    return sizes.some((size) => size.ten_kich_thuoc === nameSize);
 }
 
 module.exports = {
