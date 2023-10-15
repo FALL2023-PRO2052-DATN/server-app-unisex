@@ -153,9 +153,9 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav" class="p-t-30">
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="/" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span
-                                    class="hide-menu">Tổng quan</span></a>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/"
+                                aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Tổng
+                                    quan</span></a>
                         </li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="/admin/banner" aria-expanded="false"><i class="mdi mdi-image-multiple"></i><span
@@ -242,7 +242,7 @@
                     <div class="col-12">
                         <div class="card" style="padding: 20px;">
                             <div class="card-body-cus">
-                                <h5 class="card-title m-b-0">Danh sách mã giảm giá</h5>
+                                <h5 class="card-title m-b-0">Danh sách mã giảm giá ({{discounts.length}})</h5>
                                 <button type="button" class="button-26" data-toggle="modal"
                                     data-target="#add-discount-modal" data-whatever="@mdo">Thêm mã giảm giá</button>
                             </div>
@@ -294,7 +294,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form id="image-upload-form" action="/admin/discount/add" method="POST">
+                                <form id="image-upload-form" action="/admin/discount/create" method="POST">
                                     <div class="form-group">
                                         <label for="image-upload" class="title-form">Mã code</label>
                                         <input type="text" data-toggle="tooltip" title="" class="form-control"

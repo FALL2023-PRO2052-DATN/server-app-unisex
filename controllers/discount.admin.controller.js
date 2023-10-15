@@ -6,7 +6,7 @@ const pageDiscount = async (req, res) => {
         res.render('discount', { discounts });
     } catch (error) {
         console.error(error);
-        res.status(500).send('Server error: ' + error);
+        res.status(500).send('Server error: ' + error.message);
     }
 }
 
@@ -15,21 +15,18 @@ const insertDiscount = async (req, res) => {
         const { codeDiscount, valueDiscount } = req.body;
         const discounts = await discountModel.getAll();
 
-        // Kiểm tra mã giảm giá có tồn tại hay không
-        const isCodeExist = discounts.some((discount) => discount.code === codeDiscount);
-
-        if (isCodeExist) {
+        if (isDiscountExist(discounts, codeDiscount)) {
             req.flash('warning', 'Thêm mã giảm giá không thành công. Mã code giảm giá đã tồn tại');
         } else {
             const data = { codeDiscount, valueDiscount };
             await discountModel.insert(data);
             req.flash('success', 'Thêm mã giảm giá thành công');
         }
+
         res.redirect('/admin/discount');
     } catch (error) {
         console.error(error);
-        req.flash('error', 'Thêm mã giảm giá không thành công');
-        res.redirect('/admin/discount');
+        res.status(500).send('Server error: ' + error.message);
     }
 }
 
@@ -41,10 +38,7 @@ const updateDiscount = async (req, res) => {
         // Lấy danh sách mã giảm giá trừ mã giảm giá hiện tại
         const discountsExceptCurrent = discounts.filter((discount) => discount.id !== parseInt(idDiscount, 10));
 
-        // Kiểm tra mã giảm giá khi cập nhật cón tồn tại trong discountsExceptCurrent
-        const isCodeExist = discountsExceptCurrent.some((discount) => discount.code === codeDiscount);
-
-        if (isCodeExist) {
+        if (isDiscountExist(discountsExceptCurrent, codeDiscount)) {
             req.flash('warning', 'Cập nhật mã giảm giá không thành công. Mã code giảm giá đã tồn tại');
         } else {
             const data = {
@@ -59,21 +53,25 @@ const updateDiscount = async (req, res) => {
         res.redirect('/admin/discount');
     } catch (error) {
         console.error(error);
-        req.flash('error', 'Cập nhật mã giảm giá không thành công');
-        res.redirect('/admin/discount');
-    } 
+        res.status(500).send('Server error: ' + error.message);
+    }
 }
 
 const removeDiscount = async (req, res) => {
     try {
         const { idDiscount } = req.body;
         await discountModel.remove(idDiscount);
-        req.flash('success', 'Xoá mã giảm giá thành công');
+        req.flash('success', 'Xoá mã giảm giá thành công.');
         res.redirect('/admin/discount');
     } catch (error) {
         console.error(error);
-        res.status(500).send('Server error: ' + error);
+        res.status(500).send('Server error: ' + error.message);
     }
+}
+
+// Kiểm tra mã giảm giá tồn tại
+const isDiscountExist = (discounts, codeDiscount) => {
+    return discounts.some((discount) => discount.code === codeDiscount);
 }
 
 module.exports = {
