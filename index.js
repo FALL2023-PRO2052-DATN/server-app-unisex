@@ -17,16 +17,16 @@ const app = express();
 
 // express-session - flash message
 app.use(session({
-  secret: 'unisex-app',
-  saveUninitialized: true,
-  resave: true
+    secret: 'unisex-app',
+    saveUninitialized: true,
+    resave: true
 }));
 app.use(flash());
 app.use(function (req, res, next) {
-  res.locals.success = req.flash('success'),
-  res.locals.error = req.flash('error'),
-  res.locals.warning = req.flash('warning')
-  next();
+        res.locals.success = req.flash('success'),
+        res.locals.error = req.flash('error'),
+        res.locals.warning = req.flash('warning')
+    next();
 });
 
 // body-parser
@@ -43,30 +43,30 @@ app.use(express.static(path.join(__dirname, '/public')));
 
 // Hàm kiểm tra kích thước
 hbs.handlebars.registerHelper('checkSize', function (kich_thuoc, options) {
-  if (kich_thuoc === null || kich_thuoc === '') {
-    return 'Không có kích thước';
-  } else {
-    return kich_thuoc;
-  }
+    if (kich_thuoc === null || kich_thuoc === '') {
+        return 'Không có kích thước';
+    } else {
+        return kich_thuoc;
+    }
 });
 
 // Chuyển định dạng số tiền
 hbs.handlebars.registerHelper('formatCurrency', function (value) {
-  if (typeof value !== 'number') {
-    return value;
-  }
+    if (typeof value !== 'number') {
+        return value;
+    }
 
-  const formattedValue = new Intl.NumberFormat('vi-VN', {
-    style: 'currency',
-    currency: 'VND',
-  }).format(value);
+    const formattedValue = new Intl.NumberFormat('vi-VN', {
+        style: 'currency',
+        currency: 'VND',
+    }).format(value);
 
-  return formattedValue;
+    return formattedValue;
 });
 
 // routers
 app.get('/', (req, res) => {
-  res.render('index');
+    res.render('index');
 });
 app.use('/admin', categoryRouter);
 app.use('/admin', discountRouter);
@@ -77,5 +77,5 @@ app.use('/admin', productSizeRouter)
 
 const port = 3000;
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+    console.log(`Example app listening on port ${port}`);
 });
