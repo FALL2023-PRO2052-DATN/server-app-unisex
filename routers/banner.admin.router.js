@@ -1,5 +1,4 @@
-const express = require('express');
-const router = express.Router();
+const router = require('express').Router();
 const bannerController = require('../controllers/banner.admin.controller.js');
 
 router.get('/banner', bannerController.pageBanner);
