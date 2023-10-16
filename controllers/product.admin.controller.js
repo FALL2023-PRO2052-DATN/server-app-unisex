@@ -27,6 +27,14 @@ const pageAddProduct = async (req, res) => {
     }
 }
 
+const pageUpdateProduct = async (req, res) => {
+    const { id } = req.params;
+    const productsSize = await productSizeModel.getAllByProductId(id);
+    const products = await productModel.getAllById(id);
+    const categories = await categoryModel.getAll();
+    res.render('update-product', { product: products[0], productsSize, categories });
+}
+
 const insertProduct = (req, res) => {
     upload.single('image')(req, res, (err) => {
         if (err) {
@@ -56,7 +64,7 @@ const insertProduct = (req, res) => {
                     danh_muc_id,
                     sizes
                 } = req.body;
-    
+
                 const data = {
                     ten_san_pham,
                     imageUrl,
@@ -67,16 +75,16 @@ const insertProduct = (req, res) => {
                     mo_ta_chi_tiet,
                     danh_muc_id
                 }
-    
+
                 const resultInsertProduct = await productModel.insert(data);
                 const id_san_pham = resultInsertProduct.insertId;
                 sizes = sizes || [0];
                 // Thêm từng size vào cho sản phẩm vừa thêm
                 for (const size of sizes) {
-                    const data = {size, id_san_pham, so_luong};
+                    const data = { size, id_san_pham, so_luong };
                     await productSizeModel.insert(data);
                 }
-    
+
                 req.flash('success', 'Thêm sản phẩm thành công');
                 res.redirect('/admin/product/add');
             } catch (error) {
@@ -104,6 +112,7 @@ const removeProduct = async (req, res) => {
 module.exports = {
     pageProduct,
     pageAddProduct,
+    pageUpdateProduct,
     insertProduct,
     removeProduct
 }

@@ -16,6 +16,22 @@ const getAll = async () => {
                     WHERE KTSP.hienThi = 1`;
     return await database.queryDatabase(query, []);
 }
+const getAllByProductId = async (idProduct) => {
+    const query = `SELECT
+                        KTSP.id,
+                        SP.anh_dai_dien,
+                        SP.ten_san_pham,
+                        KT.ten_kich_thuoc,
+                        KTSP.so_luong_ton_kho
+                    FROM
+                        shop_clothes.SanPham SP
+                    INNER JOIN
+                        shop_clothes.KichThuoc_SanPham KTSP ON SP.id = KTSP.san_pham_id
+                    INNER JOIN
+                        shop_clothes.KichThuoc KT ON KTSP.kich_thuoc_id = KT.id
+                    WHERE KTSP.hienThi = 1 AND SP.id = ?`;
+    return await database.queryDatabase(query, [idProduct]);
+}
 
 const insert = async (data) => {
     const values = [
@@ -57,5 +73,6 @@ module.exports = {
     updateQuatity,
     removeById,
     removeByIdProduct,
-    getAllBySizeId
+    getAllBySizeId,
+    getAllByProductId
 }
