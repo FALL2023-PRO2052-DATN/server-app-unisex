@@ -32,7 +32,8 @@ const pageUpdateProduct = async (req, res) => {
     const productsSize = await productSizeModel.getAllByProductId(id);
     const products = await productModel.getAllById(id);
     const categories = await categoryModel.getAll();
-    res.render('update-product', { product: products[0], productsSize, categories });
+    const sizes = await sizeModel.getAll();
+    res.render('update-product', { product: products[0], productsSize, categories, sizes });
 }
 
 const insertProduct = (req, res) => {
@@ -95,6 +96,45 @@ const insertProduct = (req, res) => {
 
     });
 }
+const updateProduct = async (req, res) => {
+    var newImage = null;
+    upload.single('image')(req, res, async (err) => {
+        if (err) {
+            console.error(err);
+            return;
+        }
+
+        if (req.file) {
+            const imageBuffer = req.file.buffer;
+            newImage = await cloudinary.uploadImageToCloudinary1(imageBuffer);
+        }
+        
+        try {
+            const { idProduct, name, price, description, outstanding, selling, idCategory, discount, imgUrl } = req.body;
+            const data = {
+                name,
+                price,
+                discount,
+                outstanding,
+                selling,
+                description,
+                idCategory,
+                imgUrl,
+                idProduct
+            }
+
+            if(newImage) {
+                data.imgUrl = newImage;
+            }
+
+            await productModel.update(data);
+            res.redirect('/admin/product/update/' + idProduct)
+        } catch (error) {
+            console.error(error);
+            res.status(500).send('Server error: ' + error);
+        }
+    });
+}
 
 const removeProduct = async (req, res) => {
     try {
@@ -114,5 +154,6 @@ module.exports = {
     pageAddProduct,
     pageUpdateProduct,
     insertProduct,
+    updateProduct,
     removeProduct
 }

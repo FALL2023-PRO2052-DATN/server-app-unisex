@@ -19,6 +19,19 @@ const uploadImageToCloudinary = (imageBuffer, callback) => {
     }).end(imageBuffer);
 };
 
+const uploadImageToCloudinary1 = (imageBuffer) => {
+    return new Promise((resolve, reject) => {
+        uploadImageToCloudinary(imageBuffer, (err, imageUrl) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(imageUrl);
+            }
+        });
+    });
+};
+
 module.exports = {
-    uploadImageToCloudinary
+    uploadImageToCloudinary,
+    uploadImageToCloudinary1
 };

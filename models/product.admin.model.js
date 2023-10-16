@@ -58,8 +58,20 @@ const insert = async (data) => {
     return await database.queryDatabase(query, values);
 }
 
-const update = async () => {
-
+const update = async (data) => {
+    const values = [
+        data.name,
+        data.price,
+        data.discount,
+        data.outstanding,
+        data.selling,
+        data.description,
+        data.idCategory,
+        data.imgUrl,
+        data.idProduct
+    ];
+    const query = `UPDATE SanPham SET ten_san_pham = ?, gia_ban = ?, giam_gia = ?, noi_bat = ?, moi_nhat = ?, mo_ta_chi_tiet = ?, danh_muc_id =?, anh_dai_dien =? WHERE id = ?`;
+    return await database.queryDatabase(query, values);
 }
 
 const remove = async (idProduct) => {

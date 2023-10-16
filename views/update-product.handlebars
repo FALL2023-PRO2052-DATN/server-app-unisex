@@ -10,14 +10,12 @@
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/logo-icon.svg">
-    <title>Cập nhật sản phẩm</title>
+    <title>Danh sách mã sản phẩm</title>
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="/assets/extra-libs/multicheck/multicheck.css">
     <link href="/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css">
     <link href="/dist/css/style.min.css" rel="stylesheet">
-    <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/css/multi-select-tag.css">
-    <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/js/multi-select-tag.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -175,17 +173,20 @@
                             <div class="card-body-cus" style="margin: 20px;">
                                 <h5 class="card-title m-b-0">Thông tin chung</h5>
                             </div>
-                            <form style="margin-left: 20px; margin-right: 20px;">
+                            <form style="margin-left: 20px; margin-right: 20px;" action="/admin/product/update"
+                                method="POST"  enctype="multipart/form-data">
                                 <div class="row">
                                     <div class="col">
-                                        <input type="hidden" value="{{ product.san_pham_id }}">
+                                        <input type="hidden" value="{{ product.san_pham_id }}" name="idProduct">
                                         <label for="formGroupExampleInput" class="title-form">Tên sản phẩm</label>
                                         <input type="text" class="form-control" id="formGroupExampleInput"
-                                            placeholder="Ví dụ: Áo thun trắng" value="{{product.ten_san_pham}}">
+                                            placeholder="Ví dụ: Áo thun trắng" value="{{product.ten_san_pham}}"
+                                            name="name">
                                         <div class="mb-3">
                                             <label for="formFile" class="title-form">
                                                 Chọn ảnh đại diện cho sản phẩm</label>
-                                            <input class="form-control" type="file" id="formFile" accept="image/*">
+                                            <input class="form-control" type="file" id="formFile" name="image">
+                                            <input type="hidden" value="{{product.hinh_anh}}" name="imgUrl">
                                             <div
                                                 style="align-items: center; display: flex; text-align: center;flex-direction: column;                      ">
                                                 <img src="{{product.hinh_anh}}" class="img-thumbnail"
@@ -194,38 +195,39 @@
                                             </div>
                                         </div>
                                         <label for="formGroupExampleInput" class="title-form">Giá sản phẩm</label>
-                                        <input type="text" class="form-control" id="priceInput"
+                                        <input type="text" class="form-control" id="priceInput" name="price"
                                             placeholder="Ví dụ: 200.000đ" value="{{product.gia_ban}}">
                                         <label for="formGroupExampleInput" class="title-form">Mô tả sản phẩm</label>
-                                        <textarea class="form-control"
-                                            aria-label="With textarea">{{product.mo_ta_chi_tiet}}</textarea>
+                                        <textarea class="form-control" aria-label="With textarea"
+                                            name="description">{{product.mo_ta_chi_tiet}}</textarea>
                                         <label for="formGroupExampleInput" class="title-form">Thiết lập liên
                                             quan</label>
                                         <div class="form-check" style="margin-left: 20px;">
-                                            <input class="form-check-input" type="checkbox" value=""
+                                            <input class="form-check-input" type="checkbox" value="1" name="outstanding"
                                                 id="flexCheckDefault" {{#equal product.noi_bat 1}} checked {{/equal}}>
                                             <label class="title-form-check-box" for="flexCheckDefault">
                                                 Sản phẩm nổi bật
                                             </label>
                                         </div>
                                         <div class="form-check" style="margin-left: 20px;">
-                                            <input class="form-check-input" type="checkbox" value=""
+                                            <input class="form-check-input" type="checkbox" value="1" name="selling"
                                                 id="flexCheckDefault1" {{#equal product.moi_nhat 1}} checked {{/equal}}>
                                             <label class="title-form-check-box" for="flexCheckDefault1">
                                                 Sản phẩm mới về
                                             </label>
                                         </div>
                                         <label for="formGroupExampleInput" class="title-form">Danh mục</label>
-                                        <select class="custom-select" name="danh_muc_id">
+                                        <select class="custom-select" name="idCategory">
                                             {{#each categories}}
-                                            <option value="{{this.id_danh_muc}}" {{#equal this.id_danh_muc ../product.danh_muc_id}} selected {{/equal}}>
+                                            <option value="{{this.id_danh_muc}}" {{#equal this.id_danh_muc
+                                                ../product.danh_muc_id}} selected {{/equal}}>
                                                 {{this.ten_danh_muc}}
                                             </option>
                                             {{/each}}
                                         </select>
                                         <label for="formGroupExampleInput" class="title-form">Giảm giá</label>
                                         <input type="text" class="form-control" id="formGroupExampleInput"
-                                            placeholder="Ví dụ: 20(%)" value="{{product.giam_gia}}">
+                                            name="discount" placeholder="Ví dụ: 20(%)" value="{{product.giam_gia}}">
                                     </div>
 
                                 </div>
@@ -240,7 +242,7 @@
                                 <button type="button" class="button-26" data-toggle="modal"
                                     data-target="#modal-add-size" data-whatever="@mdo">Thêm kích thước</button>
                             </div>
-                            <table class="table">
+                            <table class="table" id="myTable" style="width: 100%;">
                                 <thead>
                                     <tr>
                                         <th scope="col">ID</th>
@@ -264,7 +266,7 @@
                                                 Cập nhật
                                             </button>
                                             <button type="button" class="btn-delete" data-toggle="modal"
-                                                data-target="#delete-size-modal">
+                                                data-target="#delete-modal-size" data-id="{{this.id}}">
                                                 Xoá
                                             </button>
                                         </td>
@@ -275,12 +277,12 @@
                         </div>
                     </div>
                 </div>
-                <!--Modal xoá mã giảm giá-->
+                <!--Modal thêm kích thước-->
                 <div class="modal" tabindex="-1" role="dialog" id="modal-add-size">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">Hệ thống</h5>
+                                <h5 class="modal-title">Thêm kích thước</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -289,14 +291,15 @@
                                 <form action="">
                                     <label for="formGroupExampleInput" class="title-form">Kích thước</label>
                                     <select name="countries" id="sizes" multiple>
-                                        <option value="0" selected>Size Tiêu chuẩn</option>
-                                        <option value="1">Size M</option>
-                                        <option value="2">Size L</option>
-                                        <option value="3">Size XL</option>
+                                        {{#each sizes}}
+                                        <option value="{{this.id}}" {{#equal this.id 0}}selected{{/equal}}>
+                                            Size {{this.ten_kich_thuoc}}
+                                        </option>
+                                        {{/each}}
                                     </select>
                                     <input type="text" style="margin-top: 10px;" class="form-control" id="priceInput"
                                         placeholder="Số lượng sản phẩm ">
-                                    <div class="modal-footer">
+                                    <div class="modal-footer" style="margin-top: 20px;">
                                         <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">Huỷ</button>
                                         <a href="#" type="button" class="button-26" style="color: white;">Thêm</a>
@@ -307,7 +310,7 @@
                     </div>
                 </div>
 
-                <!--Modal xoá mã giảm giá-->
+                <!--Modal cập nhật-->
                 <div class="modal" tabindex="-1" role="dialog" id="modal-update">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -326,11 +329,35 @@
                                     </select>
                                     <input type="text" style="margin-top: 10px;" class="form-control" id="priceInput"
                                         placeholder="Số lượng sản phẩm ">
-                                    <div class="modal-footer">
+                                    <div class="modal-footer" style="margin-top: 20px;">
                                         <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">Huỷ</button>
                                         <a href="#" type="button" class="button-26" style="color: white;">Lưu</a>
                                     </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Modal xoá danh mục-->
+                <div class="modal" tabindex="-1" role="dialog" id="delete-modal-size">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Hệ thống</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Bạn có muốn xoá kích thước sản phẩm</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
+                                <form action="" method="POST">
+                                    <input type="hidden" name="idProductSize" id="idProductSizeInput">
+                                    <button href="#" type="submit" class="btn-delete-confirm"
+                                        style="color: white;">Xoá</button>
                                 </form>
                             </div>
                         </div>
@@ -392,7 +419,7 @@
         /****************************************
          *       Basic Table                   *
          ****************************************/
-        $('#zero_config').DataTable();
+        $('#myTable').DataTable();
     </script>
     <script src="/dist/js/update-product.js"></script>
 </body>
