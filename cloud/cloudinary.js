@@ -7,8 +7,8 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-// Tải ảnh lên Cloudinary
-const uploadImageToCloudinary = (imageBuffer, callback) => {
+// Upload an image to Cloudinary
+const uploadImage = (imageBuffer, callback) => {
     cloudinary.uploader.upload_stream({ folder: 'cloud-images/', resource_type: 'image' }, (error, result) => {
         if (error) {
             console.error(error);
@@ -19,9 +19,10 @@ const uploadImageToCloudinary = (imageBuffer, callback) => {
     }).end(imageBuffer);
 };
 
-const uploadImageToCloudinary1 = (imageBuffer) => {
+// Promisify the image upload function
+const uploadImageToCloudinary = (imageBuffer) => {
     return new Promise((resolve, reject) => {
-        uploadImageToCloudinary(imageBuffer, (err, imageUrl) => {
+        uploadImage(imageBuffer, (err, imageUrl) => {
             if (err) {
                 reject(err);
             } else {
@@ -33,5 +34,4 @@ const uploadImageToCloudinary1 = (imageBuffer) => {
 
 module.exports = {
     uploadImageToCloudinary,
-    uploadImageToCloudinary1
 };

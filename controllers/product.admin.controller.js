@@ -38,7 +38,7 @@ const pageUpdateProduct = async (req, res) => {
 }
 
 const insertProduct = (req, res) => {
-    upload.single('image')(req, res, (err) => {
+    upload.single('image')(req, res, async (err) => {
         if (err) {
             return console.error(err);
 
@@ -50,50 +50,45 @@ const insertProduct = (req, res) => {
 
         const imageBuffer = req.file.buffer;
         // Tải hình ảnh lên cloudinary
-        cloudinary.uploadImageToCloudinary(imageBuffer, async (err, imageUrl) => {
-            if (err) {
-                return res.status(500).send('Tải hình banner không thành công' + err);
+        const imageUrl = await cloudinary.uploadImageToCloudinary(imageBuffer);
+        try {
+            var {
+                ten_san_pham,
+                gia_ban,
+                giam_gia,
+                mo_ta_chi_tiet,
+                noi_bat, moi_nhat,
+                so_luong,
+                danh_muc_id,
+                sizes
+            } = req.body;
+
+            const data = {
+                ten_san_pham,
+                imageUrl,
+                gia_ban,
+                giam_gia,
+                noi_bat,
+                moi_nhat,
+                mo_ta_chi_tiet,
+                danh_muc_id
             }
 
-            try {
-                var {
-                    ten_san_pham,
-                    gia_ban,
-                    giam_gia,
-                    mo_ta_chi_tiet,
-                    noi_bat, moi_nhat,
-                    so_luong,
-                    danh_muc_id,
-                    sizes
-                } = req.body;
-
-                const data = {
-                    ten_san_pham,
-                    imageUrl,
-                    gia_ban,
-                    giam_gia,
-                    noi_bat,
-                    moi_nhat,
-                    mo_ta_chi_tiet,
-                    danh_muc_id
-                }
-
-                const resultInsertProduct = await productModel.insert(data);
-                const id_san_pham = resultInsertProduct.insertId;
-                sizes = sizes || [0];
-                // Thêm từng size vào cho sản phẩm vừa thêm
-                for (const size of sizes) {
-                    const data = { size, id_san_pham, so_luong };
-                    await productSizeModel.insert(data);
-                }
-
-                req.flash('success', 'Thêm sản phẩm thành công');
-                res.redirect('/admin/product/add');
-            } catch (error) {
-                console.error(error);
-                res.status(500).send('Server error: ' + error);
+            const resultInsertProduct = await productModel.insert(data);
+            const id_san_pham = resultInsertProduct.insertId;
+            sizes = sizes || [0];
+            // Thêm từng size vào cho sản phẩm vừa thêm
+            for (const size of sizes) {
+                const data = { size, id_san_pham, so_luong };
+                await productSizeModel.insert(data);
             }
-        })
+
+            req.flash('success', 'Thêm sản phẩm thành công');
+            res.redirect('/admin/product/add');
+        } catch (error) {
+            console.error(error);
+            res.status(500).send('Server error: ' + error);
+        }
 
     });
 }
@@ -107,7 +102,7 @@ const updateProduct = async (req, res) => {
 
         if (req.file) {
             const imageBuffer = req.file.buffer;
-            newImage = await cloudinary.uploadImageToCloudinary1(imageBuffer);
+            newImage = await cloudinary.uploadImageToCloudinary(imageBuffer);
         }
 
         try {

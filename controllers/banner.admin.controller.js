@@ -17,7 +17,7 @@ const pageBanner = async (req, res) => {
 }
 
 const insertBanner = async (req, res) => {
-    upload.single('image')(req, res, (err) => {
+    upload.single('image')(req, res, async (err) => {
         if (err) {
             console.error(err);
             return;
@@ -29,21 +29,16 @@ const insertBanner = async (req, res) => {
         }
 
         const imageBuffer = req.file.buffer;
-        // Tải ảnh lên Cloudinary
-        cloudinary.uploadImageToCloudinary(imageBuffer, async (err, imageUrl) => {
-            if (err) {
-                return res.status(500).send('Tải hình lên cloudinary lỗi' + err);
-            }
 
-            try {
-                await bannerModel.insert(imageUrl);
-                req.flash('success', 'Thêm banner thành công.');
-                res.redirect('/admin/banner');
-            } catch (error) {
-                console.error(error);
-                res.status(500).send('Server error: ' + error.message);
-            }
-        });
+        try {
+            const imageUrl = await cloudinary.uploadImageToCloudinary(imageBuffer);
+            await bannerModel.insert(imageUrl);
+            req.flash('success', 'Thêm banner thành công.');
+            res.redirect('/admin/banner');
+        } catch (error) {
+            console.error(error);
+            res.status(500).send('Server error: ' + error.message);
+        }
     });
 }
 
