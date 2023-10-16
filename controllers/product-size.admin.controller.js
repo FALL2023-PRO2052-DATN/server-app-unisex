@@ -25,6 +25,7 @@ const updateQuantityProductSize = async (req, res) => {
 const removeProductSize = async (req, res) => {
     try {
         const { id } = req.body;
+        console.log(id);
         await productSizeModel.removeById(id);
         req.flash('success', 'Xoá kích thước sản phẩm thành công.');
         res.redirect('/admin/product-size');

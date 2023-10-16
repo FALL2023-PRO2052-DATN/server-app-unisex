@@ -48,4 +48,4 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-new MultiSelectTag('countries');
+new MultiSelectTag('sizes');

@@ -3,7 +3,6 @@ const productModel = require('../models/product.admin.model.js');
 const sizeModel = require('../models/size.admin.model.js');
 const categoryModel = require('../models/category.admin.model.js');
 const productSizeModel = require('../models/product-size.admin.model.js');
-const database = require('../database/database.js');
 const cloudinary = require('../cloud/cloudinary.js');
 
 const storage = multer.memoryStorage();
@@ -47,7 +46,7 @@ const insertProduct = (req, res) => {
             }
 
             try {
-                const {
+                var {
                     ten_san_pham,
                     gia_ban,
                     giam_gia,
@@ -55,7 +54,7 @@ const insertProduct = (req, res) => {
                     noi_bat, moi_nhat,
                     so_luong,
                     danh_muc_id,
-                    countries
+                    sizes
                 } = req.body;
     
                 const data = {
@@ -71,7 +70,7 @@ const insertProduct = (req, res) => {
     
                 const resultInsertProduct = await productModel.insert(data);
                 const id_san_pham = resultInsertProduct.insertId;
-                const sizes = countries || [0];
+                sizes = sizes || [0];
                 // Thêm từng size vào cho sản phẩm vừa thêm
                 for (const size of sizes) {
                     const data = {size, id_san_pham, so_luong};
