@@ -10,12 +10,15 @@
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/logo-icon.svg">
-    <title>Danh sách mã sản phẩm</title>
+    <title>Cập nhật sản phẩm</title>
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="/assets/extra-libs/multicheck/multicheck.css">
     <link href="/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css">
     <link href="/dist/css/style.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/css/multi-select-tag.css">
+    <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/js/multi-select-tag.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -174,7 +177,7 @@
                                 <h5 class="card-title m-b-0">Thông tin chung</h5>
                             </div>
                             <form style="margin-left: 20px; margin-right: 20px;" action="/admin/product/update"
-                                method="POST"  enctype="multipart/form-data">
+                                method="POST" enctype="multipart/form-data">
                                 <div class="row">
                                     <div class="col">
                                         <input type="hidden" value="{{ product.san_pham_id }}" name="idProduct">
@@ -262,7 +265,11 @@
                                         <td style="width: 30%;">{{this.so_luong_ton_kho}}</td>
                                         <td style="width: 30%;">
                                             <button type="button" class="btn-update" data-toggle="modal"
-                                                data-target="#modal-update">
+                                                data-target="#modal-update" data-json='{
+                                                    "id_product_size": "{{this.id}}",
+                                                    "so_luong": "{{this.so_luong_ton_kho}}",
+                                                    "kich_thuoc_id": "{{this.kich_thuoc_id}}"
+                                                }'>
                                                 Cập nhật
                                             </button>
                                             <button type="button" class="btn-delete" data-toggle="modal"
@@ -288,9 +295,10 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="">
+                                <form action="/admin/product/add-size" method="POST">
+                                    <input type="hidden" name="id_san_pham" id="" value="{{product.san_pham_id}}">
                                     <label for="formGroupExampleInput" class="title-form">Kích thước</label>
-                                    <select name="countries" id="sizes" multiple>
+                                    <select class="custom-select" name="size" id="sizeUpdate">
                                         {{#each sizes}}
                                         <option value="{{this.id}}" {{#equal this.id 0}}selected{{/equal}}>
                                             Size {{this.ten_kich_thuoc}}
@@ -298,11 +306,12 @@
                                         {{/each}}
                                     </select>
                                     <input type="text" style="margin-top: 10px;" class="form-control" id="priceInput"
-                                        placeholder="Số lượng sản phẩm ">
+                                        placeholder="Số lượng sản phẩm " name="so_luong">
                                     <div class="modal-footer" style="margin-top: 20px;">
                                         <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">Huỷ</button>
-                                        <a href="#" type="button" class="button-26" style="color: white;">Thêm</a>
+                                        <button href="#" type="submit" class="button-26"
+                                            style="color: white;">Thêm</button>
                                     </div>
                                 </form>
                             </div>
@@ -321,18 +330,26 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="">
+                                <form action="/admin/product/update-size" method="POST">
+                                    <label for="formGroupExampleInput" class="title-form">Id phiên bản</label>
+                                    <input type="text" style="margin-top: 10px;" class="form-control"
+                                        id="idProdctSizeUpdateInput" placeholder="Số lượng sản phẩm " name="id_ktsp">
+                                    <input type="hidden" name="id_san_pham" id="" value="{{product.san_pham_id}}">
                                     <label for="formGroupExampleInput" class="title-form">Kích thước</label>
-                                    <select class="custom-select">
-                                        <option value="1" selected>Size M</option>
-                                        <option value="2">Size L</option>
+                                    <select class="custom-select" name="size">
+                                        {{#each sizes}}
+                                        <option value="{{this.id}}">
+                                            Size {{this.ten_kich_thuoc}}
+                                        </option>
+                                        {{/each}}
                                     </select>
-                                    <input type="text" style="margin-top: 10px;" class="form-control" id="priceInput"
-                                        placeholder="Số lượng sản phẩm ">
+                                    <input type="text" style="margin-top: 10px;" class="form-control"
+                                        id="quantityInputUpdate" placeholder="Số lượng sản phẩm " name="so_luong">
                                     <div class="modal-footer" style="margin-top: 20px;">
                                         <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">Huỷ</button>
-                                        <a href="#" type="button" class="button-26" style="color: white;">Lưu</a>
+                                        <button href="#" type="submit" class="button-26"
+                                            style="color: white;">Lưu</button>
                                     </div>
                                 </form>
                             </div>
@@ -354,7 +371,8 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
-                                <form action="" method="POST">
+                                <form action="/admin/product/delete-size" method="POST">
+                                    <input type="hidden" name="idProduct" id="" value="{{product.san_pham_id}}">
                                     <input type="hidden" name="idProductSize" id="idProductSizeInput">
                                     <button href="#" type="submit" class="btn-delete-confirm"
                                         style="color: white;">Xoá</button>
@@ -422,6 +440,9 @@
         $('#myTable').DataTable();
     </script>
     <script src="/dist/js/update-product.js"></script>
+    <script>
+        new MultiSelectTag('countries');
+    </script>
 </body>
 
 </html>

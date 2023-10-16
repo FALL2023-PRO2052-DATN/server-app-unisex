@@ -21,6 +21,7 @@ const getAllByProductId = async (idProduct) => {
                         KTSP.id,
                         SP.anh_dai_dien,
                         SP.ten_san_pham,
+                        KTSP.kich_thuoc_id,
                         KT.ten_kich_thuoc,
                         KTSP.so_luong_ton_kho
                     FROM
@@ -66,10 +67,20 @@ const getAllBySizeId = async (id) => {
     const query = `SELECT * FROM KichThuoc_SanPham WHERE kich_thuoc_id =? AND hienThi = 1`
     return await database.queryDatabase(query, [id]);
 }
-
+const update = async (data) => {
+    const values = [
+        data.size,
+        data.id_san_pham,
+        data.so_luong,
+        data.id_ktsp
+    ];
+    const query = `UPDATE KichThuoc_SanPham SET kich_thuoc_id =?, san_pham_id=?, so_luong_ton_kho=? WHERE id=?`;
+    return await database.queryDatabase(query, values);
+}
 module.exports = {
     getAll,
     insert,
+    update,
     updateQuatity,
     removeById,
     removeByIdProduct,

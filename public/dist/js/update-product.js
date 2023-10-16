@@ -1,5 +1,5 @@
-  // Hiển thị image khi chọn ảnh trong thư mục
-  document.addEventListener("DOMContentLoaded", function () {
+// Hiển thị image khi chọn ảnh trong thư mục
+document.addEventListener("DOMContentLoaded", function () {
     const fileInput = document.getElementById("formFile");
     const previewImage = document.getElementById("previewImage");
 
@@ -32,14 +32,13 @@ table.addEventListener('click', function (event) {
         const jsonData = event.target.getAttribute('data-json');
         const jsonObject = JSON.parse(jsonData);
 
-        const id_giam_gia_update_input = document.querySelector(`#id_giam_gia_update_input`);
-        const code_update_input = document.querySelector(`#code_update_input`);
-        const gia_tri_update_input = document.querySelector(`#gia_tri_update_input`);
+        const quantityInputUpdate = document.querySelector(`#quantityInputUpdate`);
+        const idProdctSizeUpdateInput = document.querySelector(`#idProdctSizeUpdateInput`);
 
-        id_giam_gia_update_input.value = jsonObject.id;
-        code_update_input.value = jsonObject.code;
-        gia_tri_update_input.value = jsonObject.gia_tri;
+        quantityInputUpdate.value = jsonObject.so_luong;
+        idProdctSizeUpdateInput.value = jsonObject.id_product_size;
+
+        $( `option[value="${jsonObject.kich_thuoc_id}"]` ).prop( 'selected', 'selected' );
     }
 });
-new MultiSelectTag('sizes');
 

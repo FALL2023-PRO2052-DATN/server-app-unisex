@@ -33,6 +33,7 @@ const pageUpdateProduct = async (req, res) => {
     const products = await productModel.getAllById(id);
     const categories = await categoryModel.getAll();
     const sizes = await sizeModel.getAll();
+    console.log(productsSize);
     res.render('update-product', { product: products[0], productsSize, categories, sizes });
 }
 
@@ -108,7 +109,7 @@ const updateProduct = async (req, res) => {
             const imageBuffer = req.file.buffer;
             newImage = await cloudinary.uploadImageToCloudinary1(imageBuffer);
         }
-        
+
         try {
             const { idProduct, name, price, description, outstanding, selling, idCategory, discount, imgUrl } = req.body;
             const data = {
@@ -123,12 +124,12 @@ const updateProduct = async (req, res) => {
                 idProduct
             }
 
-            if(newImage) {
+            if (newImage) {
                 data.imgUrl = newImage;
             }
 
             await productModel.update(data);
-            res.redirect('/admin/product/update/' + idProduct)
+            res.redirect('/admin/product/update/' + idProduct);
         } catch (error) {
             console.error(error);
             res.status(500).send('Server error: ' + error);
@@ -149,11 +150,54 @@ const removeProduct = async (req, res) => {
     }
 }
 
+const insertProductSize = async (req, res) => {
+    try {
+        const { id_san_pham, size, so_luong } = req.body;
+        const data = { size, id_san_pham, so_luong };
+        await productSizeModel.insert(data);
+        res.redirect('/admin/product/update/' + id_san_pham);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server error: ' + error.message);
+    }
+}
+
+const updateProductSize = async (req, res) => {
+    try {
+        const { id_ktsp ,id_san_pham, size, so_luong } = req.body;
+        const data = {
+            size,
+            id_san_pham,
+            so_luong,
+            id_ktsp
+        };
+        await productSizeModel.update(data)
+        res.redirect('/admin/product/update/' + id_san_pham);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server error: ' + error.message);
+    }
+}
+
+const removeProductSize = async (req, res) => {
+    try {
+        const { idProduct, idProductSize } = req.body;
+        await productSizeModel.removeById(idProductSize);
+        res.redirect('/admin/product/update/' + idProduct);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server error: ' + error.message);
+    }
+}
+
 module.exports = {
     pageProduct,
     pageAddProduct,
     pageUpdateProduct,
     insertProduct,
     updateProduct,
-    removeProduct
+    removeProductSize,
+    removeProduct,
+    insertProductSize,
+    updateProductSize
 }
