@@ -25,18 +25,12 @@
 </head>
 
 <body>
-    <!-- ============================================================== -->
-    <!-- Preloader - style you can find in spinners.css -->
-    <!-- ============================================================== -->
     <div class="preloader">
         <div class="lds-ripple">
             <div class="lds-pos"></div>
             <div class="lds-pos"></div>
         </div>
     </div>
-    <!-- ============================================================== -->
-    <!-- Main wrapper - style you can find in pages.scss -->
-    <!-- ============================================================== -->
     <div id="main-wrapper">
         <header class="topbar" data-navbarbg="skin5">
             <nav class="navbar top-navbar navbar-expand-md navbar-dark">
@@ -159,7 +153,7 @@
                         <div class="card" style="padding: 20px;">
                             <div class="card-body-cus">
                                 <h5 class="card-title m-b-0">Danh sách sản phẩm</h5>
-                                <a href="/admin/product/add" class="button-26" style="color: white;">Thêm sản phẩm</a>
+                                <a href="/admin/product/create" class="button-26" style="color: white;">Thêm sản phẩm</a>
                             </div>
                             <table class="table" id="myTable" style="width: 100%;">
                                 <thead>
@@ -230,7 +224,7 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
                                 <form action="/admin/product/delete" method="post">
-                                    <input type="hidden" id="id_san_pham_delete_input" name="id_san_pham">
+                                    <input type="hidden" id="id_san_pham_delete_input" name="idProduct">
                                     <button href="#" type="submit" class="btn-delete-confirm"
                                         style="color: white;">Xoá</button>
                                 </form>

@@ -170,6 +170,22 @@
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
+                <!-- Thông báo khi thao tác với tác vụ CRUD --->
+                {{#if success}}
+                <div class="alert alert-success" role="alert">
+                    {{success}}
+                </div>
+                {{/if}}
+                {{#if error}}
+                <div class="alert alert-danger" role="alert">
+                    {{error}}
+                </div>
+                {{/if}}
+                {{#if warning}}
+                <div class="alert alert-warning" role="alert">
+                    {{warning}}
+                </div>
+                {{/if}}
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
@@ -295,8 +311,8 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="/admin/product/add-size" method="POST">
-                                    <input type="hidden" name="id_san_pham" id="" value="{{product.san_pham_id}}">
+                                <form action="/admin/product-size/create" method="POST">
+                                    <input type="hidden" name="idProduct" id="" value="{{product.san_pham_id}}">
                                     <label for="formGroupExampleInput" class="title-form">Kích thước</label>
                                     <select class="custom-select" name="size" id="sizeUpdate">
                                         {{#each sizes}}
@@ -305,8 +321,9 @@
                                         </option>
                                         {{/each}}
                                     </select>
+                                    <label for="formGroupExampleInput" class="title-form">Số lượng</label>
                                     <input type="text" style="margin-top: 10px;" class="form-control" id="priceInput"
-                                        placeholder="Số lượng sản phẩm " name="so_luong">
+                                        placeholder="Số lượng sản phẩm " name="quantity">
                                     <div class="modal-footer" style="margin-top: 20px;">
                                         <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">Huỷ</button>
@@ -330,11 +347,11 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="/admin/product/update-size" method="POST">
+                                <form action="/admin/product-size/update" method="POST">
                                     <label for="formGroupExampleInput" class="title-form">Id phiên bản</label>
                                     <input type="text" style="margin-top: 10px;" class="form-control"
-                                        id="idProdctSizeUpdateInput" placeholder="Số lượng sản phẩm " name="id_ktsp">
-                                    <input type="hidden" name="id_san_pham" id="" value="{{product.san_pham_id}}">
+                                        id="idProdctSizeUpdateInput" placeholder="Số lượng sản phẩm " name="idProductSize" readonly>
+                                    <input type="hidden" name="idProduct" id="" value="{{product.san_pham_id}}">
                                     <label for="formGroupExampleInput" class="title-form">Kích thước</label>
                                     <select class="custom-select" name="size">
                                         {{#each sizes}}
@@ -344,7 +361,7 @@
                                         {{/each}}
                                     </select>
                                     <input type="text" style="margin-top: 10px;" class="form-control"
-                                        id="quantityInputUpdate" placeholder="Số lượng sản phẩm " name="so_luong">
+                                        id="quantityInputUpdate" placeholder="Số lượng sản phẩm " name="quantity">
                                     <div class="modal-footer" style="margin-top: 20px;">
                                         <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">Huỷ</button>
@@ -371,7 +388,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
-                                <form action="/admin/product/delete-size" method="POST">
+                                <form action="/admin/product-size/delete-for-update-product" method="POST">
                                     <input type="hidden" name="idProduct" id="" value="{{product.san_pham_id}}">
                                     <input type="hidden" name="idProductSize" id="idProductSizeInput">
                                     <button href="#" type="submit" class="btn-delete-confirm"

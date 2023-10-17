@@ -51,14 +51,14 @@ const getAllByCategoryId = async (idCategory) => {
 const insert = async (data) => {
     const query = `INSERT INTO SanPham (ten_san_pham, anh_dai_dien, gia_ban, giam_gia, noi_bat, moi_nhat, mo_ta_chi_tiet, danh_muc_id) VALUES (? , ?, ?, ?, ? , ?, ?, ?);`
     const values = [
-        data.ten_san_pham,
+        data.name,
         data.imageUrl,
-        data.gia_ban,
-        data.giam_gia,
-        data.noi_bat,
-        data.moi_nhat,
-        data.mo_ta_chi_tiet,
-        data.danh_muc_id
+        data.price,
+        data.discount,
+        data.outstanding,
+        data.selling,
+        data.description,
+        data.idCategory
     ]
     return await database.queryDatabase(query, values);
 }

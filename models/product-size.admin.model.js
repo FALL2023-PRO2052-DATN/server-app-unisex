@@ -16,6 +16,7 @@ const getAll = async () => {
                     WHERE KTSP.hienThi = 1`;
     return await database.queryDatabase(query, []);
 }
+
 const getAllByProductId = async (idProduct) => {
     const query = `SELECT
                         KTSP.id,
@@ -37,8 +38,8 @@ const getAllByProductId = async (idProduct) => {
 const insert = async (data) => {
     const values = [
         data.size,
-        data.id_san_pham,
-        data.so_luong
+        data.idProduct,
+        data.quantity
     ];
     const query = `INSERT INTO KichThuoc_SanPham (kich_thuoc_id, san_pham_id, so_luong_ton_kho) VALUES (?, ?, ?)`
     return await database.queryDatabase(query, values);
@@ -54,12 +55,12 @@ const updateQuatity = async (id, quantity) => {
 }
 
 const removeByIdProduct = async (idProduct) => {
-    const query = `UPDATE KichThuoc_SanPham SET hienThi = 0 WHERE san_pham_id=?`;
+    const query = `DELETE FROM KichThuoc_SanPham WHERE san_pham_id = ?`;
     return await database.queryDatabase(query, [idProduct]);
 }
 
 const removeById = async (id) => {
-    const query = `UPDATE KichThuoc_SanPham SET hienThi = 0 WHERE id=?`;
+    const query = `DELETE FROM KichThuoc_SanPham WHERE id = ?`;
     return await database.queryDatabase(query, [id]);
 }
 
@@ -67,16 +68,18 @@ const getAllBySizeId = async (id) => {
     const query = `SELECT * FROM KichThuoc_SanPham WHERE kich_thuoc_id =? AND hienThi = 1`
     return await database.queryDatabase(query, [id]);
 }
+
 const update = async (data) => {
     const values = [
         data.size,
-        data.id_san_pham,
-        data.so_luong,
-        data.id_ktsp
+        data.idProduct,
+        data.quantity,
+        data.idProductSize
     ];
     const query = `UPDATE KichThuoc_SanPham SET kich_thuoc_id =?, san_pham_id=?, so_luong_ton_kho=? WHERE id=?`;
     return await database.queryDatabase(query, values);
 }
+
 module.exports = {
     getAll,
     insert,

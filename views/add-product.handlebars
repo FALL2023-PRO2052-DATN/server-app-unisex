@@ -317,13 +317,13 @@
                             <div class="card-body-cus" style="margin: 20px;">
                                 <h5 class="card-title m-b-0">Thêm sản phẩm</h5>
                             </div>
-                            <form style="margin-left: 20px; margin-right: 20px;" action="/admin/product/add"
+                            <form style="margin-left: 20px; margin-right: 20px;" action="/admin/product/create"
                                 method="POST" enctype="multipart/form-data">
                                 <div class="row">
                                     <div class="col">
                                         <label for="formGroupExampleInput" class="title-form">Tên sản phẩm</label>
                                         <input type="text" class="form-control" id="formGroupExampleInput"
-                                            placeholder="Ví dụ: Áo thun trắng" name="ten_san_pham" required="">
+                                            placeholder="Ví dụ: Áo thun trắng" name="name" required="">
                                         <div class="mb-3">
                                             <label for="formFile" class="title-form">
                                                 Chọn ảnh đại diện cho sản phẩm</label>
@@ -340,25 +340,25 @@
                                         </div>
                                         <label for="formGroupExampleInput" class="title-form">Giá sản phẩm</label>
                                         <input type="number" class="form-control" id="priceInput" min="0"
-                                            placeholder="Ví dụ: 200.000đ" name="gia_ban" required="">
+                                            placeholder="Ví dụ: 200.000đ" name="price" required="">
                                         <label for="formGroupExampleInput" class="title-form">Giảm giá</label>
-                                        <input name="giam_gia" type="number" class="form-control" id="formGroupExampleInput" min="1"
+                                        <input name="discount" type="number" class="form-control" id="formGroupExampleInput" min="1"
                                             max="100" placeholder="Ví dụ: 20(% có thể để trống)" required="">
                                     </div>
                                     <div class="col">
                                         <label for="formGroupExampleInput" class="title-form">Mô tả sản phẩm</label>
-                                        <textarea class="form-control" aria-label="With textarea" name="mo_ta_chi_tiet"></textarea>
+                                        <textarea class="form-control" aria-label="With textarea" name="description"></textarea>
                                         <label for="formGroupExampleInput" class="title-form">Thiết lập liên
                                             quan</label>
                                         <div class="form-check" style="margin-left: 20px;">
-                                            <input class="form-check-input" type="checkbox" value="1" name="noi_bat"
+                                            <input class="form-check-input" type="checkbox" value="1" name="outstanding"
                                                 id="flexCheckDefault">
                                             <label class="title-form-check-box" for="flexCheckDefault">
                                                 Sản phẩm nổi bật
                                             </label>
                                         </div>
                                         <div class="form-check" style="margin-left: 20px;">
-                                            <input class="form-check-input" type="checkbox" value="1" name="moi_nhat"
+                                            <input class="form-check-input" type="checkbox" value="1" name="selling"
                                                 id="flexCheckDefault1">
                                             <label class="title-form-check-box" for="flexCheckDefault1">
                                                 Sản phẩm mới về
@@ -373,10 +373,10 @@
                                             {{/each}}
                                         </select>
                                         <input type="text" style="margin-top: 10px;" class="form-control"
-                                            id="priceInput" placeholder="Số lượng sản phẩm " name="so_luong" min="0" required="">
+                                            id="priceInput" placeholder="Số lượng sản phẩm " name="quantity" min="0" required="">
                                         <label for="formGroupExampleInput" class="title-form">Danh mục</label>
-                                        <select class="custom-select" name="danh_muc_id">
-                                            {{#each categoris}}
+                                        <select class="custom-select" name="idCategory">
+                                            {{#each categories}}
                                             <option value="{{this.id_danh_muc}}">
                                                 {{this.ten_danh_muc}}
                                             </option>

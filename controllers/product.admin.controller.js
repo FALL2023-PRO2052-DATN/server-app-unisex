@@ -13,85 +13,74 @@ const pageProduct = async (req, res) => {
         const products = await productModel.getAll();
         res.render('product', { products });
     } catch (error) {
-        console.log(error);
+        console.error(error);
+        res.status(500).send('Server error: ' + error.message);
     }
 }
 
 const pageAddProduct = async (req, res) => {
     try {
         const sizes = await sizeModel.getAll();
-        const categoris = await categoryModel.getAll();
-        res.render('add-product', { sizes, categoris });
+        const categories = await categoryModel.getAll();
+        res.render('add-product', { sizes, categories });
     } catch (error) {
-        console.log(error);
+        console.error(error);
+        res.status(500).send('Server error: ' + error.message);
     }
-}
-
-const pageUpdateProduct = async (req, res) => {
-    const { id } = req.params;
-    const productsSize = await productSizeModel.getAllByProductId(id);
-    const products = await productModel.getAllById(id);
-    const categories = await categoryModel.getAll();
-    const sizes = await sizeModel.getAll();
-    console.log(productsSize);
-    res.render('update-product', { product: products[0], productsSize, categories, sizes });
 }
 
 const insertProduct = (req, res) => {
     upload.single('image')(req, res, async (err) => {
         if (err) {
             return console.error(err);
-
         }
 
-        if (!req.file) {
-            return;
-        }
+        if (req.file) {
+            try {
+                var { name, price, discount, outstanding, selling, description, idCategory, quantity, sizes } = req.body;
 
-        const imageBuffer = req.file.buffer;
-        // Tải hình ảnh lên cloudinary
-        const imageUrl = await cloudinary.uploadImageToCloudinary(imageBuffer);
-        try {
-            var {
-                ten_san_pham,
-                gia_ban,
-                giam_gia,
-                mo_ta_chi_tiet,
-                noi_bat, moi_nhat,
-                so_luong,
-                danh_muc_id,
-                sizes
-            } = req.body;
+                // Tải ảnh lên cloudinary
+                const imageBuffer = req.file.buffer;
+                const imageUrl = await cloudinary.uploadImageToCloudinary(imageBuffer);
 
-            const data = {
-                ten_san_pham,
-                imageUrl,
-                gia_ban,
-                giam_gia,
-                noi_bat,
-                moi_nhat,
-                mo_ta_chi_tiet,
-                danh_muc_id
+                if (imageUrl) {
+                    const data = { name, imageUrl, price, discount, outstanding, selling, description, idCategory };
+
+                    // Thêm sẩn phẩm
+                    const resultInsertProduct = await productModel.insert(data);
+                    const idProduct = resultInsertProduct.insertId;
+
+                    // Thêm kích thước sản phẩm
+                    for (const size of sizes || [0]) {
+                        const data = { size, idProduct, quantity };
+                        await productSizeModel.insert(data);
+                    }
+
+                    req.flash('success', 'Thêm sản phẩm thành công');
+                    res.redirect('/admin/product/create');
+                }
+            } catch (error) {
+                console.error(error);
+                res.status(500).send('Server error: ' + error.message);
             }
-
-            const resultInsertProduct = await productModel.insert(data);
-            const id_san_pham = resultInsertProduct.insertId;
-            sizes = sizes || [0];
-            // Thêm từng size vào cho sản phẩm vừa thêm
-            for (const size of sizes) {
-                const data = { size, id_san_pham, so_luong };
-                await productSizeModel.insert(data);
-            }
-
-            req.flash('success', 'Thêm sản phẩm thành công');
-            res.redirect('/admin/product/add');
-        } catch (error) {
-            console.error(error);
-            res.status(500).send('Server error: ' + error);
         }
-
     });
 }
+
+const pageUpdateProduct = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const productsSize = await productSizeModel.getAllByProductId(id);
+        const products = await productModel.getAllById(id);
+        const categories = await categoryModel.getAll();
+        const sizes = await sizeModel.getAll();
+        res.render('update-product', { product: products[0], productsSize, categories, sizes });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server error: ' + error.message);
+    }
+}
+
 const updateProduct = async (req, res) => {
     var newImage = null;
     upload.single('image')(req, res, async (err) => {
@@ -101,29 +90,21 @@ const updateProduct = async (req, res) => {
         }
 
         if (req.file) {
+            // Nếu chọn ảnh thì sẽ upload ảnh lên cloudinary và cập nhật lại ảnh
             const imageBuffer = req.file.buffer;
             newImage = await cloudinary.uploadImageToCloudinary(imageBuffer);
         }
 
         try {
             const { idProduct, name, price, description, outstanding, selling, idCategory, discount, imgUrl } = req.body;
-            const data = {
-                name,
-                price,
-                discount,
-                outstanding,
-                selling,
-                description,
-                idCategory,
-                imgUrl,
-                idProduct
-            }
+            const data = { name, price, discount, outstanding, selling, description, idCategory, imgUrl, idProduct };
 
             if (newImage) {
                 data.imgUrl = newImage;
             }
 
             await productModel.update(data);
+            req.flash('success', 'Cập nhật thông tin chung thành công.');
             res.redirect('/admin/product/update/' + idProduct);
         } catch (error) {
             console.error(error);
@@ -134,54 +115,13 @@ const updateProduct = async (req, res) => {
 
 const removeProduct = async (req, res) => {
     try {
-        const { id_san_pham } = req.body;
-        await productModel.remove(id_san_pham);
-        await productSizeModel.removeByIdProduct(id_san_pham);
-        req.flash('success', 'Xoá sản phẩm thành công');
+        const { idProduct } = req.body;
+        await productModel.remove(idProduct);
+        await productSizeModel.removeByIdProduct(idProduct);
+        req.flash('success', 'Xoá sản phẩm thành công.');
         res.redirect('/admin/product');
     } catch (error) {
-        console.error(error);
-        res.status(500).send('Server error: ' + error);
-    }
-}
-
-const insertProductSize = async (req, res) => {
-    try {
-        const { id_san_pham, size, so_luong } = req.body;
-        const data = { size, id_san_pham, so_luong };
-        await productSizeModel.insert(data);
-        res.redirect('/admin/product/update/' + id_san_pham);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Server error: ' + error.message);
-    }
-}
-
-const updateProductSize = async (req, res) => {
-    try {
-        const { id_ktsp ,id_san_pham, size, so_luong } = req.body;
-        const data = {
-            size,
-            id_san_pham,
-            so_luong,
-            id_ktsp
-        };
-        await productSizeModel.update(data)
-        res.redirect('/admin/product/update/' + id_san_pham);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Server error: ' + error.message);
-    }
-}
-
-const removeProductSize = async (req, res) => {
-    try {
-        const { idProduct, idProductSize } = req.body;
-        await productSizeModel.removeById(idProductSize);
-        res.redirect('/admin/product/update/' + idProduct);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Server error: ' + error.message);
+        handleError(res, error);
     }
 }
 
@@ -191,8 +131,5 @@ module.exports = {
     pageUpdateProduct,
     insertProduct,
     updateProduct,
-    removeProductSize,
-    removeProduct,
-    insertProductSize,
-    updateProductSize
+    removeProduct
 }
