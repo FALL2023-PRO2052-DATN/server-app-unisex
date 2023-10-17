@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const productSizeController = require('../controllers/product-size.admin.controller.js');
 
-router.get('/product-size', productSizeController.pageProductSize);
+router.get('/product-size', productSizeController.pageAdminProductSize);
 router.post('/product-size/create', productSizeController.insertProductSize);
 router.post('/product-size/update', productSizeController.updateProductSize);
 router.post('/product-size/update-quantity', productSizeController.updateQuantityProductSize);

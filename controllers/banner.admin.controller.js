@@ -1,6 +1,6 @@
 const multer = require('multer');
-const bannerModel = require('../models/banner.admin.model.js')
 const cloudinary = require('../cloud/cloudinary.js');
+const bannerAdminModel = require('../models/banner.admin.model.js');
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -10,10 +10,10 @@ const handleError = (res, error) => {
     res.status(500).send('Server error: ' + error.message);
 }
 
-const pageBanner = async (req, res) => {
+const pageAdminBanner = async (req, res) => {
     try {
-        const banners = await bannerModel.getAll();
-        return res.render('banner', { banners });
+        const banners = await bannerAdminModel.getAll();
+        res.status(200).render('banner', { banners });
     } catch (error) {
         handleError(res, error);
     }
@@ -30,12 +30,11 @@ const insertBanner = async (req, res) => {
             try {
                 const imageBuffer = req.file.buffer;
                 // Tải ảnh lên cloudinary
-                const imageUrl = await cloudinary.uploadImageToCloudinary(imageBuffer); 
-
+                const imageUrl = await cloudinary.uploadImageToCloudinary(imageBuffer);
                 if (imageUrl) {
-                    await bannerModel.insert(imageUrl);
+                    await bannerAdminModel.insert(imageUrl);
                     req.flash('success', 'Thêm banner thành công.');
-                    res.redirect('/admin/banner');
+                    res.status(200).redirect('/admin/banner');
                 }
             } catch (error) {
                 handleError(res, error);
@@ -47,16 +46,16 @@ const insertBanner = async (req, res) => {
 const removeBanner = async (req, res) => {
     try {
         const { id } = req.body;
-        await bannerModel.remove(id);
+        await bannerAdminModel.remove(id);
         req.flash('success', 'Xoá banner thành công.');
-        res.redirect('/admin/banner');
+        res.status(200).redirect('/admin/banner');
     } catch (error) {
         handleError(res, error);
     }
 }
 
 module.exports = {
-    pageBanner,
+    pageAdminBanner,
     insertBanner,
     removeBanner
 }

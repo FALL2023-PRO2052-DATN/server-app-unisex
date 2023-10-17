@@ -1,9 +1,9 @@
 const router = require('express').Router();
-const discountController = require('../controllers/discount.admin.controller.js');
+const discountAdminController = require('../controllers/discount.admin.controller.js');
 
-router.get('/discount', discountController.pageDiscount);
-router.post('/discount/create', discountController.insertDiscount);
-router.post('/discount/update', discountController.updateDiscount);
-router.post('/discount/delete', discountController.removeDiscount);
+router.get('/discount', discountAdminController.pageAdminDiscount);
+router.post('/discount/create', discountAdminController.insertDiscount);
+router.post('/discount/update', discountAdminController.updateDiscount);
+router.post('/discount/delete', discountAdminController.removeDiscount);
 
 module.exports = router;

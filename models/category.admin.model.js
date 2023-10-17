@@ -22,7 +22,10 @@ const insert = async (name) => {
 }
 
 const update = async (data) => {
-    const values = [data.name, data.id];
+    const values = [
+        data.name,
+        data.id
+    ];
     const query = `UPDATE DanhMuc SET ten_danh_muc = ? WHERE id = ?`;
     return await database.queryDatabase(query, values);
 }

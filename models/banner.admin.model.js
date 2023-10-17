@@ -10,10 +10,10 @@ const insert = async (imageUrl) => {
     return await database.queryDatabase(query, [imageUrl])
 }
 
-const remove = async(id) => {
+const remove = async (id) => {
     const query = `UPDATE Banner SET hienThi = 0 WHERE id=?`;
     return await database.queryDatabase(query, [id]);
-} 
+}
 
 module.exports = {
     getAll,

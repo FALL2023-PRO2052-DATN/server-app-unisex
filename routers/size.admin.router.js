@@ -1,9 +1,9 @@
 const router = require('express').Router();
-const sizeController = require('../controllers/size.admin.controller.js');
+const sizeAdminController = require('../controllers/size.admin.controller.js');
 
-router.get('/size', sizeController.pageSize);
-router.post('/size/create', sizeController.insertSize);
-router.post('/size/update', sizeController.updateSize);
-router.post('/size/delete', sizeController.removeSize);
+router.get('/size', sizeAdminController.pageAdminSize);
+router.post('/size/create', sizeAdminController.insertSize);
+router.post('/size/update', sizeAdminController.updateSize);
+router.post('/size/delete', sizeAdminController.removeSize);
 
 module.exports = router;

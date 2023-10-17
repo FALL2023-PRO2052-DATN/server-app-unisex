@@ -35,6 +35,11 @@ const getAllByProductId = async (idProduct) => {
     return await database.queryDatabase(query, [idProduct]);
 }
 
+const getAllBySizeId = async (id) => {
+    const query = `SELECT * FROM KichThuoc_SanPham WHERE kich_thuoc_id =? AND hienThi = 1`
+    return await database.queryDatabase(query, [id]);
+}
+
 const insert = async (data) => {
     const values = [
         data.size,
@@ -43,30 +48,6 @@ const insert = async (data) => {
     ];
     const query = `INSERT INTO KichThuoc_SanPham (kich_thuoc_id, san_pham_id, so_luong_ton_kho) VALUES (?, ?, ?)`
     return await database.queryDatabase(query, values);
-}
-
-const updateQuatity = async (id, quantity) => {
-    const values = [
-        quantity,
-        id
-    ];
-    const query = `UPDATE KichThuoc_SanPham SET so_luong_ton_kho=? WHERE id=?`;
-    return await database.queryDatabase(query, values);
-}
-
-const removeByIdProduct = async (idProduct) => {
-    const query = `DELETE FROM KichThuoc_SanPham WHERE san_pham_id = ?`;
-    return await database.queryDatabase(query, [idProduct]);
-}
-
-const removeById = async (id) => {
-    const query = `DELETE FROM KichThuoc_SanPham WHERE id = ?`;
-    return await database.queryDatabase(query, [id]);
-}
-
-const getAllBySizeId = async (id) => {
-    const query = `SELECT * FROM KichThuoc_SanPham WHERE kich_thuoc_id =? AND hienThi = 1`
-    return await database.queryDatabase(query, [id]);
 }
 
 const update = async (data) => {
@@ -80,13 +61,32 @@ const update = async (data) => {
     return await database.queryDatabase(query, values);
 }
 
+const updateQuatity = async (id, quantity) => {
+    const values = [
+        quantity,
+        id
+    ];
+    const query = `UPDATE KichThuoc_SanPham SET so_luong_ton_kho=? WHERE id=?`;
+    return await database.queryDatabase(query, values);
+}
+
+const removeById = async (id) => {
+    const query = `DELETE FROM KichThuoc_SanPham WHERE id = ?`;
+    return await database.queryDatabase(query, [id]);
+}
+
+const removeByProductId = async (idProduct) => {
+    const query = `DELETE FROM KichThuoc_SanPham WHERE san_pham_id = ?`;
+    return await database.queryDatabase(query, [idProduct]);
+}
+
 module.exports = {
     getAll,
+    getAllByProductId,
+    getAllBySizeId,
     insert,
     update,
     updateQuatity,
     removeById,
-    removeByIdProduct,
-    getAllBySizeId,
-    getAllByProductId
+    removeByProductId,
 }
