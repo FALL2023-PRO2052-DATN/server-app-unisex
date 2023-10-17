@@ -43,6 +43,11 @@ const getAllById = async (id) => {
     return await database.queryDatabase(query, [id]);
 }
 
+const getAllByCategoryId = async (idCategory) => {
+    const query = 'SELECT * FROM SanPham WHERE danh_muc_id = ? AND hienThi = 1';
+    return await database.queryDatabase(query, [idCategory]);
+}
+
 const insert = async (data) => {
     const query = `INSERT INTO SanPham (ten_san_pham, anh_dai_dien, gia_ban, giam_gia, noi_bat, moi_nhat, mo_ta_chi_tiet, danh_muc_id) VALUES (? , ?, ?, ?, ? , ?, ?, ?);`
     const values = [
@@ -79,16 +84,11 @@ const remove = async (idProduct) => {
     return await database.queryDatabase(query, [idProduct]);
 }
 
-const getAllByCategoryId = async (idCategory) => {
-    const query = 'SELECT * FROM SanPham WHERE danh_muc_id = ? AND hienThi = 1';
-    return await database.queryDatabase(query, [idCategory]);
-}
-
 module.exports = {
     getAll,
+    getAllById,
+    getAllByCategoryId,
     insert,
     update,
-    remove,
-    getAllByCategoryId,
-    getAllById
+    remove
 }

@@ -6,9 +6,9 @@ const getAll = async () => {
                     dm.ten_danh_muc AS ten_danh_muc,
                     COUNT(sp.id) AS so_luong_san_pham
                 FROM
-                    shop_clothes.DanhMuc AS dm  
+                    DanhMuc AS dm  
                 LEFT JOIN
-                    shop_clothes.SanPham AS sp ON dm.id = sp.danh_muc_id AND sp.hienThi = 1
+                    SanPham AS sp ON dm.id = sp.danh_muc_id AND sp.hienThi = 1
                 WHERE
                     dm.hienThi = 1
                 GROUP BY
@@ -23,12 +23,12 @@ const insert = async (name) => {
 
 const update = async (data) => {
     const values = [data.name, data.id];
-    const query = `UPDATE DanhMuc SET ten_danh_muc =? WHERE id=?`;
+    const query = `UPDATE DanhMuc SET ten_danh_muc = ? WHERE id = ?`;
     return await database.queryDatabase(query, values);
 }
 
 const remove = async (id) => {
-    const query = 'UPDATE DanhMuc SET hienThi = 0 WHERE id = ?';
+    const query = `UPDATE DanhMuc SET hienThi = 0 WHERE id = ?`;
     return await database.queryDatabase(query, id);
 }
 

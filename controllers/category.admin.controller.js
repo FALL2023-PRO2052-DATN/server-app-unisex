@@ -5,13 +5,17 @@ const isCategoryExist = (categories, name) => {
     return categories.some((category) => category.ten_danh_muc === name);
 }
 
+const handleError = (res, error) => {
+    console.error(error);
+    res.status(500).send('Server error: ' + error.message);
+}
+
 const pageCategory = async (req, res) => {
     try {
         const categories = await categoryModel.getAll();
         res.render('category', { categories });
     } catch (error) {
-        console.error(error);
-        res.status(500).send('Server error: ' + error.message);
+        handleError(res, error);
     }
 }
 
@@ -21,7 +25,7 @@ const insertCategory = async (req, res) => {
         const categories = await categoryModel.getAll();
 
         if (isCategoryExist(categories, name)) {
-            req.flash('warning', 'Thêm danh mục không thành công. Tên danh mục đã tồn tại.');
+            req.flash('warning', 'Thêm không thành công. Tên danh mục đã tồn tại.');
         } else {
             await categoryModel.insert(name);
             req.flash('success', 'Thêm danh mục thành công.');
@@ -29,8 +33,7 @@ const insertCategory = async (req, res) => {
 
         res.redirect('/admin/category');
     } catch (error) {
-        console.error(error);
-        res.status(500).send('Server error: ' + error.message);
+        handleError(res, error);
     }
 }
 
@@ -38,7 +41,6 @@ const updateCategory = async (req, res) => {
     try {
         const { id, name } = req.body;
         const categories = await categoryModel.getAll();
-
         const categoryToUpdate = categories.find((category) => category.id_danh_muc === parseInt(id, 10));
         const categoriesExceptCurrent = categories.filter((category) => category !== categoryToUpdate);
 
@@ -52,18 +54,16 @@ const updateCategory = async (req, res) => {
 
         res.redirect('/admin/category');
     } catch (error) {
-        console.error(error);
-        res.status(500).send('Server error: ' + error.message);
+        handleError(res, error);
     }
 }
 
 const removeCategory = async (req, res) => {
     try {
-        const EMPTY_COUNT = 0;
         const { id } = req.body;
-        const products = await productModel.getAllByCategoryId(id);
+        const productsWithCategory = await productModel.getAllByCategoryId(id);
 
-        if (products.length > EMPTY_COUNT) {
+        if (productsWithCategory.length > 0) {
             req.flash('warning', 'Không thể xóa danh mục. Đã có sản phẩm thuộc danh mục này.');
         } else {
             await categoryModel.remove(id);
@@ -72,10 +72,9 @@ const removeCategory = async (req, res) => {
 
         res.redirect('/admin/category');
     } catch (error) {
-        console.error(error);
-        res.status(500).send('Server error: ' + error.message);
+        handleError(res, error);
     }
-};
+}
 
 module.exports = {
     pageCategory,
