@@ -6,7 +6,10 @@ const getAll = async () => {
 }
 
 const insert = async (data) => {
-    const values = [data.code, data.value];
+    const values = [
+        data.code, 
+        data.value
+    ];
     const query = `INSERT INTO GiamGia(code, gia_tri) VALUES (?, ?)`;
     return await database.queryDatabase(query, values);
 }
