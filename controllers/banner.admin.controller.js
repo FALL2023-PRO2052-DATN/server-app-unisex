@@ -10,7 +10,6 @@ const handleError = (res, error) => {
     res.status(500).send('Server error: ' + error.message);
 }
 
-// Trang quản trị banner
 const pageAdminBanner = async (req, res) => {
     try {
         const banners = await bannerAdminModel.getAll();
@@ -29,10 +28,10 @@ const insertBanner = async (req, res) => {
 
         if (req.file) {
             try {
-                // Tải ảnh lên Clodinary
+                // Tải ảnh lên Cloudinary
                 const imageBuffer = req.file.buffer;
                 const imageUrl = await cloudinary.uploadImageToCloudinary(imageBuffer);
-                
+
                 if (imageUrl) {
                     await bannerAdminModel.insert(imageUrl);
                     req.flash('success', 'Thêm banner thành công.');
