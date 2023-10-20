@@ -5,6 +5,10 @@ const hbs = exphbs.create({ defaultLayout: false });
 
 const userRouter = require('./routers/account.user.routers')
 const bannerRouter = require('./routers/banner.user.routers')
+const productRouter = require('./routers/product.user.roters')
+const typeProductRouter = require('./routers/typeProduct.user.routers')
+const commentRouter = require('./routers/comment.user.routers')
+const cartRouter = require('./routers/cart.user.routers')
 
 const app = express();
 
@@ -24,6 +28,10 @@ app.get('/', (req, res) => {
 
 app.use("/api", userRouter)
 app.use("/api", bannerRouter)
+app.use("/api", productRouter)
+app.use("/api", typeProductRouter)
+app.use("/api", commentRouter)
+app.use("/api", cartRouter)
 //
 const port = 3000;
 app.listen(port, () => {
