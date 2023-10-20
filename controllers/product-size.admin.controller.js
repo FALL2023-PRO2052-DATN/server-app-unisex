@@ -29,7 +29,7 @@ const updateQuantityProductSize = async (req, res) => {
         const { id, quantity } = req.body;
         await productSizeAdminModel.updateQuatity(id, quantity);
         req.flash('success', 'Cập nhật nhập số lượng sản phẩm thành công');
-        res.status.redirect('/admin/product-size');
+        res.status(200).redirect('/admin/product-size');
     } catch (error) {
         console.error(error);
         res.status(500).send('Server error: ' + error.message);
