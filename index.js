@@ -4,6 +4,7 @@ const exphbs = require("express-handlebars");
 const hbs = exphbs.create({ defaultLayout: false });
 const session = require("express-session");
 const flash = require("connect-flash");
+const moment = require('moment');
 const path = require("path");
 
 const categoryRouter = require("./routers/category.admin.router.js");
@@ -18,18 +19,18 @@ const app = express();
 
 // express-session - flash message
 app.use(
-  session({
-    secret: "unisex-app",
-    saveUninitialized: true,
-    resave: true,
-  })
+    session({
+        secret: "unisex-app",
+        saveUninitialized: true,
+        resave: true,
+    })
 );
 app.use(flash());
 app.use(function (req, res, next) {
-  (res.locals.success = req.flash("success")),
-    (res.locals.error = req.flash("error")),
-    (res.locals.warning = req.flash("warning"));
-  next();
+    (res.locals.success = req.flash("success")),
+        (res.locals.error = req.flash("error")),
+        (res.locals.warning = req.flash("warning"));
+    next();
 });
 
 // body-parser
@@ -46,30 +47,36 @@ app.use(express.static(path.join(__dirname, "/public")));
 
 // Hàm kiểm tra kích thước
 hbs.handlebars.registerHelper("checkSize", function (kich_thuoc, options) {
-  if (kich_thuoc === null || kich_thuoc === "") {
-    return "Không có kích thước";
-  } else {
-    return kich_thuoc;
-  }
+    if (kich_thuoc === null || kich_thuoc === "") {
+        return "Không có kích thước";
+    } else {
+        return kich_thuoc;
+    }
 });
 
 // Chuyển định dạng số tiền
 hbs.handlebars.registerHelper("formatCurrency", function (value) {
-  if (typeof value !== "number") {
-    return value;
-  }
+    if (typeof value !== "number") {
+        return value;
+    }
 
-  const formattedValue = new Intl.NumberFormat("vi-VN", {
-    style: "currency",
-    currency: "VND",
-  }).format(value);
+    const formattedValue = new Intl.NumberFormat("vi-VN", {
+        style: "currency",
+        currency: "VND",
+    }).format(value);
 
-  return formattedValue;
+    return formattedValue;
+});
+
+// Chuyển đổi date thành định dạng ngày 'dd/mm/yyyy'
+hbs.handlebars.registerHelper('formatDate', function (date) {
+    const formattedDate = moment(date).format('DD/MM/YYYY');
+    return new hbs.handlebars.SafeString(formattedDate);
 });
 
 // routers
 app.get("/", (req, res) => {
-  res.render("index");
+    res.render("index");
 });
 app.use("/admin", categoryRouter);
 app.use("/admin", discountRouter);
@@ -81,5 +88,5 @@ app.use("/admin", reviewRouter);
 
 const port = 3000;
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+    console.log(`Example app listening on port ${port}`);
 });
