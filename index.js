@@ -15,6 +15,7 @@ const productRouter = require("./routers/product.admin.router.js");
 const productSizeRouter = require("./routers/product-size.admin.router.js");
 const reviewRouter = require("./routers/reviews.admin.router.js");
 const billRouter = require("./routers/bill.admin.router.js");
+const billDetailRouter = require("./routers/bill-detail.admin.router.js");
 
 const app = express();
 
@@ -57,6 +58,7 @@ app.use("/admin", productRouter);
 app.use("/admin", productSizeRouter);
 app.use("/admin", reviewRouter);
 app.use("/admin", billRouter);
+app.use("/admin", billDetailRouter);
 
 const port = 3000 || process.env.DB_PORT;
 app.listen(port, () => {
