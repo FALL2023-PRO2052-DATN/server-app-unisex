@@ -58,7 +58,7 @@ app.use("/admin", productSizeRouter);
 app.use("/admin", reviewRouter);
 app.use("/admin", billRouter);
 
-const port = 3000;
+const port = 3000 || process.env.DB_PORT;
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });

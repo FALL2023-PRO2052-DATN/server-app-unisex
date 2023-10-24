@@ -10,12 +10,14 @@
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/logo-icon.svg">
-    <title>Danh sách kích thước</title>
+    <title>Đơn hàng chi tiết</title>
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="/assets/extra-libs/multicheck/multicheck.css">
     <link href="/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
     <link href="/dist/css/style.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/css/multi-select-tag.css">
+    <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/js/multi-select-tag.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -28,7 +30,7 @@
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
     <!-- ============================================================== -->
-    <div class="preloader">
+    <div class="preloader" id="loader">
         <div class="lds-ripple">
             <div class="lds-pos"></div>
             <div class="lds-pos"></div>
@@ -44,87 +46,34 @@
         <header class="topbar" data-navbarbg="skin5">
             <nav class="navbar top-navbar navbar-expand-md navbar-dark">
                 <div class="navbar-header" data-logobg="skin5">
-                    <!-- This is for the sidebar toggle which is visible on mobile only -->
                     <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i
                             class="ti-menu ti-close"></i></a>
-                    <!-- ============================================================== -->
-                    <!-- Logo -->
-                    <!-- ============================================================== -->
                     <a class="navbar-brand" href="index.html">
-                        <!-- Logo icon -->
                         <b class="logo-icon p-l-10">
-                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                            <!-- Dark Logo icon -->
                             <img src="/assets/images/logo-icon.svg" alt="homepage" class="light-logo" />
-
                         </b>
-                        <!--End Logo icon -->
-                        <!-- Logo text -->
                         <span class="logo-text">
-                            <!-- dark Logo text -->
                             <img src="/assets/images/logo-text.svg" alt="homepage" class="light-logo" />
-
                         </span>
-                        <!-- Logo icon -->
-                        <!-- <b class="logo-icon"> -->
-                        <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                        <!-- Dark Logo icon -->
-                        <!-- <img src="assets/images/logo-text.png" alt="homepage" class="light-logo" /> -->
-
-                        <!-- </b> -->
-                        <!--End Logo icon -->
                     </a>
-                    <!-- ============================================================== -->
-                    <!-- End Logo -->
-                    <!-- ============================================================== -->
-                    <!-- ============================================================== -->
-                    <!-- Toggle which is visible on mobile only -->
-                    <!-- ============================================================== -->
                     <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)"
                         data-toggle="collapse" data-target="#navbarSupportedContent"
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i
                             class="ti-more"></i></a>
                 </div>
-                <!-- ============================================================== -->
-                <!-- End Logo -->
-                <!-- ============================================================== -->
                 <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
-                    <!-- ============================================================== -->
-                    <!-- toggle and nav items -->
-                    <!-- ============================================================== -->
                     <ul class="navbar-nav float-left mr-auto">
                         <li class="nav-item d-none d-md-block"><a
                                 class="nav-link sidebartoggler waves-effect waves-light" href="javascript:void(0)"
                                 data-sidebartype="mini-sidebar"><i class="mdi mdi-menu font-24"></i></a></li>
                         <!-- ============================================================== -->
                     </ul>
-
-                    <!-- ============================================================== -->
-                    <!-- Right side toggle and nav items -->
-                    <!-- ============================================================== -->
                     <ul class="navbar-nav float-right">
-                        <!-- ============================================================== -->
-                        <!-- Comment -->
-                        <!-- ============================================================== -->
-                        <!-- ============================================================== -->
-                        <!-- End Comment -->
-                        <!-- ============================================================== -->
-                        <!-- ============================================================== -->
-                        <!-- Messages -->
-                        <!-- ============================================================== -->
-                        <!-- ============================================================== -->
-                        <!-- End Messages -->
-                        <!-- ============================================================== -->
-
-                        <!-- ============================================================== -->
-                        <!-- User profile and search -->
-                        <!-- ============================================================== -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href=""
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
-                                    src="/assets/images/users/1.jpg" alt="user" class="rounded-circle" width="31"></a>
+                                    src="assets/images/users/1.jpg" alt="user" class="rounded-circle" width="31"></a>
                             <div class="dropdown-menu dropdown-menu-right user-dd animated">
-
                                 <a class="dropdown-item" href="javascript:void(0)"><i
                                         class="fa fa-power-off m-r-5 m-l-5"></i>
                                     Logout</a>
@@ -134,9 +83,6 @@
                                         Profile</a></div>
                             </div>
                         </li>
-                        <!-- ============================================================== -->
-                        <!-- User profile and search -->
-                        <!-- ============================================================== -->
                     </ul>
                 </div>
             </nav>
@@ -214,6 +160,7 @@
             <!-- ============================================================== -->
             <!-- Container fluid  -->
             <!-- ============================================================== -->
+
             <div class="container-fluid">
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
@@ -228,154 +175,197 @@
                     {{error}}
                 </div>
                 {{/if}}
-                {{#if warning}}
-                <div class="alert alert-warning" role="alert">
-                    {{warning}}
-                </div>
-                {{/if}}
                 <div class="row">
                     <div class="col-12">
-                        <div class="card" style="padding: 20px;">
-                            <div class="card-body-cus">
-                                <h5 class="card-title m-b-0">Danh sách kích thước</h5>
-                                <button type="button" class="button-26" data-toggle="modal"
-                                    data-target="#add-size-modal" data-whatever="@mdo">Thêm kích thước</button>
+                        <div class="card">
+                            <div class="card-body-cus" style="margin-top: 20px; margin-left: 20px; margin-right: 20px;">
+                                <h5 class="card-title m-b-0">Chi tiết đơn hàng | {{bill.don_hang_id}}</h5>
                             </div>
-                            <table class="table" id="myTable" style="width: 100%;">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">ID</th>
-                                        <th scope="col">Tên kích thước (Size)</th>
-                                        <th scope="col">Mô tả</th>
-                                        <th scope="col">Tác vụ</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {{#each sizes}}
-                                    <tr>
-                                        <th scope="row" style="width: 10%;">{{this.id}}</th>
-                                        <td style="width: 30%;">Size {{this.ten_kich_thuoc}}</td>
-                                        <td style="width: 30%;">{{this.mo_ta_chi_tiet}}</td>
-                                        <td style="width: 30%;">
-                                            <button type="button" class="btn-update" data-toggle="modal"
-                                                data-target="#update-size-modal" data-json='{
-                                                                "id": "{{this.id}}",
-                                                                "ten_kich_thuoc": "{{this.ten_kich_thuoc}}",
-                                                                "mo_ta_chi_tiet": "{{this.mo_ta_chi_tiet}}"
-                                                            }'>
-                                                Cập nhật
-                                            </button>
-                                            <button type="button" class="btn-delete" data-toggle="modal"
-                                                data-target="#delete-size-modal" data-id="{{this.id}}">
-                                                Xoá
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    {{/each}}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <!--Modal thêm kích thước-->
-                <div class="modal fade" id="add-size-modal" tabindex="-1" role="dialog"
-                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Thêm kích thước</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form id="image-upload-form" action="/admin/size/create" method="POST">
-                                    <div class="form-group">
-                                        <label for="image-upload" class="title-form">Tên kích thước</label>
-                                        <input type="text" data-toggle="tooltip" title="" class="form-control"
-                                            id="validationDefault05" placeholder="Ví dụ: M" required="" name="name"
-                                            data-original-title="A Tooltip for the input !">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="image-upload" class="title-form">Mô tả</label>
-                                        <textarea name="description" class="form-control"></textarea>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-dismiss="modal">Huỷ</button>
-                                        <button style="color: white;" type="submit" class="button-26"
-                                            id="upload-image">Thêm mới</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--Xử lý ở trong file size.js-->
-                <!--Modal cập nhật mã giảm giá-->
-                <div class="modal fade" id="update-size-modal" tabindex="-1" role="dialog"
-                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Cập nhật kích thước</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form id="image-upload-form" action="/admin/size/update" method="POST">
-                                    <div class="form-group">
-                                        <label for="image-upload" class="title-form">ID</label>
-                                        <input type="text" data-toggle="tooltip" title="" class="form-control"
-                                            id="id_kich_thuoc_update_input" placeholder="Ví dụ: 1" required="" name="id"
-                                            data-original-title="A Tooltip for the input !" readonly>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="image-upload" class="title-form">Tên kích thước</label>
-                                        <input type="text" data-toggle="tooltip" title="" class="form-control"
-                                            id="ten_kich_thuoc_update_input" placeholder="Ví dụ: M" required=""
-                                            name="name" data-original-title="A Tooltip for the input !">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="image-upload" class="title-form">Mô tả</label>
-                                        <textarea id="mo_ta_chi_tiet_update_input" name="description"
-                                            class="form-control"></textarea>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-dismiss="modal">Huỷ</button>
-                                        <button style="color: white;" type="submit" class="button-26"
-                                            id="upload-image">Lưu</button>
-                                    </div>
-                                </form>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <!--Xử lý ở trong file size.js-->
-                <!--Modal xoá. danh mục-->
-                <div class="modal" tabindex="-1" role="dialog" id="delete-size-modal">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Hệ thống</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <p>Bạn có muốn xoá kích thước?</p>
-                            </div>
-                            <form action="/admin/size/delete" method="POST">
-                                <div class="modal-footer">
-                                    <input type="hidden" name="id" id="id_kich_thuoc_delete_input">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
-                                    <button href="#" type="submit" class="btn-delete-confirm"
-                                        style="color: white;">Xoá</button>
+                            <div class="card bg-light mb-3"
+                                style="max-width: 100%; margin-left: 20px; margin-right: 20px;">
+                                <div class="card-header">Địa chỉ nhận hàng</div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Thông tin liên hệ</h5>
+                                    <p class="card-text">{{bill.ho_va_ten}} | (+84) {{bill.dien_thoai}} | {{bill.email}}
+                                    </p>
+                                    <h5 class="card-title">Địa chỉ</h5>
+                                    <p class="card-text">{{bill.dia_chi}} </p>
                                 </div>
-                            </form>
+                            </div>
+                            <div class="card bg-light mb-3"
+                                style="max-width: 100%; margin-left: 20px; margin-right: 20px;">
+                                <div class="card-header">Sản phẩm</div>
+                                <div class="card-body">
+                                    <table class="table" id="myTable" style="background-color: white; width: 100%;">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">STT</th>
+                                                <th scope="col">Ảnh</th>
+                                                <th scope="col">Phiên bản sản phẩm</th>
+                                                <th scope="col">Giá bán</th>
+                                                <th scope="col">Giảm giá</th>
+                                                <th scope="col">Số lượng</th>
+                                                <th scope="col">Tổng tiền</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {{#each billsDetail}}
+                                            <tr>
+                                                <th scope="row" style="width: 10%;">{{calculateIndex @index}}</th>
+                                                <td style="width: 10%"><img id="img-table-cus"
+                                                        src="{{this.anh_dai_dien}}" alt="Hình ảnh"></td>
+                                                <td style="width: 30%;">{{this.ten_san_pham}} - {{this.kich_thuoc}}</td>
+                                                <td style="width: 30%;">{{formatCurrency this.gia_ban}}</td>
+                                                <td style="width: 30%;">{{this.giam_gia}}%</td>
+                                                <td style="width: 30%;">{{this.so_luong}}</td>
+                                                <td style="width: 30%;">{{formatCurrency this.don_gia}}</td>
+                                            </tr>
+                                            {{/each}}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="card-group">
+                                <div class="card bg-light mb-3"
+                                    style="max-width: 100%; margin-left: 20px; margin-right: 20px;">
+                                    <div class="card-header">Hình thức thanh toán</div>
+                                    <div class="card-body">
+                                        <p class="card-text">
+                                            <a href="#" class="badge badge-dark"
+                                                style="font-size: 14px;">{{bill.hinh_thuc_thanh_toan}}</a>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="card bg-light mb-3"
+                                    style="max-width: 100%; margin-left: 20px; margin-right: 20px;">
+                                    <div class="card-header">Mã giảm giá</div>
+                                    <div class="card-body">
+                                        <p class="card-text">
+                                            {{#equal bill.giam_gia_id null}}
+                                            <a href="#" class="badge badge-primary" style="font-size: 14px;">Mã giảm giá
+                                                không áp dụng</a>
+                                            {{else}}
+                                            <a href="#" class="badge badge-primary"
+                                                style="font-size: 14px;">{{bill.code}} | {{bill.gia_tri}}%</a>
+                                            {{/equal}}
+
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="card bg-light mb-3"
+                                    style="max-width: 100%; margin-left: 20px; margin-right: 20px;">
+                                    <div class="card-header">Trạng thái thanh toán</div>
+                                    <div class="card-body">
+                                        <p class="card-text">
+                                            {{#equal bill.trang_thai_thanh_toan "Chưa thanh toán"}}
+                                            <a href="" class="badge badge-danger" style="font-size: 13px;">Chưa thanh
+                                                toán</a>
+                                            {{/equal}}
+                                            {{#equal bill.trang_thai_thanh_toan "Đã thanh toán"}}
+                                            <a href="" class="badge badge-success" style="font-size: 13px;">Đã thanh
+                                                toán</a>
+                                            {{/equal}}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="card bg-light mb-3"
+                                    style="max-width: 100%; margin-left: 20px; margin-right: 20px;">
+                                    <div class="card-header">Trạng thái đơn hàng</div>
+                                    <div class="card-body">
+                                        <p class="card-text">
+                                            {{#equal bill.tinh_trang_giao_hang "Chờ xác nhận"}}
+                                            <a href="" class="badge badge-warning" style="font-size: 13px;">Chờ xác
+                                                nhận</a>
+                                            {{/equal}}
+                                            {{#equal bill.tinh_trang_giao_hang "Chờ lấy hàng"}}
+                                            <a href="#" class="badge badge-info" style="font-size: 13px;">Chờ lấy
+                                                hàng</a>
+                                            {{/equal}}
+                                            {{#equal bill.tinh_trang_giao_hang "Đang giao hàng"}}
+                                            <a href="" class="badge badge-primary" style="font-size: 13px;">Đang giao
+                                                hàng</a>
+                                            {{/equal}}
+                                            {{#equal bill.tinh_trang_giao_hang "Đã giao hàng"}}
+                                            <a href="" class="badge badge-success" style="font-size: 13px;">Giao hàng
+                                                thành công</a>
+                                            {{/equal}}
+                                            {{#equal bill.tinh_trang_giao_hang "Đã hủy"}}
+                                            <a href="" class="badge badge-light" style="font-size: 13px;">Đã huỷ</a>
+                                            {{/equal}}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card border-warning mb-3"
+                                style="max-width: 100%; margin-left: 20px; margin-right: 20px;">
+                                <div class="card-header">Lưu ý của khách hàng</div>
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        {{#equal bill.ghi_chu ""}}
+                                        Không có lưu ý nào từ khách hàng
+                                        {{else}}
+                                        {{#equal bill.ghi_chu null}}
+                                        Không có lưu ý nào từ khách hàng
+                                        {{else}}
+                                        {{bill.ghi_chu}}
+                                        {{/equal}}
+                                        {{/equal}}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="card text-white bg-dark mb-3"
+                                style="max-width: 100%; margin-left: 20px; margin-right: 20px;">
+                                <div class="card-header">Chi tiết thanh toán ({{billsDetail.length}} sản phẩm)</div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Tổng tiền sản phẩm</h5>
+                                    <p class="card-text">
+                                        {{formatCurrency (calculateTotalAmount billsDetail)}}
+                                    </p>
+                                    <h5 class="card-title">Giảm giá</h5>
+                                    <p class="card-text">
+                                        {{bill.gia_tri}}%
+                                    </p>
+                                    <h5 class="card-title">Tổng thanh toán</h5>
+                                    <p class="card-text">
+                                        {{formatCurrency bill.thanh_tien}}
+                                    </p>
+                                </div>
+                            </div>
+                            {{#equal bill.tinh_trang_giao_hang "Chờ xác nhận"}}
+                            <div class="row" style="margin-left: 10px; margin-right: 10px; margin-bottom: 20px;">
+                                <div class="col-sm-6">
+                                    <form action="/admin/bill/{{bill.don_hang_id}}" method="POST">
+                                        <button type="submit" class="btn btn-warning"
+                                            style="width: 100%; height: 40px;">Xác
+                                            nhận đơn hàng</button>
+                                    </form>
+                                </div>
+                                <div class="col-sm-6">
+                                    <button type="button" class="btn btn-secondary" data-toggle="modal"
+                                        data-target="#model-cancel-order" style="width: 100%; height: 40px;">Huỷ
+                                        đơn</button>
+                                </div>
+                            </div>
+                            {{/equal}}
+                            {{#equal bill.tinh_trang_giao_hang "Đã giao hàng"}}
+                            <div class="card text-white bg-success mb-3"
+                                style="max-width: 100%; margin-left: 20px; margin-right: 20px; ">
+                                <div class="card-header">Đơn đã giao</div>
+                                <div class="card-body">
+                                    <p class="card-text">Đơn hàng đã giao thành công</p>
+                                </div>
+                            </div>
+                            {{/equal}}
+                            {{#equal bill.tinh_trang_giao_hang "Đã hủy"}}
+                            <div class="card text-white bg-danger mb-3"
+                                style="max-width: 100%; margin-left: 20px; margin-right: 20px;">
+                                <div class="card-header">Đơn đã huỷ</div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Lý do</h5>
+                                    <p class="card-text">{{bill.ly_do_huy}}</p>
+                                </div>
+                            </div>
+                            {{/equal}}
                         </div>
                     </div>
                 </div>
@@ -389,6 +379,36 @@
                 <!-- ============================================================== -->
                 <!-- End Right sidebar -->
                 <!-- ============================================================== -->
+                <!--Modal huỷ đơn hàng-->
+                <div class="modal fade" id="model-cancel-order" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Lý do huỷ đơn</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="image-upload-form" action="/admin/bill/cancel-order/{{bill.don_hang_id}}"
+                                    method="POST">
+                                    <div class="form-group">
+                                        <label for="image-upload" class="title-form">Nội dung</label>
+                                        <input type="text" data-toggle="tooltip" title="" class="form-control"
+                                            id="validationDefault05" placeholder="Nhập nội dung huỷ đơn hàng"
+                                            required="" data-original-title="A Tooltip for the input !" name="reason">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Huỷ</button>
+                                        <button style="color: white;" type="submit" class="btn-delete-confirm" id="upload-image">Huỷ đơn</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <!-- ============================================================== -->
             <!-- End Container fluid  -->
@@ -435,9 +455,9 @@
         /****************************************
          *       Basic Table                   *
          ****************************************/
-        $('#myTable').DataTable();
+        $('#').DataTable();
     </script>
-    <script src="/dist/js/size.js"></script>
+    <script src="/dist/js/bill-detail.js"></script>
 </body>
 
 </html>

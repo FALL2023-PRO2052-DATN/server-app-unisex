@@ -275,15 +275,14 @@
                                                 thành công</a>
                                             {{/equal}}
                                             {{#equal this.tinh_trang_giao_hang "Đã hủy"}}
-                                            <a href="" class="badge badge-light">Đã huỷ</a>
+                                            <a href="" class="badge badge-light" style="font-size: 13px;">Đã huỷ</a>
                                             {{/equal}}
                                         </td>
                                         <td style="width: 10%;">{{formatCurrency this.thanh_tien}}</td>
                                         <td style="width: 10%;">
-                                            <button type="button" class="button-26" data-toggle="modal"
-                                                data-target="#update-discount-modal">
+                                            <a type="button" style="color: white;" class="button-26" href="/admin/bill/{{this.id}}">
                                                 Xem chi tiết
-                                            </button>
+                                            </a>
                                         </td>
                                     </tr>
                                     {{/each}}

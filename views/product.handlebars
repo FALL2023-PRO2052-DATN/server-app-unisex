@@ -77,9 +77,7 @@
             </nav>
         </header>
         <aside class="left-sidebar" data-sidebarbg="skin5">
-            <!-- Sidebar scroll-->
             <div class="scroll-sidebar">
-                <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav" class="p-t-30">
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/"
@@ -103,7 +101,8 @@
                                             class="mdi mdi-format-list-bulleted"></i><span class="hide-menu"> Danh sách
                                             sản phẩm </span></a></li>
                                 <li class="sidebar-item"><a href="/admin/product-size" class="sidebar-link"><i
-                                            class="mdi mdi-table-edit"></i><span class="hide-menu"> Quản lý kho </span></a>
+                                            class="mdi mdi-table-edit"></i><span class="hide-menu"> Quản lý kho
+                                        </span></a>
                                 </li>
                                 <li class="sidebar-item"><a href="/admin/size" class="sidebar-link"><i
                                             class="mdi mdi-move-resize"></i><span class="hide-menu"> Kích thước sản phẩm
@@ -111,7 +110,7 @@
                             </ul>
                         </li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="bill.html" aria-expanded="false"><i class="mdi mdi-truck"></i><span
+                                href="/admin/bill" aria-expanded="false"><i class="mdi mdi-truck"></i><span
                                     class="hide-menu">Đơn hàng</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="/admin/discount" aria-expanded="false"><i class="mdi mdi-blur-linear"></i><span
@@ -126,9 +125,7 @@
                                     class="hide-menu">Doanh thu</span></a></li>
                     </ul>
                 </nav>
-                <!-- End Sidebar navigation -->
             </div>
-            <!-- End Sidebar scroll-->
         </aside>
         <div class="page-wrapper">
             <div class="container-fluid">
@@ -153,7 +150,8 @@
                         <div class="card" style="padding: 20px;">
                             <div class="card-body-cus">
                                 <h5 class="card-title m-b-0">Danh sách sản phẩm</h5>
-                                <a href="/admin/product/create" class="button-26" style="color: white;">Thêm sản phẩm</a>
+                                <a href="/admin/product/create" class="button-26" style="color: white;">Thêm sản
+                                    phẩm</a>
                             </div>
                             <table class="table" id="myTable" style="width: 100%;">
                                 <thead>
@@ -193,7 +191,8 @@
                                         <td style="width: 5%;">{{checkSize this.kich_thuoc}}</td>
                                         <td style="width: 5%;">{{this.ten_danh_muc}}</td>
                                         <td style="width: 10%;">
-                                            <a type="button" class="btn-update" style="color: white;" href="/admin/product/update/{{this.san_pham_id}}">
+                                            <a type="button" class="btn-update" style="color: white;"
+                                                href="/admin/product/update/{{this.san_pham_id}}">
                                                 Cập nhật
                                             </a>
                                             <button type="button" class="btn-delete" data-toggle="modal"

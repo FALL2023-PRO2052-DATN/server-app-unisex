@@ -37,3 +37,12 @@ Handlebars.registerHelper('formatDate', function (date) {
 Handlebars.registerHelper('calculateIndex', function (index) {
     return index + 1;
 });
+
+// Hàm tính tổng tiền hoá đơn chi tiết
+Handlebars.registerHelper('calculateTotalAmount', function (billsDetail) {
+    let totalAmount = 0;
+    billsDetail.forEach(function (billDetail) {
+        totalAmount += billDetail.don_gia;
+    });
+    return totalAmount;
+});
