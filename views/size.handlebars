@@ -244,7 +244,7 @@
                             <table class="table" id="myTable" style="width: 100%;">
                                 <thead>
                                     <tr>
-                                        <th scope="col">ID</th>
+                                        <th scope="col">STT</th>
                                         <th scope="col">Tên kích thước (Size)</th>
                                         <th scope="col">Mô tả</th>
                                         <th scope="col">Tác vụ</th>
@@ -253,7 +253,8 @@
                                 <tbody>
                                     {{#each sizes}}
                                     <tr>
-                                        <th scope="row" style="width: 10%;">{{this.id}}</th>
+                                        <input type="hidden" name="" id="" value="{{this.id}}">
+                                        <th scope="row" style="width: 10%;">{{calculateIndex @index}}</th>
                                         <td style="width: 30%;">Size {{this.ten_kich_thuoc}}</td>
                                         <td style="width: 30%;">{{this.mo_ta_chi_tiet}}</td>
                                         <td style="width: 30%;">
@@ -390,19 +391,9 @@
                 <!-- End Right sidebar -->
                 <!-- ============================================================== -->
             </div>
-            <!-- ============================================================== -->
-            <!-- End Container fluid  -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- footer -->
-            <!-- ============================================================== -->
             <footer class="footer text-center">
-                All Rights Reserved by Matrix-admin. Designed and Developed by <a
-                    href="https://wrappixel.com">WrapPixel</a>.
+                Unisex Store - Thời trang cho mọi người <a href="">Unisex.com</a>.
             </footer>
-            <!-- ============================================================== -->
-            <!-- End footer -->
-            <!-- ============================================================== -->
         </div>
         <!-- ============================================================== -->
         <!-- End Page wrapper  -->

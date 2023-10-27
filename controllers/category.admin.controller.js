@@ -1,6 +1,12 @@
 const categoryAdminModel = require('../models/category.admin.model.js');
+const productAdminModel = require('../models/product.admin.model.js');
 
-// Kiểm tra danh mục tồn tại
+/**
+ * Hàm kiểm tra tên danh mục có tồn tại hay không
+ * @param {*} categories danh sách danh mục cần kiểm tra
+ * @param {*} name tên danh mục cần kiểm tra
+ * @returns true => tồn tại, false => không tồn tại
+ */
 const isCategoryExist = (categories, name) => {
     return categories.some((category) => category.ten_danh_muc === name);
 }
@@ -12,7 +18,7 @@ const handleError = (res, error) => {
 
 const pageAdminCategory = async (req, res) => {
     try {
-        const categories = await categoryAdminModel.getAll();
+        const categories = await categoryAdminModel.getAllCategories();
         res.status(200).render('category', { categories });
     } catch (error) {
         handleError(res, error);
@@ -22,7 +28,7 @@ const pageAdminCategory = async (req, res) => {
 const insertCategory = async (req, res) => {
     try {
         const { name } = req.body;
-        const categories = await categoryAdminModel.getAll();
+        const categories = await categoryAdminModel.getAllCategories();
 
         if (isCategoryExist(categories, name)) {
             req.flash('warning', 'Thêm không thành công. Tên danh mục đã tồn tại.');
@@ -40,7 +46,7 @@ const insertCategory = async (req, res) => {
 const updateCategory = async (req, res) => {
     try {
         const { id, name } = req.body;
-        const categories = await categoryAdminModel.getAll();
+        const categories = await categoryAdminModel.getAllCategories();
         const categoryToUpdate = categories.find((category) => category.id_danh_muc === parseInt(id, 10));
         const categoriesExceptCurrent = categories.filter((category) => category !== categoryToUpdate);
 
@@ -61,7 +67,7 @@ const updateCategory = async (req, res) => {
 const removeCategory = async (req, res) => {
     try {
         const { id } = req.body;
-        const productsWithCategory = await productModel.getAllByCategoryId(id);
+        const productsWithCategory = await productAdminModel.getAllProductsByCategoryId(id);
 
         if (productsWithCategory.length > 0) {
             req.flash('warning', 'Không thể xóa danh mục. Đã có sản phẩm thuộc danh mục này.');

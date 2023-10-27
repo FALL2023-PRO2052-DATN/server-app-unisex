@@ -249,7 +249,8 @@
                                 <tbody>
                                     {{#each productsSize}}
                                     <tr>
-                                        <th scope="row" style="width: 5%;">{{this.id}}</th>
+                                        <th scope="row" style="width:5%;">{{calculateIndex @index}}</th>
+                                        <input type="hidden" value="{{this.id}}">
                                         <td style="width: 5%;"><img id="img-table-cus" src="{{this.anh_dai_dien}}"
                                                 alt="Hình ảnh"></td>
                                         </td>

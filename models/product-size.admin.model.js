@@ -35,7 +35,7 @@ const getAllByProductId = async (idProduct) => {
     return await database.queryDatabase(query, [idProduct]);
 }
 
-const getAllBySizeId = async (id) => {
+const getProductSizesBySizeId = async (id) => {
     const query = `SELECT * FROM KichThuoc_SanPham WHERE kich_thuoc_id =? AND hienThi = 1`
     return await database.queryDatabase(query, [id]);
 }
@@ -83,7 +83,7 @@ const removeByProductId = async (idProduct) => {
 module.exports = {
     getAll,
     getAllByProductId,
-    getAllBySizeId,
+    getProductSizesBySizeId,
     insert,
     update,
     updateQuatity,

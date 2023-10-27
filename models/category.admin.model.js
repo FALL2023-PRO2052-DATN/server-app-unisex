@@ -1,6 +1,6 @@
 const database = require('../database/database.js');
 
-const getAll = async () => {
+const getAllCategories = async () => {
     const query = `SELECT
                     dm.id AS id_danh_muc,
                     dm.ten_danh_muc AS ten_danh_muc,
@@ -22,21 +22,18 @@ const insert = async (name) => {
 }
 
 const update = async (data) => {
-    const values = [
-        data.name,
-        data.id
-    ];
+    const values = [data.name, data.id];
     const query = `UPDATE DanhMuc SET ten_danh_muc = ? WHERE id = ?`;
     return await database.queryDatabase(query, values);
 }
 
 const remove = async (id) => {
     const query = `UPDATE DanhMuc SET hienThi = 0 WHERE id = ?`;
-    return await database.queryDatabase(query, id);
+    return await database.queryDatabase(query, [id]);
 }
 
 module.exports = {
-    getAll,
+    getAllCategories,
     insert,
     update,
     remove

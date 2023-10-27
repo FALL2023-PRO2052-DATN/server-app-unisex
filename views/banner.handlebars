@@ -150,7 +150,7 @@
                             <table class="table" id="myTable" style="width: 100%;">
                                 <thead>
                                     <tr>
-                                        <th scope="col">ID</th>
+                                        <th scope="col">STT</th>
                                         <th scope="col">Ảnh</th>
                                         <th scope="col">Tác vụ</th>
                                     </tr>
@@ -158,8 +158,9 @@
                                 <tbody>
                                     {{#each banners}}
                                     <tr>
-                                        <th scope="row" style="width: 20%;">{{this.id}}</th>
-                                        <td style="width: 400px; height: 200px ;"><img id="img-table-cus"
+                                        <input type="hidden" value="{{this.id}}">
+                                        <th scope="row" style="width: 50px;">{{calculateIndex @index}}</th>
+                                        <td style="width: 500px; height: 200px ;"><img id="img-table-cus"
                                                 src="{{this.anh_banner}}" alt="Hình ảnh" /></td>
                                         <td>
                                             <button type="button" class="btn-delete" data-toggle="modal"

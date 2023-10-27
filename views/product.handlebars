@@ -156,7 +156,7 @@
                             <table class="table" id="myTable" style="width: 100%;">
                                 <thead>
                                     <tr>
-                                        <th scope="col">ID</th>
+                                        <th scope="col">STT</th>
                                         <th scope="col">Ảnh</th>
                                         <th scope="col">Tên sản phẩm</th>
                                         <th scope="col">Giá bán</th>
@@ -172,7 +172,8 @@
                                 <tbody>
                                     {{#each products}}
                                     <tr>
-                                        <th scope="row" style="width: 5%;">{{this.san_pham_id}}</th>
+                                        <th scope="row" style="width: 5%;">{{calculateIndex @index}}</th>
+                                        <input type="hidden" value="{{this.san_pham_id}}">
                                         <td style="width: 10%;"><img id="img-table-cus" src="{{this.hinh_anh}}"
                                                 alt="Hình ảnh"></td>
                                         </td>

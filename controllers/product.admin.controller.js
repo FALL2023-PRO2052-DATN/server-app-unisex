@@ -20,8 +20,8 @@ const pageAdminProduct = async (req, res) => {
 
 const pageAdminAddProduct = async (req, res) => {
     try {
-        const sizes = await sizeAdminModel.getAll();
-        const categories = await categoryAdminModel.getAll();
+        const sizes = await sizeAdminModel.getAllSizes();
+        const categories = await categoryAdminModel.getAllCategories();
         res.status(200).render('add-product', { sizes, categories });
     } catch (error) {
         console.error(error);
@@ -72,8 +72,8 @@ const pageAdminUpdateProduct = async (req, res) => {
         const { id } = req.params;
         const productsSize = await productSizeAdminModel.getAllByProductId(id);
         const products = await productAdminModel.getAllById(id);
-        const categories = await categoryAdminModel.getAll();
-        const sizes = await sizeAdminModel.getAll();
+        const categories = await categoryAdminModel.getAllCategories();
+        const sizes = await sizeAdminModel.getAllSizes();
         res.status(200).render('update-product', { product: products[0], productsSize, categories, sizes });
     } catch (error) {
         console.error(error);

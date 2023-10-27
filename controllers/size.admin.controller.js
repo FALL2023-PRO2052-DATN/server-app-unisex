@@ -1,7 +1,12 @@
 const sizeAdminModel = require('../models/size.admin.model.js');
 const productSizeAdminModel = require('../models/product-size.admin.model.js');
 
-// Kiểm tra kích thước tồn tại
+/**
+ * Hàm kiểm tra tên kích thước có tồn tại hay không
+ * @param {*} sizes Danh sách kích thước cần kiếm tra
+ * @param {*} name Tên kích thước cần kiếm tra
+ * @returns true => tồn tại, false => không tồn tại
+ */
 const isSizeExist = (sizes, name) => {
     return sizes.some((size) => size.ten_kich_thuoc === name);
 }
@@ -13,7 +18,7 @@ const handleError = (res, error) => {
 
 const pageAdminSize = async (req, res) => {
     try {
-        const sizes = await sizeAdminModel.getAll();
+        const sizes = await sizeAdminModel.getAllSizes();
         res.status(200).render('size', { sizes });
     } catch (error) {
         handleError(res, error);
@@ -23,7 +28,7 @@ const pageAdminSize = async (req, res) => {
 const insertSize = async (req, res) => {
     try {
         const { name, description } = req.body;
-        const sizes = await sizeAdminModel.getAll();
+        const sizes = await sizeAdminModel.getAllSizes();
 
         if (isSizeExist(sizes, name)) {
             req.flash('warning', 'Thêm không thành công. Tên kích thước đã tồn tại.');
@@ -42,7 +47,7 @@ const insertSize = async (req, res) => {
 const updateSize = async (req, res) => {
     try {
         const { id, name, description } = req.body;
-        const sizes = await sizeAdminModel.getAll();
+        const sizes = await sizeAdminModel.getAllSizes();
         const sizeToUpdate = sizes.find((size) => size.id === parseInt(id, 10));
         const sizesExceptCurrent = sizes.filter((size) => size !== sizeToUpdate);
 
@@ -63,7 +68,7 @@ const updateSize = async (req, res) => {
 const removeSize = async (req, res) => {
     try {
         const { id } = req.body;
-        const productsWithSize = await productSizeAdminModel.getAllBySizeId(id);
+        const productsWithSize = await productSizeAdminModel.getProductSizesBySizeId(id);
 
         if (productsWithSize.length > 0) {
             req.flash('warning', 'Xoá kích thước không thành công. Đã có sản phẩm thuộc kích thước này.');

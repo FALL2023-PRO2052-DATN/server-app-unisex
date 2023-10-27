@@ -323,7 +323,11 @@
                                     </p>
                                     <h5 class="card-title">Giảm giá</h5>
                                     <p class="card-text">
+                                        {{#equal bill.giam_gia_id null}}
+                                        Không áp dụng mã giảm giá
+                                        {{else}}
                                         {{bill.gia_tri}}%
+                                        {{/equal}}
                                     </p>
                                     <h5 class="card-title">Tổng thanh toán</h5>
                                     <p class="card-text">
@@ -402,7 +406,8 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">Huỷ</button>
-                                        <button style="color: white;" type="submit" class="btn-delete-confirm" id="upload-image">Huỷ đơn</button>
+                                        <button style="color: white;" type="submit" class="btn-delete-confirm"
+                                            id="upload-image">Huỷ đơn</button>
                                     </div>
                                 </form>
                             </div>

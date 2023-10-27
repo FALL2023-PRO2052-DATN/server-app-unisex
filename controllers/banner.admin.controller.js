@@ -35,8 +35,11 @@ const insertBanner = async (req, res) => {
                 if (imageUrl) {
                     await bannerAdminModel.insert(imageUrl);
                     req.flash('success', 'Thêm banner thành công.');
-                    res.status(200).redirect('/admin/banner');
+                } else {
+                    req.flash('error', 'Thêm banner không thành công.');
                 }
+                
+                res.status(200).redirect('/admin/banner');
             } catch (error) {
                 handleError(res, error);
             }
