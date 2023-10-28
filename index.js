@@ -9,6 +9,10 @@ const productRouter = require('./routers/product.user.roters')
 const typeProductRouter = require('./routers/typeProduct.user.routers')
 const commentRouter = require('./routers/comment.user.routers')
 const cartRouter = require('./routers/cart.user.routers')
+const addressRouter = require('./routers/address.user.routers')
+const discountRouter = require('./routers/discount.user.routers')
+const orderRouter = require('./routers/order.user.routers')
+const billRouter = require('./routers/bill.user.routers')
 
 const app = express();
 
@@ -30,8 +34,13 @@ app.use("/api", userRouter)
 app.use("/api", bannerRouter)
 app.use("/api", productRouter)
 app.use("/api", typeProductRouter)
+
 app.use("/api", commentRouter)
 app.use("/api", cartRouter)
+app.use("/api", addressRouter)
+app.use("/api", discountRouter)
+app.use("/api", orderRouter)
+app.use("/api", billRouter)
 //
 const port = 3000;
 app.listen(port, () => {
