@@ -15,7 +15,7 @@ const readAddress = (req, res) => {
     })
 }
 const insertAddress = (req, res) => {
-    const {id, fullname, email, phone, address, defaultStatus, userId } = req.body;
+    const { id, fullname, email, phone, address, defaultStatus, userId } = req.body;
     const queryInsert = "INSERT INTO DiaChi(ho_va_ten, email, dien_thoai, dia_chi, mac_dinh, nguoi_dung_id) VALUE (?,?,?,?,?,?)"
     const queryUpdate = "UPDATE DiaChi SET mac_dinh = 0 WHERE id = ?"
     connection.con.beginTransaction((err) => {
@@ -25,34 +25,36 @@ const insertAddress = (req, res) => {
         }
     })
 
-    connection.con.query(queryInsert, [fullname, email, phone, address,defaultStatus, userId], (err, results) => {
-        if(err){
-            connection.con.rollback(()=>{
-                res.json({status: "ERROR", err});
+    connection.con.query(queryInsert, [fullname, email, phone, address, defaultStatus, userId], (err, results) => {
+        if (err) {
+            connection.con.rollback(() => {
+                res.json({ status: "ERROR", err });
             });
-        }else{
-            if(defaultStatus == 1){
-                connection.con.query(queryUpdate, [id], (err, insertResults) =>{
-                    if(err){
+        } else {
+            if (defaultStatus == 1) {
+                connection.con.query(queryUpdate, [id], (err, insertResults) => {
+                    if (err) {
                         connection.con.rollback(() => {
-                            res.json({status: "ERROR", err});
+                            res.json({ status: "ERROR", err });
                         });
-                    }else{
+                    } else {
                         connection.con.commit((err) => {
-                            if(err){
+                            if (err) {
                                 res.json(err)
-                            }else{
-                                res.json({status: "SUCCESS"})
+                            } else {
+                                res.json({ status: "SUCCESS" })
                             }
                         });
                     }
                 });
-            }else{
+            } else {
                 connection.con.commit((err) => {
-                    if(err){
-                        res.json(err)
-                    }else{
-                        res.json({status: "SUCCESS"})
+                    if (err) {
+                        connection.con.rollback(() => {
+                            res.json({ status: "ERROR", err: err.sqlMessage });
+                        });
+                    } else {
+                        res.json({ status: "SUCCESS" });
                     }
                 });
             }
@@ -61,44 +63,46 @@ const insertAddress = (req, res) => {
 }
 
 const updateAddress = (req, res) => {
-    const {fullname, email, phone, address, defaultStatus, id} = req.body;
-    const queryUpdateBefore = "UPDATE DiaChi SET id = ?, ho_va_ten = ?, email = ?, dien_thoai = ?, dia_chi = ?, mac_dinh = ? WHERE id = ? "
+    const { fullname, email, phone, address, defaultStatus, id, idDefault } = req.body;
+    const queryUpdateBefore = "UPDATE DiaChi SET ho_va_ten = ?, email = ?, dien_thoai = ?, dia_chi = ?, mac_dinh = ? WHERE id = ? "
     const queryUpdateLater = "UPDATE DiaChi SET mac_dinh = 0 WHERE id = ?"
-    connection.con.beginTransaction((err)=>{
-        if(err){
-            res.json({status: "ERROR", err});
+    connection.con.beginTransaction((err) => {
+        if (err) {
+            res.json({ status: "ERROR", err });
             return;
         }
     })
 
-    connection.con.query(queryUpdateBefore, [id, fullname, email, phone, address, defaultStatus], (err, results)=>{
-        if(err){
-            connection.con.rollback(() =>{
-                res.json({status: "ERROR", err});
+    connection.con.query(queryUpdateBefore, [fullname, email, phone, address, defaultStatus, id], (err, results) => {
+        if (err) {
+            connection.con.rollback(() => {
+                res.json({ status: "ERROR", err });
             });
-        }else{
-            if(defaultStatus == 1){
-                connection.con.query(queryUpdateLater, [id], (err, updateResults) => {
-                    if(err){
+        } else {
+            if (defaultStatus == 1 && idDefault != id) {
+                connection.con.query(queryUpdateLater, [idDefault], (err, updateResults) => {
+                    if (err) {
                         connection.con.rollback(() => {
-                            res.json({status: "ERROR", err});
+                            res.json({ status: "ERROR", err });
                         });
-                    }else{
+                    } else {
                         connection.con.commit((err) => {
-                            if(err){
+                            if (err) {
                                 res.json(err)
-                            }else{
-                                res.json({status: "SUCCESS"})
+                            } else {
+                                res.json({ status: "SUCCESS" })
                             }
                         });
                     }
                 });
-            }else{
-                connection.con.commit((err) =>{
-                    if(err){
-                        res.json(err)
-                    }else{
-                        res.json({status: "SUCCESS"})
+            } else {
+                connection.con.commit((err) => {
+                    if (err) {
+                        connection.con.rollback(() => {
+                            res.json({ status: "ERROR", err: err.sqlMessage });
+                        });
+                    } else {
+                        res.json({ status: "SUCCESS" });
                     }
                 });
             }
@@ -110,10 +114,10 @@ const deleteAddress = (req, res) => {
     const { id } = req.body
     const query = "UPDATE DiaChi SET hienThi = 0 WHERE id = ?"
     connection.con.query(query, [id], (err, results) => {
-        if(err){
-            res.json({status: "ERROR", err})
-        }else{
-            res.json({status: "SUCCESS", addressList: results})
+        if (err) {
+            res.json({ status: "ERROR", err })
+        } else {
+            res.json({ status: "SUCCESS", addressList: results })
         }
     })
 }
