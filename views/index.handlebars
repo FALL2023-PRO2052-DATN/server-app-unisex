@@ -207,13 +207,6 @@
             <!-- ============================================================== -->
             <!-- Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
-            <div class="page-breadcrumb">
-                <div class="row">
-                    <div class="col-12 d-flex no-block align-items-center">
-                        <h4 class="page-title">Tổng quan</h4>
-                    </div>
-                </div>
-            </div>
             <!-- ============================================================== -->
             <!-- End Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
@@ -221,44 +214,95 @@
             <!-- Container fluid  -->
             <!-- ============================================================== -->
             <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
                 <div class="row">
-                    <div class="col-sm">
-                        <div class="card" style="width: 18rem;">
-                            <div class="card-body">
-                                <h5 class="card-title">Danh mục sản phẩm</h5>
-                                <p class="card-text"> 5 Danh mục</p>
+                    <!-- Column -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card card-hover">
+                            <div class="box bg-cyan text-center">
+                                <h1 class="font-light text-white"><i class="mdi mdi-package-variant-closed"></i></h1>
+                                <h6 class="text-white">200 sản phẩm</h6>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm">
-                        <div class="card" style="width: 18rem;">
-                            <div class="card-body">
-                                <h5 class="card-title">Sản phẩm</h5>
-                                <p class="card-text"> 105 Sản phẩm</p>
+                    <!-- Column -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card card-hover">
+                            <div class="box bg-danger text-center">
+                                <h1 class="font-light text-white"><i class="mdi mdi-table-edit"></i></h1>
+                                <h6 class="text-white">1000 sản phâm tồn kho</h6>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm">
-                        <div class="card" style="width: 18rem;">
-                            <div class="card-body">
-                                <h5 class="card-title">Mã giảm giá</h5>
-                                <p class="card-text"> 5 mã giảm giá</p>
+                    <!-- Column -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card card-hover">
+                            <div class="box bg-success text-center">
+                                <h1 class="font-light text-white"><i class="mdi mdi-truck"></i></h1>
+                                <h6 class="text-white">200 đơn hàng đã thanh toán</h6>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm">
-                        <div class="card" style="width: 18rem;">
-                            <div class="card-body">
-                                <h5 class="card-title">Đánh giá</h5>
-                                <p class="card-text"> 200 lượt đánh giá</p>
+                    <!-- Column -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card card-hover">
+                            <div class="box bg-warning text-center">
+                                <h1 class="font-light text-white"><i class="mdi mdi-truck"></i></h1>
+                                <h6 class="text-white">100 chờ xác nhận</h6>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm">
-                        <div class="card" style="width: 18rem;">
-                            <div class="card-body">
-                                <h5 class="card-title">Bán hàng</h5>
-                                <p class="card-text"> 200 sản phẩm đã được bán ra</p>
+                </div>
+                <div class="row">
+                    <div class="col-md-7" id="revenueChart-layout">
+                        <div class="card" style="padding: 20px;">
+                            <div class="card-body-cus">
+                                <h5 class="card-title m-b-0">Doanh thu</h5>
+                                <select class="form-control form-control-sm" style="width: auto; height: 22px;">
+                                    <option selected>Chọn năm</option>
+                                    <option>2020</option>
+                                    <option>2021</option>
+                                    <option>2022</option>
+                                    <option>2023</option>
+                                    <option>2024</option>
+                                </select>
+                            </div>
+                            <div class="card-group" style="margin-left: 10px; margin-right: 10px;">
+                                <canvas id="revenueChart" height="400"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5" id="myChart-layout">
+                        <div class="card" style="padding: 20px;">
+                            <div class="card-body-cus">
+                                <h5 class="card-title m-b-0">Đơn hàng</h5>
+                            </div>
+                            <div class="card-group" style="margin-left: 10px; margin-right: 10px;">
+                                <canvas id="myChart" height="400"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card" style="padding: 20px;">
+                            <div class="card-body-cus">
+                                <h5 class="card-title m-b-0">Đánh giá sản phẩm</h5>
+                            </div>
+                            <div class="card-group" style="margin-left: 10px; margin-right: 10px;">
+                                <canvas id="ratingChart" height="300"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card" style="padding: 20px;">
+                            <div class="card-body-cus">
+                                <h5 class="card-title m-b-0">Thống kê tồn kho</h5>
+                            </div>
+                            <div class="card-group" style="margin-left: 10px; margin-right: 10px;">
+                                <canvas id="inventoryChart" height="300"></canvas>
                             </div>
                         </div>
                     </div>
@@ -288,30 +332,240 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
-    <script src="/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="assets/libs/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
-    <script src="/assets/libs/popper.js/dist/umd/popper.min.js"></script>
-    <script src="/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
-    <script src="/assets/extra-libs/sparkline/sparkline.js"></script>
+    <script src="assets/libs/popper.js/dist/umd/popper.min.js"></script>
+    <script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <script src="assets/extra-libs/sparkline/sparkline.js"></script>
     <!--Wave Effects -->
-    <script src="/dist/js/waves.js"></script>
+    <script src="dist/js/waves.js"></script>
     <!--Menu sidebar -->
-    <script src="/dist/js/sidebarmenu.js"></script>
+    <script src="dist/js/sidebarmenu.js"></script>
     <!--Custom JavaScript -->
-    <script src="/dist/js/custom.min.js"></script>
-    <!--This page JavaScript -->
-    <!-- <script src="dist/js/pages/dashboards/dashboard1.js"></script> -->
-    <!-- Charts js Files -->
-    <script src="/assets/libs/flot/excanvas.js"></script>
-    <script src="/assets/libs/flot/jquery.flot.js"></script>
-    <script src="/assets/libs/flot/jquery.flot.pie.js"></script>
-    <script src="/assets/libs/flot/jquery.flot.time.js"></script>
-    <script src="/assets/libs/flot/jquery.flot.stack.js"></script>
-    <script src="/assets/libs/flot/jquery.flot.crosshair.js"></script>
-    <script src="/assets/libs/flot.tooltip/js/jquery.flot.tooltip.min.js"></script>
-    <script src="/dist/js/pages/chart/chart-page-init.js"></script>
+    <script src="dist/js/custom.min.js"></script>
+    <!-- this page js -->
+    <script src="assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
+    <script src="assets/extra-libs/multicheck/jquery.multicheck.js"></script>
+    <script src="assets/extra-libs/DataTables/datatables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        /****************************************
+         *       Basic Table                   *
+         ****************************************/
+        $('#zero_config').DataTable();
+    </script>
+    <script>
+        // Dữ liệu về đơn hàng
+        const orderData = [
+            { status: 'Chờ xác nhận', payment: 'Đã thanh toán', count: 10 },
+            { status: 'Chờ lấy hàng', payment: 'Chưa thanh toán', count: 15 },
+            { status: 'Chờ xác nhận', payment: 'Chưa thanh toán', count: 8 },
+            { status: 'Đã giao hàng', payment: 'Đã thanh toán', count: 20 },
+            { status: 'Đã huỷ', payment: 'Chưa thanh toán', count: 5 },
+            // Thêm các dữ liệu khác
+        ];
 
+        // Tạo dữ liệu cho biểu đồ
+        const chartData = {
+            labels: ['Chờ xác nhận', 'Chờ lấy hàng', 'Đã giao hàng', 'Đã huỷ'],
+            datasets: [
+                {
+                    label: 'Đã thanh toán',
+                    data: [10, 2, 20, 0],
+                    backgroundColor: '#3874ff' // Màu xanh nhạt
+                },
+                {
+                    label: 'Chưa thanh toán',
+                    data: [8, 15, 0, 5],
+                    backgroundColor: '#e5edff' // Màu xanh đậm
+                }
+            ],
+        };
+        // Tạo biểu đồ cột xếp chồng
+        // Tạo biểu đồ cột nhóm
+        const ctx = document.getElementById('myChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: chartData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { stacked: true },
+                    y: { beginAtZero: true },
+                },
+            },
+        });
+
+    </script>
+    <script>
+        // Dữ liệu doanh thu cho 12 tháng (điều này cần phải là dữ liệu thực tế)
+        const revenueData = [1000, 1500, 2000, 2500, 3000, 3500, 2800, 3200, 3800, 4200, 4600, 5000];
+
+        // Lấy thẻ canvas bằng id
+        const ctx1 = document.getElementById('revenueChart').getContext('2d');
+
+        // Cấu hình biểu đồ sử dụng Chart.js
+        const chart = new Chart(ctx1, {
+            type: 'line', // Loại biểu đồ (có thể sử dụng 'bar' cho biểu đồ cột)
+            data: {
+                labels: ['Th1', 'Th2', 'Th3', 'Th4', 'Th5', 'Th6', 'Th7', 'Th8', 'Th9', 'Th10', 'Th11', 'Th12'],
+                datasets: [
+                    {
+                        label: 'Doanh thu 12 tháng',
+                        data: revenueData,
+                        borderColor: '#3874ff', // Màu của đường biểu đồ
+                        borderWidth: 2, // Độ dày của đường biểu đồ
+                    },
+                ],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+
+    <script>
+        const ratings = [5, 4, 3, 2, 1]; // Đánh giá từ 5 sao đến 1 sao
+        const ratingCounts = [10, 25, 30, 15, 5]; // Số lượng đánh giá cho mỗi mức đánh giá
+
+        const ctx2 = document.getElementById('ratingChart').getContext('2d');
+
+        new Chart(ctx2, {
+            type: 'pie',
+            data: {
+                labels: ratings.map(rating => `${rating} sao`),
+                datasets: [{
+                    data: ratingCounts,
+                    backgroundColor: ['#3874ff', '#00A9FF', '#89CFF3', '#A0E9FF', '#CDF5FD'],
+                }],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                title: {
+                    display: true,
+                    text: 'Biểu đồ đánh giá sản phẩm',
+                },
+            },
+        });
+
+    </script>
+
+
+    <script>
+        // Dữ liệu số lượng tồn kho của sản phẩm
+        const productData = [
+            { name: 'Áo sơ mi', inventory: 100 },
+            { name: 'Sản phẩm B', inventory: 75 },
+            { name: 'Sản phẩm C', inventory: 120 },
+            { name: 'Sản phẩm A', inventory: 100 },
+            { name: 'Sản phẩm B', inventory: 75 },
+            { name: 'Sản phẩm C', inventory: 120 },
+            { name: 'Sản phẩm A', inventory: 100 },
+            { name: 'Sản phẩm B', inventory: 75 },
+            { name: 'Sản phẩm C', inventory: 120 },
+            { name: 'Sản phẩm A', inventory: 100 },
+            { name: 'Sản phẩm B', inventory: 75 },
+            { name: 'Sản phẩm C', inventory: 120 },
+            { name: 'Sản phẩm A', inventory: 100 },
+            { name: 'Sản phẩm B', inventory: 75 },
+            { name: 'Sản phẩm C', inventory: 120 },
+            { name: 'Sản phẩm A', inventory: 100 },
+            { name: 'Sản phẩm B', inventory: 75 },
+            { name: 'Sản phẩm C', inventory: 120 },
+            { name: 'Sản phẩm A', inventory: 100 },
+            { name: 'Sản phẩm B', inventory: 75 },
+            { name: 'Sản phẩm C', inventory: 120 },
+            { name: 'Sản phẩm A', inventory: 100 },
+            { name: 'Sản phẩm B', inventory: 75 },
+            { name: 'Sản phẩm C', inventory: 120 },
+            { name: 'Sản phẩm A', inventory: 100 },
+            { name: 'Sản phẩm B', inventory: 75 },
+            { name: 'Sản phẩm C', inventory: 120 },
+            { name: 'Sản phẩm A', inventory: 100 },
+            { name: 'Sản phẩm B', inventory: 75 },
+            { name: 'Sản phẩm C', inventory: 120 },
+            { name: 'Sản phẩm A', inventory: 100 },
+            { name: 'Sản phẩm B', inventory: 75 },
+            { name: 'Sản phẩm C', inventory: 120 },
+            { name: 'Sản phẩm A', inventory: 100 },
+            { name: 'Sản phẩm B', inventory: 75 },
+            { name: 'Sản phẩm C', inventory: 120 },
+            { name: 'Sản phẩm A', inventory: 100 },
+            { name: 'Sản phẩm B', inventory: 75 },
+            { name: 'Sản phẩm C', inventory: 120 },
+            { name: 'Sản phẩm A', inventory: 100 },
+            { name: 'Sản phẩm B', inventory: 75 },
+            { name: 'Sản phẩm C', inventory: 120 },
+            { name: 'Sản phẩm A', inventory: 100 },
+            { name: 'Sản phẩm B', inventory: 75 },
+            { name: 'Sản phẩm C', inventory: 120 },
+            { name: 'Sản phẩm A', inventory: 100 },
+            { name: 'Sản phẩm B', inventory: 75 },
+            { name: 'Sản phẩm C', inventory: 120 },
+            { name: 'Sản phẩm A', inventory: 100 },
+            { name: 'Sản phẩm B', inventory: 75 },
+            { name: 'Sản phẩm C', inventory: 120 },
+            { name: 'Sản phẩm A', inventory: 100 },
+            { name: 'Sản phẩm B', inventory: 75 },
+            { name: 'Sản phẩm C', inventory: 120 },
+            { name: 'Sản phẩm A', inventory: 100 },
+            { name: 'Sản phẩm B', inventory: 75 },
+            { name: 'Sản phẩm C', inventory: 120 },
+            { name: 'Sản phẩm A', inventory: 100 },
+            { name: 'Sản phẩm B', inventory: 75 },
+            { name: 'Sản phẩm C', inventory: 120 },
+
+            // ...Thêm hàng trăm sản phẩm khác
+        ];
+
+        // Tạo mảng tên sản phẩm và mảng số lượng tồn kho
+        const productNames = productData.map(item => item.name);
+        const inventoryCounts = productData.map(item => item.inventory);
+
+        // Lấy thẻ canvas
+        const ctx3 = document.getElementById('inventoryChart').getContext('2d');
+
+        // Tạo biểu đồ cột dọc
+        new Chart(ctx3, {
+            type: 'bar',
+            data: {
+                labels: productNames, // Tên sản phẩm
+                datasets: [{
+                    label: 'Số lượng tồn kho',
+                    data: inventoryCounts, // Số lượng tồn kho
+                    backgroundColor: '#3874ff', // Màu cho cột
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+
+                    x: {
+                        ticks: {
+                            maxRotation: 90,
+                            minRotation: 80
+                        }
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 
 </html>
