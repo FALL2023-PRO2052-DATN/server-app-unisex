@@ -20,8 +20,26 @@ const remove = async (id) => {
   const query = `UPDATE DanhGia SET hienThi = 0 WHERE id=?`;
   return await database.queryDatabase(query, [id]);
 };
+// Đếm điểm đánh giá theo sao ví dụ 5 4 3 2 1 theo nhóm
+const getRatingCounts = async () => {
+  const query = `SELECT
+    CASE
+      WHEN diem_danh_gia > 4 THEN 5
+      WHEN diem_danh_gia > 3 THEN 4
+      WHEN diem_danh_gia > 2 THEN 3
+      WHEN diem_danh_gia > 1 THEN 2
+      ELSE 1
+    END AS diem,
+    COUNT(*) AS so_luong
+  FROM shop_clothes.DanhGia
+  GROUP BY diem
+  ORDER BY diem DESC;
+  `;
+  return await database.queryDatabase(query, []);
+}
 
 module.exports = {
   getAll,
   remove,
+  getRatingCounts
 };

@@ -80,6 +80,31 @@ const removeByProductId = async (idProduct) => {
     return await database.queryDatabase(query, [idProduct]);
 }
 
+// Lấy tổng số lượng tồn kho
+const getTotalStock = async () => {
+    const query = `SELECT SUM(so_luong_ton_kho) AS tong_ton_kho
+    FROM shop_clothes.KichThuoc_SanPham WHERE hienThi = 1`;
+    return await database.queryDatabase(query, []);
+}
+
+const getProductStockByGroup = async () => {
+    const query = `SELECT
+    SP.ten_san_pham,
+    SUM(KTSP.so_luong_ton_kho) AS tong_ton_kho
+FROM
+    shop_clothes.SanPham SP
+INNER JOIN
+    shop_clothes.KichThuoc_SanPham KTSP ON SP.id = KTSP.san_pham_id
+INNER JOIN
+    shop_clothes.KichThuoc KT ON KTSP.kich_thuoc_id = KT.id
+WHERE
+    KTSP.hienThi = 1
+GROUP BY
+    SP.ten_san_pham;
+`;
+    return await database.queryDatabase(query, []);
+}
+
 module.exports = {
     getAll,
     getAllByProductId,
@@ -89,4 +114,6 @@ module.exports = {
     updateQuatity,
     removeById,
     removeByProductId,
+    getTotalStock,
+    getProductStockByGroup
 }

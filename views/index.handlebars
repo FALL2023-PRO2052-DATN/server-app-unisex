@@ -223,7 +223,7 @@
                         <div class="card card-hover">
                             <div class="box bg-cyan text-center">
                                 <h1 class="font-light text-white"><i class="mdi mdi-package-variant-closed"></i></h1>
-                                <h6 class="text-white">200 sản phẩm</h6>
+                                <h6 class="text-white">{{products.length}} sản phẩm</h6>
                             </div>
                         </div>
                     </div>
@@ -232,7 +232,7 @@
                         <div class="card card-hover">
                             <div class="box bg-danger text-center">
                                 <h1 class="font-light text-white"><i class="mdi mdi-table-edit"></i></h1>
-                                <h6 class="text-white">1000 sản phâm tồn kho</h6>
+                                <h6 class="text-white">{{tong_ton_kho}} sản phâm tồn kho</h6>
                             </div>
                         </div>
                     </div>
@@ -241,7 +241,7 @@
                         <div class="card card-hover">
                             <div class="box bg-success text-center">
                                 <h1 class="font-light text-white"><i class="mdi mdi-truck"></i></h1>
-                                <h6 class="text-white">200 đơn hàng đã thanh toán</h6>
+                                <h6 class="text-white">{{billsIsPaid.length}} đơn hàng đã thanh toán</h6>
                             </div>
                         </div>
                     </div>
@@ -250,7 +250,7 @@
                         <div class="card card-hover">
                             <div class="box bg-warning text-center">
                                 <h1 class="font-light text-white"><i class="mdi mdi-truck"></i></h1>
-                                <h6 class="text-white">100 chờ xác nhận</h6>
+                                <h6 class="text-white">{{billsUnConfirm.length}} chờ xác nhận</h6>
                             </div>
                         </div>
                     </div>
@@ -260,13 +260,14 @@
                         <div class="card" style="padding: 20px;">
                             <div class="card-body-cus">
                                 <h5 class="card-title m-b-0">Doanh thu</h5>
-                                <select class="form-control form-control-sm" style="width: auto; height: 22px;">
-                                    <option selected>Chọn năm</option>
-                                    <option>2020</option>
-                                    <option>2021</option>
-                                    <option>2022</option>
-                                    <option>2023</option>
-                                    <option>2024</option>
+                                <select id="selectYear" class="form-control form-control-sm"
+                                    style="width: auto; height: 22px;">
+                                    <option selected disabled>Chọn năm</option>
+                                    <option value="2020">2020</option>
+                                    <option value="2021">2021</option>
+                                    <option value="2022">2022</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2024">2024</option>
                                 </select>
                             </div>
                             <div class="card-group" style="margin-left: 10px; margin-right: 10px;">
@@ -334,21 +335,21 @@
     <!-- ============================================================== -->
     <script src="assets/libs/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
-    <script src="assets/libs/popper.js/dist/umd/popper.min.js"></script>
-    <script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/assets/libs/popper.js/dist/umd/popper.min.js"></script>
+    <script src="/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- slimscrollbar scrollbar JavaScript -->
-    <script src="assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
-    <script src="assets/extra-libs/sparkline/sparkline.js"></script>
+    <script src="/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <script src="/assets/extra-libs/sparkline/sparkline.js"></script>
     <!--Wave Effects -->
-    <script src="dist/js/waves.js"></script>
+    <script src="/dist/js/waves.js"></script>
     <!--Menu sidebar -->
-    <script src="dist/js/sidebarmenu.js"></script>
+    <script src="/dist/js/sidebarmenu.js"></script>
     <!--Custom JavaScript -->
-    <script src="dist/js/custom.min.js"></script>
+    <script src="/dist/js/custom.min.js"></script>
     <!-- this page js -->
-    <script src="assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
-    <script src="assets/extra-libs/multicheck/jquery.multicheck.js"></script>
-    <script src="assets/extra-libs/DataTables/datatables.min.js"></script>
+    <script src="/assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
+    <script src="/assets/extra-libs/multicheck/jquery.multicheck.js"></script>
+    <script src="/assets/extra-libs/DataTables/datatables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         /****************************************
@@ -357,28 +358,21 @@
         $('#zero_config').DataTable();
     </script>
     <script>
-        // Dữ liệu về đơn hàng
-        const orderData = [
-            { status: 'Chờ xác nhận', payment: 'Đã thanh toán', count: 10 },
-            { status: 'Chờ lấy hàng', payment: 'Chưa thanh toán', count: 15 },
-            { status: 'Chờ xác nhận', payment: 'Chưa thanh toán', count: 8 },
-            { status: 'Đã giao hàng', payment: 'Đã thanh toán', count: 20 },
-            { status: 'Đã huỷ', payment: 'Chưa thanh toán', count: 5 },
-            // Thêm các dữ liệu khác
-        ];
-
         // Tạo dữ liệu cho biểu đồ
+        const unpaidBillsCounts = {{{ unpaidBillsCount }}}; // Số lượng đánh giá cho mỗi mức đánh giá
+        const paidBillsCounts = {{{ paidBillsCount }}}; // Số lượng đánh giá cho mỗi mức đánh giá
+
         const chartData = {
-            labels: ['Chờ xác nhận', 'Chờ lấy hàng', 'Đã giao hàng', 'Đã huỷ'],
+            labels: ['Chờ xác nhận', 'Chờ lấy hàng', 'Đang giao hàng', 'Đã giao hàng', 'Đã huỷ'],
             datasets: [
                 {
                     label: 'Đã thanh toán',
-                    data: [10, 2, 20, 0],
+                    data: paidBillsCounts,
                     backgroundColor: '#3874ff' // Màu xanh nhạt
                 },
                 {
                     label: 'Chưa thanh toán',
-                    data: [8, 15, 0, 5],
+                    data: unpaidBillsCounts,
                     backgroundColor: '#e5edff' // Màu xanh đậm
                 }
             ],
@@ -402,7 +396,7 @@
     </script>
     <script>
         // Dữ liệu doanh thu cho 12 tháng (điều này cần phải là dữ liệu thực tế)
-        const revenueData = [1000, 1500, 2000, 2500, 3000, 3500, 2800, 3200, 3800, 4200, 4600, 5000];
+        const revenueData = {{{ annualRevenues }}};
 
         // Lấy thẻ canvas bằng id
         const ctx1 = document.getElementById('revenueChart').getContext('2d');
@@ -437,7 +431,7 @@
 
     <script>
         const ratings = [5, 4, 3, 2, 1]; // Đánh giá từ 5 sao đến 1 sao
-        const ratingCounts = [10, 25, 30, 15, 5]; // Số lượng đánh giá cho mỗi mức đánh giá
+        const ratingCounts = {{{ ratingCount }}}; // Số lượng đánh giá cho mỗi mức đánh giá
 
         const ctx2 = document.getElementById('ratingChart').getContext('2d');
 
@@ -465,74 +459,11 @@
 
     <script>
         // Dữ liệu số lượng tồn kho của sản phẩm
-        const productData = [
-            { name: 'Áo sơ mi', inventory: 100 },
-            { name: 'Sản phẩm B', inventory: 75 },
-            { name: 'Sản phẩm C', inventory: 120 },
-            { name: 'Sản phẩm A', inventory: 100 },
-            { name: 'Sản phẩm B', inventory: 75 },
-            { name: 'Sản phẩm C', inventory: 120 },
-            { name: 'Sản phẩm A', inventory: 100 },
-            { name: 'Sản phẩm B', inventory: 75 },
-            { name: 'Sản phẩm C', inventory: 120 },
-            { name: 'Sản phẩm A', inventory: 100 },
-            { name: 'Sản phẩm B', inventory: 75 },
-            { name: 'Sản phẩm C', inventory: 120 },
-            { name: 'Sản phẩm A', inventory: 100 },
-            { name: 'Sản phẩm B', inventory: 75 },
-            { name: 'Sản phẩm C', inventory: 120 },
-            { name: 'Sản phẩm A', inventory: 100 },
-            { name: 'Sản phẩm B', inventory: 75 },
-            { name: 'Sản phẩm C', inventory: 120 },
-            { name: 'Sản phẩm A', inventory: 100 },
-            { name: 'Sản phẩm B', inventory: 75 },
-            { name: 'Sản phẩm C', inventory: 120 },
-            { name: 'Sản phẩm A', inventory: 100 },
-            { name: 'Sản phẩm B', inventory: 75 },
-            { name: 'Sản phẩm C', inventory: 120 },
-            { name: 'Sản phẩm A', inventory: 100 },
-            { name: 'Sản phẩm B', inventory: 75 },
-            { name: 'Sản phẩm C', inventory: 120 },
-            { name: 'Sản phẩm A', inventory: 100 },
-            { name: 'Sản phẩm B', inventory: 75 },
-            { name: 'Sản phẩm C', inventory: 120 },
-            { name: 'Sản phẩm A', inventory: 100 },
-            { name: 'Sản phẩm B', inventory: 75 },
-            { name: 'Sản phẩm C', inventory: 120 },
-            { name: 'Sản phẩm A', inventory: 100 },
-            { name: 'Sản phẩm B', inventory: 75 },
-            { name: 'Sản phẩm C', inventory: 120 },
-            { name: 'Sản phẩm A', inventory: 100 },
-            { name: 'Sản phẩm B', inventory: 75 },
-            { name: 'Sản phẩm C', inventory: 120 },
-            { name: 'Sản phẩm A', inventory: 100 },
-            { name: 'Sản phẩm B', inventory: 75 },
-            { name: 'Sản phẩm C', inventory: 120 },
-            { name: 'Sản phẩm A', inventory: 100 },
-            { name: 'Sản phẩm B', inventory: 75 },
-            { name: 'Sản phẩm C', inventory: 120 },
-            { name: 'Sản phẩm A', inventory: 100 },
-            { name: 'Sản phẩm B', inventory: 75 },
-            { name: 'Sản phẩm C', inventory: 120 },
-            { name: 'Sản phẩm A', inventory: 100 },
-            { name: 'Sản phẩm B', inventory: 75 },
-            { name: 'Sản phẩm C', inventory: 120 },
-            { name: 'Sản phẩm A', inventory: 100 },
-            { name: 'Sản phẩm B', inventory: 75 },
-            { name: 'Sản phẩm C', inventory: 120 },
-            { name: 'Sản phẩm A', inventory: 100 },
-            { name: 'Sản phẩm B', inventory: 75 },
-            { name: 'Sản phẩm C', inventory: 120 },
-            { name: 'Sản phẩm A', inventory: 100 },
-            { name: 'Sản phẩm B', inventory: 75 },
-            { name: 'Sản phẩm C', inventory: 120 },
-
-            // ...Thêm hàng trăm sản phẩm khác
-        ];
+        const productData = {{{ productStockByGroupStr }}}
 
         // Tạo mảng tên sản phẩm và mảng số lượng tồn kho
-        const productNames = productData.map(item => item.name);
-        const inventoryCounts = productData.map(item => item.inventory);
+        const productNames = productData.map(item => item.ten_san_pham);
+        const inventoryCounts = productData.map(item => item.tong_ton_kho);
 
         // Lấy thẻ canvas
         const ctx3 = document.getElementById('inventoryChart').getContext('2d');

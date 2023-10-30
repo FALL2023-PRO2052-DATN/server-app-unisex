@@ -16,6 +16,7 @@ const productSizeRouter = require("./routers/product-size.admin.router.js");
 const reviewRouter = require("./routers/reviews.admin.router.js");
 const billRouter = require("./routers/bill.admin.router.js");
 const billDetailRouter = require("./routers/bill-detail.admin.router.js");
+const overviewRouter = require('./routers/overview.admin.router.js');
 
 const app = express();
 
@@ -47,9 +48,7 @@ app.set("view engine", "handlebars");
 app.use(express.static(path.join(__dirname, "/public")));
 
 // routers
-app.get("/", (req, res) => {
-    res.render("index");
-});
+app.use("/", overviewRouter);
 app.use("/admin", categoryRouter);
 app.use("/admin", discountRouter);
 app.use("/admin", sizeRouter);

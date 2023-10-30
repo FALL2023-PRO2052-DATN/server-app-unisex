@@ -15,6 +15,36 @@ const getAll = async () => {
     return await database.queryDatabase(query, []);
 }
 
+const getAllByStatusPay = async (status_paid) => {
+    const query = `SELECT
+                        DonHang.*,
+                        DiaChi.nguoi_dung_id
+                    FROM
+                        shop_clothes.DonHang
+                    JOIN
+                        shop_clothes.DiaChi
+                    ON
+                        DonHang.dia_chi_id = DiaChi.id
+                    WHERE
+                        DonHang.hienThi = 1 AND trang_thai_thanh_toan = ?;`;
+    return await database.queryDatabase(query, [status_paid]);
+}
+
+const getAllByStatusBill = async (status_bill) => {
+    const query = `SELECT
+                        DonHang.*,
+                        DiaChi.nguoi_dung_id
+                    FROM
+                        shop_clothes.DonHang
+                    JOIN
+                        shop_clothes.DiaChi
+                    ON
+                        DonHang.dia_chi_id = DiaChi.id
+                    WHERE
+                        DonHang.hienThi = 1 AND tinh_trang_giao_hang = ?;`;
+    return await database.queryDatabase(query, [status_bill]);
+}
+
 const getBillById = async (id) => {
     const query = `SELECT
                     dh.id as "don_hang_id",
@@ -55,9 +85,31 @@ const cancel = async (id, reason) => {
     return await database.queryDatabase(query, [reason, id]);
 }
 
+const countBillsWithStatus  = async (trang_thai_thanh_toan, tinh_trang_gh) => {
+    const query = `SELECT COUNT(*) AS so_luong_don_hang
+    FROM shop_clothes.DonHang
+    WHERE trang_thai_thanh_toan = ? AND tinh_trang_giao_hang = ?;
+    `;
+    return await database.queryDatabase(query, [trang_thai_thanh_toan, tinh_trang_gh])
+}
+
+
+const getRevenue = async (month, year) => {
+    const query = `SELECT IFNULL(SUM(thanh_tien), 0) AS tong_doanh_thu
+    FROM shop_clothes.DonHang
+    WHERE MONTH(ngay_dat) = ? AND YEAR(ngay_dat) = ? AND trang_thai_thanh_toan = 'Đã thanh toán';
+    `;
+    return await database.queryDatabase(query, [month, year])
+}
+
+
 module.exports = {
     getAll,
     getBillById,
     confirm,
-    cancel
+    cancel,
+    getAllByStatusPay,
+    getAllByStatusBill,
+    countBillsWithStatus,
+    getRevenue
 }
