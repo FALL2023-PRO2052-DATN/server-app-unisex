@@ -52,8 +52,8 @@ const pageAdminOverView = async (req, res) => {
 
         // Tính doanh thu 12 tháng năm 2023
         const annualRevenue = await calculateAnnualRevenue(2023);
-        console.log(annualRevenue)
-        const annualRevenues = JSON.stringify(annualRevenue.map(item => item.tgt));
+        const annualRevenues = JSON.stringify(annualRevenue);
+        console.log(annualRevenues)
 
         res.render("index", { products, tong_ton_kho, billsIsPaid, billsUnConfirm, ratingCount, productStockByGroupStr, unpaidBillsCount, paidBillsCount, annualRevenues });
     } catch (error) {
@@ -64,13 +64,11 @@ const pageAdminOverView = async (req, res) => {
 const calculateAnnualRevenue = async (year) => {
     const months = Array.from({ length: 12 }, (_, i) => i + 1); // Tạo mảng từ 1 đến 12 để đại diện cho 12 tháng
 
-    const annualRevenue = [];
+    var annualRevenue = [];
 
-    for (const month of months) {
-        const revenue = await billAdminModel.getRevenue(month, year);
-        const tgt = revenue[0].tong_doanh_thu;
-        annualRevenue.push({ month, tgt});
-    }
+    const revenue = await billAdminModel.getRevenue();
+    annualRevenue = revenue;
+
     return annualRevenue;
 };
 

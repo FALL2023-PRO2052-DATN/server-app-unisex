@@ -94,12 +94,17 @@ const countBillsWithStatus  = async (trang_thai_thanh_toan, tinh_trang_gh) => {
 }
 
 
-const getRevenue = async (month, year) => {
-    const query = `SELECT IFNULL(SUM(thanh_tien), 0) AS tong_doanh_thu
-    FROM shop_clothes.DonHang
-    WHERE MONTH(ngay_dat) = ? AND YEAR(ngay_dat) = ? AND trang_thai_thanh_toan = 'Đã thanh toán';
+const getRevenue = async () => {
+    const query = `SELECT YEAR(dh.ngay_dat) as year_order, 
+    MONTH(dh.ngay_dat) as month_order, 
+    IFNULL(SUM(dh.thanh_tien), 0) AS tong_doanh_thu
+FROM shop_clothes.DonHang dh
+WHERE trang_thai_thanh_toan = 'Đã thanh toán'
+GROUP BY year_order, month_order
+ORDER BY year_order, month_order;
+;
     `;
-    return await database.queryDatabase(query, [month, year])
+    return await database.queryDatabase(query, [])
 }
 
 

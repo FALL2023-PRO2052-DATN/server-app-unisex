@@ -350,7 +350,7 @@
     <script src="/assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
     <script src="/assets/extra-libs/multicheck/jquery.multicheck.js"></script>
     <script src="/assets/extra-libs/DataTables/datatables.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>SƯ
     <script>
         /****************************************
          *       Basic Table                   *
@@ -395,38 +395,77 @@
 
     </script>
     <script>
-        // Dữ liệu doanh thu cho 12 tháng (điều này cần phải là dữ liệu thực tế)
-        const revenueData = {{{ annualRevenues }}};
-
-        // Lấy thẻ canvas bằng id
-        const ctx1 = document.getElementById('revenueChart').getContext('2d');
-
-        // Cấu hình biểu đồ sử dụng Chart.js
-        const chart = new Chart(ctx1, {
-            type: 'line', // Loại biểu đồ (có thể sử dụng 'bar' cho biểu đồ cột)
-            data: {
-                labels: ['Th1', 'Th2', 'Th3', 'Th4', 'Th5', 'Th6', 'Th7', 'Th8', 'Th9', 'Th10', 'Th11', 'Th12'],
-                datasets: [
-                    {
-                        label: 'Doanh thu 12 tháng',
-                        data: revenueData,
-                        borderColor: '#3874ff', // Màu của đường biểu đồ
-                        borderWidth: 2, // Độ dày của đường biểu đồ
-                    },
-                ],
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
+        // Function to update the chart based on the selected year
+        let chart;
+        function updateChart(yearSelected, revenueData) {
+            if (chart) {
+                chart.destroy(); // Destroy the previous chart if it exists.
             }
+            let data = Array(12).fill(0);
+
+            // Filter the data for the selected year
+            const filteredData = revenueData.filter(item => item.year_order === yearSelected);
+
+            // Populate the data array with the monthly revenue
+            filteredData.forEach(item => {
+                const month = item.month_order;
+                if (month >= 1 && month <= 12) {
+                    data[month - 1] += item.tong_doanh_thu;
+                }
+            });
+
+            // Get the canvas context
+            const ctx = document.getElementById('revenueChart').getContext('2d');
+
+            // Configure the Chart.js chart
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Th1', 'Th2', 'Th3', 'Th4', 'Th5', 'Th6', 'Th7', 'Th8', 'Th9', 'Th10', 'Th11', 'Th12'],
+                    datasets: [
+                        {
+                            label: 'Doanh thu 12 tháng năm ' + yearSelected,
+                            data: data,
+                            borderColor: '#3874ff',
+                            borderWidth: 2,
+                            lineTension: 0.1
+                        },
+                    ],
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y : {
+                            beginAtZero: true,
+                            ticks: {
+                                beginAtZero: true,
+                                min: 0 
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Event listener for the year select dropdown
+        document.getElementById("selectYear").addEventListener("change", function () {
+            const indexSelected = this.selectedIndex;
+            const optionSelected = this.options[indexSelected];
+            const yearSelected = parseInt(optionSelected.value, 10);
+
+            // Replace {{{ annualRevenues }}} with your actual data
+            const revenueData = {{{ annualRevenues }}};
+
+            // Call the updateChart function with the selected year and data
+            updateChart(yearSelected, revenueData);
         });
+
+        // Initialize the chart with the current year
+        const revenueData = {{{ annualRevenues }}};
+        const currentYear = new Date().getFullYear();
+        updateChart(currentYear, revenueData);
+
     </script>
 
     <script>
