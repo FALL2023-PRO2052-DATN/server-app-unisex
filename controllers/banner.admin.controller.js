@@ -13,7 +13,9 @@ const handleError = (res, error) => {
 const pageAdminBanner = async (req, res) => {
     try {
         const banners = await bannerAdminModel.getAll();
-        res.status(200).render('banner', { banners });
+        const reversedBanners = banners.slice().reverse();
+
+        res.status(200).render('banner', { banners: reversedBanners });
     } catch (error) {
         handleError(res, error);
     }
@@ -28,8 +30,8 @@ const insertBanner = async (req, res) => {
 
         if (req.file) {
             try {
-                // Tải ảnh lên Cloudinary
                 const imageBuffer = req.file.buffer;
+                // Tải ảnh lên Cloudinary
                 const imageUrl = await cloudinary.uploadImageToCloudinary(imageBuffer);
 
                 if (imageUrl) {
@@ -38,7 +40,7 @@ const insertBanner = async (req, res) => {
                 } else {
                     req.flash('error', 'Thêm banner không thành công.');
                 }
-                
+
                 res.status(200).redirect('/admin/banner');
             } catch (error) {
                 handleError(res, error);

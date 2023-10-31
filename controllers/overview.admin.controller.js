@@ -71,7 +71,6 @@ const calculateAnnualRevenue = async (year) => {
         const tgt = revenue[0].tong_doanh_thu;
         annualRevenue.push({ month, tgt});
     }
-
     return annualRevenue;
 };
 
