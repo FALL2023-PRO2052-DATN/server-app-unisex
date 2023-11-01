@@ -7,7 +7,7 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-// Upload an image to Cloudinary
+// Tải ảnh lên Cloudinary
 const uploadImage = (imageBuffer, callback) => {
     cloudinary.uploader.upload_stream({ folder: 'cloud-images/', resource_type: 'image' }, (error, result) => {
         if (error) {
