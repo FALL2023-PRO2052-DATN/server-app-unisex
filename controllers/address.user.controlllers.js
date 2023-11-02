@@ -14,6 +14,20 @@ const readAddress = (req, res) => {
         }
     })
 }
+
+const getListAddress = (req, res) => {
+    const { userId } = req.body
+
+    const query = "SELECT * FROM DiaChi WHERE hienThi = 1  AND nguoi_dung_id = ?"
+    connection.con.query(query, [userId], (err, results) => {
+        if (err) {
+            res.json({ status: "ERROR", err })
+        } else {
+            res.json({ status: "SUCCESS", diaChiList: results })
+        }
+    })
+}
+
 const insertAddress = (req, res) => {
     const { id, fullname, email, phone, address, defaultStatus, userId } = req.body;
     const queryInsert = "INSERT INTO DiaChi(ho_va_ten, email, dien_thoai, dia_chi, mac_dinh, nguoi_dung_id) VALUE (?,?,?,?,?,?)"
@@ -64,6 +78,7 @@ const insertAddress = (req, res) => {
 
 const updateAddress = (req, res) => {
     const { fullname, email, phone, address, defaultStatus, id, idDefault } = req.body;
+    
     const queryUpdateBefore = "UPDATE DiaChi SET ho_va_ten = ?, email = ?, dien_thoai = ?, dia_chi = ?, mac_dinh = ? WHERE id = ? "
     const queryUpdateLater = "UPDATE DiaChi SET mac_dinh = 0 WHERE id = ?"
     connection.con.beginTransaction((err) => {
@@ -126,6 +141,7 @@ const deleteAddress = (req, res) => {
 
 module.exports = {
     readAddress,
+    getListAddress,
     insertAddress,
     updateAddress,
     deleteAddress
