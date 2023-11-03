@@ -17,6 +17,20 @@ const readCommentByIdProduct = (req, res) => {
   })
 }
 
+const insertComment = (req, res) => {
+  const { pointComment, content, idUser, idProduct } = req.body
+  const query = " INSERT INTO DanhGia(diem_danh_gia, noi_dung, nguoi_dung_id, san_pham_id) VALUES(?, ?, ?, ?) "
+
+  connection.con.query(query, [pointComment, content, idUser, idProduct], (err, results) => {
+    if (err) {
+      res.json({ status: "ERROR", err })
+    } else {
+      res.json({ status: "SUCCESS" })
+    }
+  })
+}
+
 module.exports = {
-  readCommentByIdProduct
+  readCommentByIdProduct,
+  insertComment
 }
