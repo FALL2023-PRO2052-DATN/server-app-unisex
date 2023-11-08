@@ -33,6 +33,13 @@ Handlebars.registerHelper('formatDate', function (date) {
     return new Handlebars.SafeString(formattedDate);
 });
 
+Handlebars.registerHelper('reverseDate', function (dateString) {
+    // Reverse the format from 'dd/mm/yyyy' to 'YYYY-MM-DD'
+    const formattedDate = moment(dateString).format('YYYY-MM-DD');
+    const reversedDate = formattedDate;
+    return reversedDate;
+  });
+
 // Số thứ tự item trong datatable
 Handlebars.registerHelper('calculateIndex', function (index) {
     return index + 1;

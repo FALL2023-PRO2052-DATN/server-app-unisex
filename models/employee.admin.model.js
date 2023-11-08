@@ -1,11 +1,11 @@
 const database = require('../database/database.js');
 
-const getAll = async() => {
+const getAll = async () => {
     const query = `SELECT * FROM NhanVien WHERE hienThi = 1 AND vai_tro = 'STAFF'`;
     return await database.queryDatabase(query, []);
 }
 
-const insert = async(data) => {
+const insert = async (data) => {
     const query = `INSERT INTO NhanVien (ten_dang_nhap, ho_va_ten, dien_thoai, mat_khau, anh_dai_dien, dia_chi, gioi_tinh, ngay_sinh, vai_tro, hienThi) VALUES (?,?,?,?,?,?,?,?,'STAFF', 1)`;
     const values = [
         data.username,
