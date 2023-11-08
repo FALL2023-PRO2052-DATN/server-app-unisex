@@ -53,7 +53,6 @@ const pageAdminOverView = async (req, res) => {
         // Tính doanh thu 12 tháng năm 2023
         const annualRevenue = await calculateAnnualRevenue(2023);
         const annualRevenues = JSON.stringify(annualRevenue);
-        console.log(annualRevenues)
 
         res.render("index", { products, tong_ton_kho, billsIsPaid, billsUnConfirm, ratingCount, productStockByGroupStr, unpaidBillsCount, paidBillsCount, annualRevenues });
     } catch (error) {

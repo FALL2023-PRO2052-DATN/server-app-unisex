@@ -16,6 +16,7 @@ const productSizeRouter = require("./routers/product-size.admin.router.js");
 const reviewRouter = require("./routers/reviews.admin.router.js");
 const billRouter = require("./routers/bill.admin.router.js");
 const billDetailRouter = require("./routers/bill-detail.admin.router.js");
+const authRouter = require("./routers/auth/auth.admin.router.js");
 // Router shipper
 const employeeShipperRouter = require("./routers/shipper/employee.shipper.router.js");
 const billShipperRouter = require("./routers/shipper/bill.shipper.router.js");
@@ -43,14 +44,20 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // express-handlebars
-app.engine("handlebars", exphbs.engine({ extname: 'handlebars', defaultLayout: null}));
+app.engine("handlebars", exphbs.engine({ extname: 'handlebars', defaultLayout: null }));
 app.set("view engine", "handlebars");
 
 // public file
 app.use(express.static(path.join(__dirname, "/public")));
 
+// Hiển thị thông tin HTTP khi yêu cầu
+app.use((req, res, next) => {
+    console.log('HTTP Method - ' + req.method + ', URL - ' + req.url);
+    next();
+});
 // routers
 app.use("/", overviewRouter);
+app.use("/", authRouter);
 app.use("/admin", bannerRouter);
 app.use("/admin", categoryRouter);
 app.use("/admin", discountRouter);
