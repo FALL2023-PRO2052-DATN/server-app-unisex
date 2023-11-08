@@ -17386,6 +17386,11 @@ a .btn-update{
     background-color: #379237;
     border-color: #379237;
 }
+.circular-image {
+    width: 90px; /* Set the width and height to create a circular shape */
+    height: 90px;
+    border-radius: 50%; /* Use border-radius to create a circle */
+}
 
 
 

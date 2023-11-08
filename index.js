@@ -16,6 +16,7 @@ const productSizeRouter = require("./routers/product-size.admin.router.js");
 const reviewRouter = require("./routers/reviews.admin.router.js");
 const billRouter = require("./routers/bill.admin.router.js");
 const billDetailRouter = require("./routers/bill-detail.admin.router.js");
+const employeeRouter = require("./routers/employee.admin.router.js");
 const authRouter = require("./routers/auth/auth.admin.router.js");
 // Router shipper
 const employeeShipperRouter = require("./routers/shipper/employee.shipper.router.js");
@@ -65,6 +66,7 @@ app.use("/admin", sizeRouter);
 app.use("/admin", productRouter);
 app.use("/admin", productSizeRouter);
 app.use("/admin", reviewRouter);
+app.use("/admin", employeeRouter);
 app.use("/admin", billRouter);
 app.use("/admin", billDetailRouter);
 app.use("/api/shipper", employeeShipperRouter);
