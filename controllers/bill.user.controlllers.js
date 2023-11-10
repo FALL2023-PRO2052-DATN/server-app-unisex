@@ -52,6 +52,23 @@ const readBillById = (req, res) => {
     })
 }
 
+const readBillByIdForComment = (req, res) => {
+    const { id } = req.body
+    const query = "SELECT SanPham.id, SanPham.ten_san_pham, SanPham.anh_dai_dien, DonHangChiTiet.kich_thuoc " +
+        "FROM DonHang " +
+        "JOIN DonHangChiTiet ON DonHang.id = DonHangChiTiet.don_hang_id " +
+        "JOIN SanPham ON DonHangChiTiet.san_pham_id = SanPham.id " +
+        "WHERE DonHang.hienThi = 1 AND DonHang.id = ?";
+
+    connection.con.query(query, [id], (err, results) => {
+        if (err) {
+            res.json({ status: "ERROR", err })
+        } else {
+            res.json({ status: "SUCCESS", productList: results })
+        }
+    })
+}
+
 const cancelBill = (req, res) => {
     const { id, reasonCancel } = req.body
     const query = "UPDATE DonHang SET ly_do_huy = ? , tinh_trang_giao_hang = 'Đã hủy' WHERE id = ?"
@@ -68,5 +85,6 @@ const cancelBill = (req, res) => {
 module.exports = {
     readBillByStatusId,
     cancelBill,
-    readBillById
+    readBillById,
+    readBillByIdForComment
 }

@@ -74,7 +74,7 @@ const updateCart = (req, res) => {
         if (err) {
             res.json({ status: "ERROR", err })
         } else {
-            res.json({ status: "SUCCESS", cartList: results })
+            res.json({ status: "SUCCESS" })
         }
     })
 }
