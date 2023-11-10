@@ -1,11 +1,11 @@
 const database = require('../database/database.js');
 
-const getAll = async () => {
+const getDiscounts = async () => {
     const query = `SELECT * FROM GiamGia WHERE hienThi = 1;`;
     return await database.queryDatabase(query, []);
 }
 
-const insert = async (data) => {
+const insertDiscount = async (data) => {
     const values = [
         data.code, 
         data.value
@@ -14,7 +14,7 @@ const insert = async (data) => {
     return await database.queryDatabase(query, values);
 }
 
-const update = async (data) => {
+const updateDiscount = async (data) => {
     const values = [
         data.code,
         data.value,
@@ -24,14 +24,14 @@ const update = async (data) => {
     return await database.queryDatabase(query, values);
 }
 
-const remove = async (id) => {
+const removeDiscount = async (id) => {
     const query = `UPDATE GiamGia SET hienThi = 0 WHERE id=?`;
     return await database.queryDatabase(query, [id]);
 }
 
 module.exports = {
-    getAll,
-    insert,
-    update,
-    remove
+    getDiscounts,
+    insertDiscount,
+    updateDiscount,
+    removeDiscount
 }

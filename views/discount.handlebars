@@ -123,8 +123,9 @@
                                     class="mdi mdi-comment-processing"></i><span class="hide-menu">Đánh giá sản
                                     phẩm</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="/admin/employee" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span
-                                    class="hide-menu">Nhân viên</span></a></li>
+                                href="/admin/employee" aria-expanded="false"><i
+                                    class="mdi mdi-account-multiple"></i><span class="hide-menu">Nhân viên</span></a>
+                        </li>
                     </ul>
                 </nav>
             </div>
@@ -170,7 +171,8 @@
                                 <tbody>
                                     {{#each discounts}}
                                     <tr>
-                                        <th scope="row" style="width: 10%;">{{this.id}}</th>
+                                        <th scope="row" style="width: 10%;">{{calculateIndex @index}}</th>
+                                        <input type="hidden" value="{{this.id}}">
                                         <td style="width: 30%;">{{this.code}}</td>
                                         <td style="width: 30%;">Giảm {{this.gia_tri}}%</td>
                                         <td style="width: 30%;">
@@ -246,12 +248,9 @@
                             <div class="modal-body">
                                 <form id="image-upload-form" action="/admin/discount/update" method="POST">
                                     <div class="form-group">
-                                        <label for="image-upload" class="title-form">ID</label>
-                                        <input type="text" data-toggle="tooltip" title="" class="form-control"
+                                        <input type="hidden" data-toggle="tooltip" title="" class="form-control"
                                             id="id_giam_gia_update_input" placeholder="Ví dụ: 1" required="" name="id"
                                             data-original-title="A Tooltip for the input !" readonly>
-                                    </div>
-                                    <div class="form-group">
                                         <label for="image-upload" class="title-form">Mã code</label>
                                         <input type="text" data-toggle="tooltip" title="" class="form-control"
                                             id="code_update_input" placeholder="Ví dụ: UNISEX-30" required=""
