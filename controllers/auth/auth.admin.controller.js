@@ -1,52 +1,48 @@
-const authAdminModel = require('../../models/auth/auth.admin.model.js');
-const cloudinary = require('../../cloud/cloudinary.js');
 const multer = require('multer');
+const cloudinary = require('../../cloud/cloudinary.js');
+const authAdminModel = require('../../models/auth/auth.admin.model.js');
+
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-const handleError = (res, error) => {
-    console.error(error);
-    res.status(500).send('Server error: ' + error.message);
+const renderPageLogin = async (req, res) => {
+    res.render('login');
 }
 
-const pageLogin = async (req, res) => {
-    console.log(req.session.user)
-    res.render('login')
+const renderPageSetting = async (req, res) => {
+    res.render('setting', { user: req.session.user });
 }
 
-const pageSetting = async (req, res) => {
-    console.log(req.session.user)
-    res.render('view-profile', {user: req.session.user})
-}
-
-const signIn = async (req, res) => {
-    const { username, password } = req.body;
+const handleLogin = async (req, res) => {
     try {
-        const signInResult = await authAdminModel.signIn(username, password);
-        if(signInResult.length > 0){
-            req.session.user = JSON.parse(JSON.stringify(signInResult[0]))
+        const { username, password } = req.body;
+        const loginResult = await authAdminModel.authenticateUser(username, password);
+
+        if (loginResult.length > 0) {
+            const user = JSON.parse(JSON.stringify(loginResult[0]));
+            req.session.user = user;
             res.redirect('/');
-        }else{
+        } else {
             req.flash('error', 'Đăng nhập không thành công');
             res.redirect('/login');
         }
     } catch (error) {
-        handleError(res, error);
+        console.error('Login error', error);
     }
 }
 
-const signOut = async (req, res) => {
+const handleLogout = async (req, res) => {
     req.session.destroy((err) => {
         if (err) {
-            console.error(err);
+            console.error('Logout error', err);
         } else {
-            res.redirect('/login'); // Chuyển hướng người dùng đến trang đăng nhập sau khi đăng xuất
+            res.redirect('/login');
         }
     });
 }
 
-const updateProfile = async (req, res) => {
-    var newImage = null;
+const handleUpateProfileUser = async (req, res) => {
+    let newImgUrl = null;
     upload.single('image')(req, res, async (err) => {
         if (err) {
             console.error(err);
@@ -54,33 +50,48 @@ const updateProfile = async (req, res) => {
         }
 
         if (req.file) {
-            // Nếu chọn ảnh thì sẽ upload ảnh lên cloudinary và cập nhật lại ảnh
+            // Tải ảnh lên Cloudinary
             const imageBuffer = req.file.buffer;
-            newImage = await cloudinary.uploadImageToCloudinary(imageBuffer);
+            newImgUrl = await cloudinary.uploadImageToCloudinary(imageBuffer);
         }
 
         try {
-            const { username, fullName, phoneNumber, password, address, gender, dateOfBirth, imgUrl} = req.body;
-            const data = { username, fullName, phoneNumber, password, address, gender, dateOfBirth, imgUrl};
+            const { username, fullName, phoneNumber, password, address, gender, dateOfBirth, imgUrl } = req.body;
+            const data = { username, fullName, phoneNumber, password, address, gender, dateOfBirth, imgUrl };
 
-            if (newImage) {
-                data.imgUrl = newImage;
+            if (newImgUrl) {
+                data.imgUrl = newImgUrl;
             }
 
-            await authAdminModel.update(data);
-            req.flash('success', 'Cập nhật thông tin thành công.');
-            res.status(200).redirect('/admin/setting');
+            const updateProfileUserResult = await authAdminModel.updateProfileUser(data);
+
+            if (updateProfileUserResult) {
+                await updateUserSession(username, req);
+                req.flash('success', 'Cập nhật thông tin thành công.');
+                res.status(200).redirect('/admin/setting');
+            } else {
+                req.flash('error', 'Cập nhật thông tin không thành công.');
+                res.status(200).redirect('/admin/setting');
+            }
         } catch (error) {
-            console.error(error);
-            res.status(500).send('Server error: ' + error);
+            console.error("Update profile error", error);
         }
     });
 }
 
+const updateUserSession = async (username, req) => {
+    const getCurrentUserResult = await authAdminModel.getCurrentUser(username);
+
+    if (getCurrentUserResult.length > 0) {
+        const user = JSON.parse(JSON.stringify(getCurrentUserResult[0]))
+        req.session.user = user;
+    }
+}
+
 module.exports = {
-    pageLogin,
-    pageSetting,
-    updateProfile,
-    signIn,
-    signOut
+    renderPageLogin,
+    renderPageSetting,
+    handleUpateProfileUser,
+    handleLogin,
+    handleLogout
 }
