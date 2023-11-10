@@ -21,7 +21,7 @@ const pageAdminProduct = async (req, res) => {
 const pageAdminAddProduct = async (req, res) => {
     try {
         const sizes = await sizeAdminModel.getAllSizes();
-        const categories = await categoryAdminModel.getAllCategories();
+        const categories = await categoryAdminModel.getCategories();
         res.status(200).render('add-product', { sizes, categories });
     } catch (error) {
         console.error(error);
