@@ -1,24 +1,19 @@
 const multer = require('multer');
 const cloudinary = require('../cloud/cloudinary.js');
-const bannerAdminModel = require('../models/banner.admin.model.js');
 const arrayHelpers = require('../helpers/array-helpers.js');
+const bannerAdminModel = require('../models/banner.admin.model.js');
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-const handleError = (res, error) => {
-    console.error(error);
-    res.status(500).send('Page banner server error: ' + error.message);
-}
-
-const pageAdminBanner = async (req, res) => {
+const renderPageBanner = async (req, res) => {
     try {
-        const banners = await bannerAdminModel.getAll();
+        const banners = await bannerAdminModel.getBanners();
         const bannersReversed = arrayHelpers.reverseArray(banners);
 
         res.status(200).render('banner', { banners: bannersReversed });
     } catch (error) {
-        handleError(res, error);
+        console.error('Render page banner error', error);
     }
 }
 
@@ -32,10 +27,11 @@ const insertBanner = async (req, res) => {
         if (req.file) {
             try {
                 const imageBuffer = req.file.buffer;
+                // Tải ảnh lên Cloudinary
                 const imageUrl = await cloudinary.uploadImageToCloudinary(imageBuffer);
 
                 if (imageUrl) {
-                    await bannerAdminModel.insert(imageUrl);
+                    await bannerAdminModel.insertBanner(imageUrl);
                     req.flash('success', 'Thêm banner thành công.');
                 } else {
                     req.flash('error', 'Thêm banner không thành công.');
@@ -43,7 +39,7 @@ const insertBanner = async (req, res) => {
 
                 res.status(200).redirect('/admin/banner');
             } catch (error) {
-                handleError(res, error);
+                console.error('Insert banner error', error);
             }
         }
     });
@@ -52,17 +48,17 @@ const insertBanner = async (req, res) => {
 const removeBanner = async (req, res) => {
     try {
         const { id } = req.body;
-        await bannerAdminModel.remove(id);
+        await bannerAdminModel.removeBanner(id);
 
         req.flash('success', 'Xoá banner thành công.');
         res.status(200).redirect('/admin/banner');
     } catch (error) {
-        handleError(res, error);
+        console.error('Remove banner error', error);
     }
 }
 
 module.exports = {
-    pageAdminBanner,
+    renderPageBanner,
     insertBanner,
     removeBanner
 }
