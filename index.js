@@ -13,6 +13,7 @@ const addressRouter = require('./routers/address.user.routers')
 const discountRouter = require('./routers/discount.user.routers')
 const orderRouter = require('./routers/order.user.routers')
 const billRouter = require('./routers/bill.user.routers')
+const userSettingRouter = require('./routers/user.user.routers')
 
 const app = express();
 
@@ -41,6 +42,7 @@ app.use("/api", addressRouter)
 app.use("/api", discountRouter)
 app.use("/api", orderRouter)
 app.use("/api", billRouter)
+app.use("/api", userSettingRouter)
 //
 const port = 3000;
 app.listen(port, () => {
