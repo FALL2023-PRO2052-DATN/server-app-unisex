@@ -215,12 +215,12 @@
                     <div class="col-12">
                         <div class="card" style="padding: 20px;">
                             <div class="card-body-cus">
-                                <h5 class="card-title m-b-0">Danh sách đánh giá</h5>
+                                <h5 class="card-title m-b-0">Danh sách đánh giá ({{reviews.length}})</h5>
                             </div>
                             <table class="table" id="myTable" style="width: 100%;">
                                 <thead>
                                     <tr>
-                                        <th scope="col">ID</th>
+                                        <th scope="col">STT</th>
                                         <th scope="col">Tên người dùng</th>
                                         <th scope="col">Điểm đánh giá</th>
                                         <th scope="col">Ngày đánh giá</th>
@@ -233,13 +233,14 @@
                                 <tbody>
                                     {{#each reviews}}
                                     <tr>
-                                        <th scope="row" style="width: 10%;">{{this.id}}</th>
-                                        <td style="width: 20%;">{{this.ho_va_ten}}</td>
-                                        <td style="width: 10%;">{{this.diem_danh_gia}}</td>
+                                        <input type="hidden" name="" id="" value="{{this.id}}">
+                                        <th scope="row" style="width: 5%;">{{calculateIndex @index}}</th>
+                                        <td style="width: 10%;">{{this.ho_va_ten}}</td>
+                                        <td style="width: 10%;">{{this.diem_danh_gia}} sao</td>
                                         <td style="width: 10%;">{{formatDate this.ngay_danh_gia}}</td>
                                         <td style="width: 10%;"><img id="img-table-cus" src="{{this.anh_dai_dien}}"
                                                 alt="Hình ảnh"></td>
-                                        <td style="width: 30%;">{{this.ten_san_pham}}</td>
+                                        <td style="width: 10%;">{{this.ten_san_pham}}</td>
                                         <td style="width: 30%;">{{this.noi_dung}}</td>
                                         <td style="width: 20%;">
                                             <button type="button" class="btn-delete" data-toggle="modal"
@@ -270,7 +271,7 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
                                 <form action="/admin/reviews/delete" method="post">
-                                    <input type="hidden" id="id_danh_gia_delete_input" name="id">
+                                    <input type="hidden" id="id_danh_gia_delete_input" name="reviewID">
                                     <button href="#" type="submit" class="btn-delete-confirm"
                                         style="color: white;">Xoá</button>
                                 </form>

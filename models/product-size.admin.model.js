@@ -35,9 +35,9 @@ const getAllByProductId = async (idProduct) => {
     return await database.queryDatabase(query, [idProduct]);
 }
 
-const getProductSizesBySizeId = async (id) => {
+const getProductSizesBySizeId = async (sizeID) => {
     const query = `SELECT * FROM KichThuoc_SanPham WHERE kich_thuoc_id =? AND hienThi = 1`
-    return await database.queryDatabase(query, [id]);
+    return await database.queryDatabase(query, [sizeID]);
 }
 
 const insert = async (data) => {
@@ -75,9 +75,9 @@ const removeById = async (id) => {
     return await database.queryDatabase(query, [id]);
 }
 
-const removeByProductId = async (idProduct) => {
+const removeByProductId = async (productID) => {
     const query = `DELETE FROM KichThuoc_SanPham WHERE san_pham_id = ?`;
-    return await database.queryDatabase(query, [idProduct]);
+    return await database.queryDatabase(query, [productID]);
 }
 
 // Lấy tổng số lượng tồn kho

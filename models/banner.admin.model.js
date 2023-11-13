@@ -5,14 +5,14 @@ const getBanners = async () => {
     return await database.queryDatabase(query, []);
 }
 
-const insertBanner = async (imageUrl) => {
+const insertBanner = async (imgUrl) => {
     const query = `INSERT INTO Banner (anh_banner) VALUES (?)`;
-    return await database.queryDatabase(query, [imageUrl]);
+    return await database.queryDatabase(query, [imgUrl]);
 }
 
-const removeBanner = async (id) => {
+const removeBanner = async (bannerID) => {
     const query = `UPDATE Banner SET hienThi = 0 WHERE id = ?`;
-    return await database.queryDatabase(query, [id]);
+    return await database.queryDatabase(query, [bannerID]);
 }
 
 module.exports = {

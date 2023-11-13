@@ -1,6 +1,6 @@
 const database = require('../database/database.js');
 
-const getAll = async () => {
+const getProducts = async () => {
     const query = `SELECT
                     SP.id AS san_pham_id,
                     SP.anh_dai_dien AS hinh_anh,
@@ -21,7 +21,7 @@ const getAll = async () => {
     return await database.queryDatabase(query, []);
 }
 
-const getAllById = async (id) => {
+const getProductsById = async (productID) => {
     const query = `SELECT
                     SP.id AS san_pham_id,
                     SP.anh_dai_dien AS hinh_anh,
@@ -40,15 +40,15 @@ const getAllById = async (id) => {
                     LEFT JOIN KichThuoc KT ON KTS.kich_thuoc_id = KT.id AND KT.hienThi = 1
                     WHERE SP.hienThi = 1 AND SP.id = ?
                     GROUP BY SP.id`;
-    return await database.queryDatabase(query, [id]);
+    return await database.queryDatabase(query, [productID]);
 }
 
-const getProductsByCategoryId = async (idCategory) => {
+const getProductsByCategoryId = async (categoryID) => {
     const query = 'SELECT * FROM SanPham WHERE danh_muc_id = ? AND hienThi = 1';
-    return await database.queryDatabase(query, [idCategory]);
+    return await database.queryDatabase(query, [categoryID]);
 }
 
-const insert = async (data) => {
+const insertProduct = async (data) => {
     const query = `INSERT INTO SanPham (ten_san_pham, anh_dai_dien, gia_ban, giam_gia, noi_bat, moi_nhat, mo_ta_chi_tiet, danh_muc_id) VALUES (? , ?, ?, ?, ? , ?, ?, ?);`
     const values = [
         data.name,
@@ -63,7 +63,7 @@ const insert = async (data) => {
     return await database.queryDatabase(query, values);
 }
 
-const update = async (data) => {
+const updateProduct = async (data) => {
     const values = [
         data.name,
         data.price,
@@ -79,16 +79,16 @@ const update = async (data) => {
     return await database.queryDatabase(query, values);
 }
 
-const remove = async (idProduct) => {
+const removeProduct = async (idProduct) => {
     const query = `UPDATE SanPham SET hienThi = 0 WHERE id=?`;
     return await database.queryDatabase(query, [idProduct]);
 }
 
 module.exports = {
-    getAll,
-    getAllById,
+    getProducts,
+    getProductsById,
     getProductsByCategoryId,
-    insert,
-    update,
-    remove
+    insertProduct,
+    updateProduct,
+    removeProduct
 }

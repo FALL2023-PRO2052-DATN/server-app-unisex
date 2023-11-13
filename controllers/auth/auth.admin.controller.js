@@ -12,10 +12,10 @@ const renderPageLogin = async (req, res) => {
 const handleLogin = async (req, res) => {
     try {
         const { username, password } = req.body;
-        const loginResult = await authAdminModel.authenticateUser(username, password);
+        const loginResults = await authAdminModel.authenticateUser(username, password);
 
-        if (loginResult.length > 0) {
-            const user = loginResult[0];
+        if (loginResults.length > 0) {
+            const user = loginResults[0];
             req.session.user = user;
             res.status(200).redirect('/');
         } else {
@@ -38,7 +38,8 @@ const handleLogout = async (req, res) => {
 }
 
 const renderPageSetting = async (req, res) => {
-    res.status(200).render('setting', { user: req.session.user });
+    const user = req.session.user;
+    res.status(200).render('setting', { user });
 }
 
 const handleUpateProfileUser = async (req, res) => {
@@ -63,9 +64,9 @@ const handleUpateProfileUser = async (req, res) => {
                 data.imgUrl = newImgUrl;
             }
 
-            const updateProfileUserResult = await authAdminModel.updateProfileUser(data);
+            const updateProfileUserResults = await authAdminModel.updateProfileUser(data);
 
-            if (updateProfileUserResult) {
+            if (updateProfileUserResults) {
                 await updateUserSession(username, req);
                 req.flash('success', 'Cập nhật thông tin thành công.');
             } else {
@@ -74,24 +75,24 @@ const handleUpateProfileUser = async (req, res) => {
 
             res.status(200).redirect('/admin/setting');
         } catch (error) {
-            console.error("Update profile error", error);
+            console.error('Update profile error', error);
         }
     });
 }
 
 const updateUserSession = async (username, req) => {
-    const result = await authAdminModel.getCurrentUser(username);
+    const results = await authAdminModel.getCurrentUser(username);
+    const user = JSON.parse(JSON.stringify(results[0]));
 
-    if (result.length > 0) {
-        const user = JSON.parse(JSON.stringify(result[0]))
+    if (user) {
         req.session.user = user;
     }
 }
 
 module.exports = {
     renderPageLogin,
+    handleLogin,
+    handleLogout,
     renderPageSetting,
     handleUpateProfileUser,
-    handleLogin,
-    handleLogout
 }

@@ -201,7 +201,7 @@
                                     <div class="form-group">
                                         <label for="image-upload" class="title-form">Tên danh mục</label>
                                         <input type="text" data-toggle="tooltip" title="" class="form-control"
-                                            name="name" id="validationDefault05" placeholder="Ví dụ: Áo thun nam"
+                                            name="categoryName" id="validationDefault05" placeholder="Ví dụ: Áo thun nam"
                                             required="" data-original-title="A Tooltip for the input !">
                                         <div class="modal-footer" style="margin-top: 16px;">
                                             <button type="button" class="btn btn-secondary"
@@ -230,11 +230,11 @@
                             <div class="modal-body">
                                 <form id="image-upload-form" action="/admin/category/update" method="POST">
                                     <div class="form-group">
-                                        <input name="id" type="hidden" data-toggle="tooltip" title="" class="form-control"
+                                        <input name="categoryID" type="hidden" data-toggle="tooltip" title="" class="form-control"
                                             id="id_danh_muc_update_input" placeholder="Ví dụ: 01" required=""
                                             data-original-title="A Tooltip for the input !" readonly>
                                         <label for="image-upload" class="title-form">Tên danh mục</label>
-                                        <input name="name" type="text" data-toggle="tooltip" title=""
+                                        <input name="categoryName" type="text" data-toggle="tooltip" title=""
                                             class="form-control" id="ten_danh_muc_update_input"
                                             placeholder="Ví dụ: Áo thun nam" required=""
                                             data-original-title="A Tooltip for the input !">
@@ -265,7 +265,7 @@
                                 <p>Bạn có muốn xoá danhh mục sản phẩm ?</p>
                             </div>
                             <form action="/admin/category/delele" class="modal-footer" method="POST">
-                                <input type="hidden" id="id_danh_muc_delete_input" name="id">
+                                <input type="hidden" id="id_danh_muc_delete_input" name="categoryID">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
                                 <button type="submit" class="btn-delete-confirm" style="color: white;">Xoá</button>
                             </form>

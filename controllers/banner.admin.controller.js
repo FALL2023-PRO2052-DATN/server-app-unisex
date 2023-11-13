@@ -27,11 +27,10 @@ const insertBanner = async (req, res) => {
         if (req.file) {
             try {
                 const imageBuffer = req.file.buffer;
-                // Tải ảnh lên Cloudinary
-                const imageUrl = await cloudinary.uploadImageToCloudinary(imageBuffer);
+                const imgUrl = await cloudinary.uploadImageToCloudinary(imageBuffer);
 
-                if (imageUrl) {
-                    await bannerAdminModel.insertBanner(imageUrl);
+                if (imgUrl) {
+                    await bannerAdminModel.insertBanner(imgUrl);
                     req.flash('success', 'Thêm banner thành công.');
                 } else {
                     req.flash('error', 'Thêm banner không thành công.');
@@ -47,8 +46,8 @@ const insertBanner = async (req, res) => {
 
 const removeBanner = async (req, res) => {
     try {
-        const { id } = req.body;
-        await bannerAdminModel.removeBanner(id);
+        const { bannerID } = req.body;
+        await bannerAdminModel.removeBanner(bannerID);
 
         req.flash('success', 'Xoá banner thành công.');
         res.status(200).redirect('/admin/banner');

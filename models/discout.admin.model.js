@@ -7,8 +7,8 @@ const getDiscounts = async () => {
 
 const insertDiscount = async (data) => {
     const values = [
-        data.code, 
-        data.value
+        data.discountCode, 
+        data.discountValue
     ];
     const query = `INSERT INTO GiamGia(code, gia_tri) VALUES (?, ?)`;
     return await database.queryDatabase(query, values);
@@ -16,17 +16,17 @@ const insertDiscount = async (data) => {
 
 const updateDiscount = async (data) => {
     const values = [
-        data.code,
-        data.value,
-        data.id
+        data.disocntCode,
+        data.discountValue,
+        data.discountID
     ];
     const query = `UPDATE GiamGia SET code=?, gia_tri=? WHERE id=?`;
     return await database.queryDatabase(query, values);
 }
 
-const removeDiscount = async (id) => {
+const removeDiscount = async (discountID) => {
     const query = `UPDATE GiamGia SET hienThi = 0 WHERE id=?`;
-    return await database.queryDatabase(query, [id]);
+    return await database.queryDatabase(query, [discountID]);
 }
 
 module.exports = {

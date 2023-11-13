@@ -10,22 +10,18 @@ const isUserExists = (employees, username) => {
     return employees.some((employee) => employee.ten_dang_nhap === username);
 }
 
-const handleError = (res, error) => {
-    console.error(error);
-    res.status(500).send('Server error: ' + error.message);
-}
-
-const pageAdminEmployee = async (req, res) => {
+const renderPageEmployee = async (req, res) => {
     try {
-        const employees = await employeeAdminModel.getAll();
+        const employees = await employeeAdminModel.getEmployeesByRoleStaff();
         const employeesReversed = arrayHelpers.reverseArray(employees);
-        res.render('employee', {employees: employeesReversed});
+
+        res.status(200).render('employee', { employees: employeesReversed });
     } catch (error) {
-        handleError(res, error);
+        console.log('Render page employee error: ' + error.message);
     }
 }
 
-const pageInsertEmployee = async (req, res) => {
+const renderPageInserEmployee = async (req, res) => {
     res.render('add-employee');
 }
 
@@ -38,9 +34,9 @@ const insertEmployee = async (req, res) => {
         if (req.file) {
             try {
                 const { username, fullName, phoneNumber, password, address, gender, dateOfBirth } = req.body;
-                const employees = await employeeAdminModel.getAll();
+                const employees = await employeeAdminModel.getEmployees();
 
-                if(isUserExists(employees, username) || username === 'admin'){
+                if (isUserExists(employees, username) || username === 'admin') {
                     req.flash('warning', 'Tên đăng nhập đã tồn tại');
                     res.status(200).redirect('/admin/employee/create');
                     return;
@@ -49,13 +45,10 @@ const insertEmployee = async (req, res) => {
                 // Tải ảnh lên cloudinary
                 const imageBuffer = req.file.buffer;
                 const imgUrl = await cloudinary.uploadImageToCloudinary(imageBuffer);
-                
+
                 if (imgUrl) {
-                    const data = { username, fullName, phoneNumber, password, address, gender, dateOfBirth, imgUrl};
-
-                    // Thêm nhân viên
-                    await employeeAdminModel.insert(data);
-
+                    const data = { username, fullName, phoneNumber, password, address, gender, dateOfBirth, imgUrl };
+                    await employeeAdminModel.insertEmployee(data);
                     req.flash('success', 'Thêm nhân viên thành công');
                     res.status(200).redirect('/admin/employee/create');
                 }
@@ -69,20 +62,20 @@ const insertEmployee = async (req, res) => {
 
 const removeEmployee = async (req, res) => {
     try {
-        const { idEmployee } = req.body;
-        await employeeAdminModel.remove(idEmployee);
-
+        const { employeeID } = req.body;
+        await employeeAdminModel.removeEmployee(employeeID);
+        
         req.flash('success', 'Xoá Xoá nhân viên thành công.');
         res.status(200).redirect('/admin/employee');
     } catch (error) {
-        handleError(res, error);
+        console.log('Remove employee error: ' + error.message);
     }
 }
 
 
 module.exports = {
-    pageAdminEmployee,
-    pageInsertEmployee,
+    renderPageEmployee,
+    renderPageInserEmployee,
     insertEmployee,
     removeEmployee,
 }

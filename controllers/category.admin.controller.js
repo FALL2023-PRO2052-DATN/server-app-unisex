@@ -2,15 +2,15 @@ const categoryAdminModel = require('../models/category.admin.model.js');
 const productAdminModel = require('../models/product.admin.model.js');
 const arrHelpers = require('../helpers/array-helpers.js');
 
-const isCategoryExist = (categories, name) => {
-    return categories.some((category) => category.ten_danh_muc === name);
+const isCategoryNameExist = (categories, categoryName) => {
+    return categories.some((category) => category.ten_danh_muc === categoryName);
 }
 
 const renderPageCategory = async (req, res) => {
     try {
         const categories = await categoryAdminModel.getCategories();
         const categoriesReversed = arrHelpers.reverseArray(categories);
-
+        
         res.status(200).render('category', { categories: categoriesReversed });
     } catch (error) {
         console.error('Render page category error', error);
@@ -19,13 +19,13 @@ const renderPageCategory = async (req, res) => {
 
 const insertCategory = async (req, res) => {
     try {
-        const { name } = req.body;
+        const { categoryName } = req.body;
         const categories = await categoryAdminModel.getCategories();
 
-        if (isCategoryExist(categories, name)) {
+        if (isCategoryNameExist(categories, categoryName)) {
             req.flash('warning', 'Thêm không thành công. Tên danh mục đã tồn tại.');
         } else {
-            await categoryAdminModel.insertCategory(name);
+            await categoryAdminModel.insertCategory(categoryName);
             req.flash('success', 'Thêm danh mục thành công.');
         }
 
@@ -37,17 +37,15 @@ const insertCategory = async (req, res) => {
 
 const updateCategory = async (req, res) => {
     try {
-        const { id, name } = req.body;
+        const { categoryID, categoryName } = req.body;
         const categories = await categoryAdminModel.getCategories();
-        // Lấy danh mục cập nhật hiện tại
-        const categoryToUpdate = categories.find((category) => category.id_danh_muc === parseInt(id, 10));
-        // Lấy danh sách danh mục trừ danh mục hiện tại
-        const categoriesExceptCurrent = categories.filter((category) => category !== categoryToUpdate);
+        const categoryCurrentToUpdate = categories.find((category) => category.id_danh_muc === parseInt(categoryID, 10));
+        const categoriesExceptCurrent = categories.filter((category) => category !== categoryCurrentToUpdate);
 
-        if (isCategoryExist(categoriesExceptCurrent, name)) {
+        if (isCategoryNameExist(categoriesExceptCurrent, categoryName)) {
             req.flash('warning', 'Cập nhật không thành công. Tên danh mục đã tồn tại.');
         } else {
-            const data = { id, name };
+            const data = { categoryID, categoryName };
             await categoryAdminModel.updateCategory(data);
             req.flash('success', 'Cập nhật danh mục thành công.');
         }
@@ -60,13 +58,13 @@ const updateCategory = async (req, res) => {
 
 const removeCategory = async (req, res) => {
     try {
-        const { id } = req.body;
-        const productsWithCategory = await productAdminModel.getProductsByCategoryId(id);
+        const { categoryID } = req.body;
+        const products = await productAdminModel.getProductsByCategoryId(categoryID);
 
-        if (productsWithCategory.length > 0) {
+        if (products.length > 0) {
             req.flash('warning', 'Không thể xóa danh mục. Đã có sản phẩm thuộc danh mục này.');
         } else {
-            await categoryAdminModel.removeCategory(id);
+            await categoryAdminModel.removeCategory(categoryID);
             req.flash('success', 'Xóa danh mục thành công.');
         }
 
@@ -75,6 +73,7 @@ const removeCategory = async (req, res) => {
         console.error('Remove category error', error);
     }
 }
+
 
 module.exports = {
     renderPageCategory,

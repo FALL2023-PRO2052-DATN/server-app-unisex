@@ -16,35 +16,19 @@
     <link href="/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
     <link href="/dist/css/style.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-<![endif]-->
 </head>
 
 <body>
-    <!-- ============================================================== -->
-    <!-- Preloader - style you can find in spinners.css -->
-    <!-- ============================================================== -->
     <div class="preloader">
         <div class="lds-ripple">
             <div class="lds-pos"></div>
             <div class="lds-pos"></div>
         </div>
     </div>
-    <!-- ============================================================== -->
-    <!-- Main wrapper - style you can find in pages.scss -->
-    <!-- ============================================================== -->
     <div id="main-wrapper">
-        <!-- ============================================================== -->
-        <!-- Topbar header - style you can find in pages.scss -->
-        <!-- ============================================================== -->
         <header class="topbar" data-navbarbg="skin5">
             <nav class="navbar top-navbar navbar-expand-md navbar-dark">
                 <div class="navbar-header" data-logobg="skin5">
-                    <!-- This is for the sidebar toggle which is visible on mobile only -->
                     <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i
                             class="ti-menu ti-close"></i></a>
                     <!-- ============================================================== -->
@@ -65,14 +49,6 @@
                             <img src="/assets/images/logo-text.svg" alt="homepage" class="light-logo" />
 
                         </span>
-                        <!-- Logo icon -->
-                        <!-- <b class="logo-icon"> -->
-                        <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                        <!-- Dark Logo icon -->
-                        <!-- <img src="assets/images/logo-text.png" alt="homepage" class="light-logo" /> -->
-
-                        <!-- </b> -->
-                        <!--End Logo icon -->
                     </a>
                     <!-- ============================================================== -->
                     <!-- End Logo -->
@@ -219,7 +195,7 @@
                     <div class="col-12">
                         <div class="card" style="padding: 20px;">
                             <div class="card-body-cus">
-                                <h5 class="card-title m-b-0">Danh sách kích thước</h5>
+                                <h5 class="card-title m-b-0">Danh sách kích thước ({{sizes.length}})</h5>
                                 <button type="button" class="button-26" data-toggle="modal"
                                     data-target="#add-size-modal" data-whatever="@mdo">Thêm kích thước</button>
                             </div>
@@ -276,12 +252,12 @@
                                     <div class="form-group">
                                         <label for="image-upload" class="title-form">Tên kích thước</label>
                                         <input type="text" data-toggle="tooltip" title="" class="form-control"
-                                            id="validationDefault05" placeholder="Ví dụ: M" required="" name="name"
+                                            id="validationDefault05" placeholder="Ví dụ: M" required="" name="sizeName"
                                             data-original-title="A Tooltip for the input !">
                                     </div>
                                     <div class="form-group">
                                         <label for="image-upload" class="title-form">Mô tả</label>
-                                        <textarea name="description" class="form-control"></textarea>
+                                        <textarea name="sizeDescription" class="form-control"></textarea>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
@@ -309,20 +285,17 @@
                             <div class="modal-body">
                                 <form id="image-upload-form" action="/admin/size/update" method="POST">
                                     <div class="form-group">
-                                        <label for="image-upload" class="title-form">ID</label>
-                                        <input type="text" data-toggle="tooltip" title="" class="form-control"
-                                            id="id_kich_thuoc_update_input" placeholder="Ví dụ: 1" required="" name="id"
+                                        <input type="hidden" data-toggle="tooltip" title="" class="form-control"
+                                            id="id_kich_thuoc_update_input" placeholder="Ví dụ: 1" required="" name="sizeID"
                                             data-original-title="A Tooltip for the input !" readonly>
-                                    </div>
-                                    <div class="form-group">
                                         <label for="image-upload" class="title-form">Tên kích thước</label>
                                         <input type="text" data-toggle="tooltip" title="" class="form-control"
                                             id="ten_kich_thuoc_update_input" placeholder="Ví dụ: M" required=""
-                                            name="name" data-original-title="A Tooltip for the input !">
+                                            name="sizeName" data-original-title="A Tooltip for the input !">
                                     </div>
                                     <div class="form-group">
                                         <label for="image-upload" class="title-form">Mô tả</label>
-                                        <textarea id="mo_ta_chi_tiet_update_input" name="description"
+                                        <textarea id="mo_ta_chi_tiet_update_input" name="sizeDescription"
                                             class="form-control"></textarea>
                                     </div>
                                     <div class="modal-footer">
@@ -353,7 +326,7 @@
                             </div>
                             <form action="/admin/size/delete" method="POST">
                                 <div class="modal-footer">
-                                    <input type="hidden" name="id" id="id_kich_thuoc_delete_input">
+                                    <input type="hidden" name="sizeID" id="id_kich_thuoc_delete_input">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
                                     <button href="#" type="submit" class="btn-delete-confirm"
                                         style="color: white;">Xoá</button>

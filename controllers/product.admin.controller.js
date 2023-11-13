@@ -1,4 +1,5 @@
 const multer = require('multer');
+const arrayHelpers = require('../helpers/array-helpers.js');
 const cloudinary = require('../cloud/cloudinary.js');
 const productAdminModel = require('../models/product.admin.model.js');
 const sizeAdminModel = require('../models/size.admin.model.js');
@@ -8,20 +9,22 @@ const productSizeAdminModel = require('../models/product-size.admin.model.js');
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-const pageAdminProduct = async (req, res) => {
+const renderPageProduct = async (req, res) => {
     try {
-        const products = await productAdminModel.getAll();
-        res.status(200).render('product', { products });
+        const products = await productAdminModel.getProducts();
+        const productsReversed = arrayHelpers.reverseArray(products);
+
+        res.status(200).render('product', { products: productsReversed });
     } catch (error) {
-        console.error(error);
-        res.status(500).send('Server error: ' + error.message);
+        console.log('Render page product error: ' + error.message);
     }
 }
 
 const pageAdminAddProduct = async (req, res) => {
     try {
-        const sizes = await sizeAdminModel.getAllSizes();
+        const sizes = await sizeAdminModel.getSizes();
         const categories = await categoryAdminModel.getCategories();
+        
         res.status(200).render('add-product', { sizes, categories });
     } catch (error) {
         console.error(error);
@@ -47,7 +50,7 @@ const insertProduct = (req, res) => {
                     const data = { name, imageUrl, price, discount, outstanding, selling, description, idCategory };
 
                     // Thêm sẩn phẩm
-                    const resultInsertProduct = await productAdminModel.insert(data);
+                    const resultInsertProduct = await productAdminModel.insertProduct(data);
                     const idProduct = resultInsertProduct.insertId;
 
                     // Thêm kích thước sản phẩm
@@ -71,9 +74,9 @@ const pageAdminUpdateProduct = async (req, res) => {
     try {
         const { id } = req.params;
         const productsSize = await productSizeAdminModel.getAllByProductId(id);
-        const products = await productAdminModel.getAllById(id);
-        const categories = await categoryAdminModel.getAllCategories();
-        const sizes = await sizeAdminModel.getAllSizes();
+        const products = await productAdminModel.getProductsById(id);
+        const categories = await categoryAdminModel.getCategories();
+        const sizes = await sizeAdminModel.getSizes();
         res.status(200).render('update-product', { product: products[0], productsSize, categories, sizes });
     } catch (error) {
         console.error(error);
@@ -103,7 +106,7 @@ const updateProduct = async (req, res) => {
                 data.imgUrl = newImage;
             }
 
-            await productAdminModel.update(data);
+            await productAdminModel.updateProduct(data);
             req.flash('success', 'Cập nhật thông tin chung thành công.');
             res.status(200).redirect('/admin/product/update/' + idProduct);
         } catch (error) {
@@ -115,9 +118,9 @@ const updateProduct = async (req, res) => {
 
 const removeProduct = async (req, res) => {
     try {
-        const { idProduct } = req.body;
-        await productAdminModel.remove(idProduct);
-        await productSizeAdminModel.removeByProductId(idProduct);
+        const { productID } = req.body;
+        await productAdminModel.removeProduct(productID);
+        await productSizeAdminModel.removeByProductId(productID);
         req.flash('success', 'Xoá sản phẩm thành công.');
         res.status(200).redirect('/admin/product');
     } catch (error) {
@@ -126,7 +129,7 @@ const removeProduct = async (req, res) => {
 }
 
 module.exports = {
-    pageAdminProduct,
+    renderPageProduct,
     pageAdminAddProduct,
     pageAdminUpdateProduct,
     insertProduct,

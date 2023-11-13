@@ -11,7 +11,7 @@ const handleError = (res, error) => {
 const pageAdminOverView = async (req, res) => {
     try {
         // Lấy danh sách sản phẩm
-        const products = await productAdminModel.getAll();
+        const products = await productAdminModel.getProducts();
         // Đếm số lượng sản phẩm tồn kho
         const getTotalStock = await productSizeAdminModel.getTotalStock();
         const tong_ton_kho = getTotalStock[0].tong_ton_kho;

@@ -150,7 +150,7 @@
                     <div class="col-12">
                         <div class="card" style="padding: 20px;">
                             <div class="card-body-cus">
-                                <h5 class="card-title m-b-0">Danh sách nhân viên</h5>
+                                <h5 class="card-title m-b-0">Danh sách nhân viên ({{employees.length}})</h5>
                                 <a href="/admin/employee/create" class="button-26" style="color: white;">Thêm nhân
                                     viên</a>
                             </div>
@@ -161,6 +161,7 @@
                                         <th scope="col">Ảnh</th>
                                         <th scope="col">Họ và tên</th>
                                         <th scope="col">Điện thoại</th>
+                                        <th scope="col">Tên đănh nhập</th>
                                         <th scope="col">Mật khẩu</th>
                                         <th scope="col">Địa chỉ</th>
                                         <th scope="col">Giới tính</th>
@@ -172,15 +173,15 @@
                                     {{#each employees}}
                                     <tr>
                                         <th scope="row" style="width: 5%;">{{calculateIndex @index}}</th>
-                                        <input type="hidden" value="{{this.ten_dang_nhap}}">
                                         <td style="width: 10%;"> <img src="{{this.anh_dai_dien}}" alt="Circular Image"
                                                 class="circular-image">
                                         </td>
                                         </td>
                                         <td style="width: 10%;">{{this.ho_va_ten}}</td>
                                         <td style="width: 10%;">{{this.dien_thoai}}</td>
+                                        <td style="width: 10%;">{{this.ten_dang_nhap}}</td>
                                         <td style="width: 10%;">{{this.mat_khau}}</td>
-                                        <td style="width: 20%;">{{this.dia_chi}}</td>
+                                        <td style="width: 10%;">{{this.dia_chi}}</td>
                                         <td style="width: 10%;">{{this.gioi_tinh}}</td>
                                         <td style="width: 10%;">{{formatDate this.ngay_sinh}}</td>
                                         <td style="width: 10%;">
@@ -212,7 +213,7 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
                                 <form action="/admin/employee/delete" method="post">
-                                    <input type="hidden" id="ten_dang_nhap_input" name="idEmployee">
+                                    <input type="hidden" id="ten_dang_nhap_input" name="employeeID">
                                     <button href="#" type="submit" class="btn-delete-confirm"
                                         style="color: white;">Xoá</button>
                                 </form>
