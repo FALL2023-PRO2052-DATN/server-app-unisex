@@ -3,10 +3,12 @@ const table = document.querySelector("#myTable");
 table.addEventListener("click", function (event) {
   if (event.target.classList.contains("btn-delete")) {
     const id = event.target.getAttribute("data-id");
-    const idDanhGiaDeleteInput = document.querySelector(
-      "#id_danh_gia_delete_input"
-    );
-    idDanhGiaDeleteInput.value = id;
+    var formDel = document.forms["form-del-review"];
+    formDel.addEventListener('submit', function (e) {
+      e.preventDefault();
+      formDel.action = "/admin/reviews/" + id + "?_method=PUT";
+      formDel.submit();
+    });
   }
 });
 

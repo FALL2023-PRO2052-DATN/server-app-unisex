@@ -1,7 +1,7 @@
-const productAdminModel = require('../models/product.admin.model.js');
-const productSizeAdminModel = require('../models/product-size.admin.model.js');
-const billAdminModel = require('../models/bill.admin.model.js');
-const reviewAdminModel = require('../models/reviews.admin.model.js');
+const productAdminModel = require('../models/admin/product.model.js');
+const productSizeAdminModel = require('../models/admin/product-size.model.js');
+const billAdminModel = require('../models/admin/bill.model.js');
+const reviewAdminModel = require('../models/admin/reviews.model.js');
 
 const handleError = (res, error) => {
     console.error(error);
@@ -20,7 +20,7 @@ const pageAdminOverView = async (req, res) => {
         // Lấy danh sách đơn hàng chờ xác nhận
         const billsUnConfirm = await billAdminModel.getAllByStatusBill('Chờ xác nhận');
         // Lấy danh sách đánh giá
-        const reviews = await reviewAdminModel.getRatingCounts();
+        const reviews = await reviewAdminModel.getRatingCountsReview();
         // Chuyển thành str để gửi qua script
         const ratingCount = JSON.stringify(reviews.map(item => item.so_luong));
         // Lấy sản phẩm và số lượng tồn kho 

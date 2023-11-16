@@ -12187,7 +12187,13 @@ ul.list-style-none li a:hover {
 .table td:last-child {
     white-space: nowrap;
 }
-thead, tbody, tfoot, tr, td, th{
+
+thead,
+tbody,
+tfoot,
+tr,
+td,
+th {
     border-style: solid;
     border-color: #dee2e6;
     border-width: 1px 1px;
@@ -12196,14 +12202,17 @@ thead, tbody, tfoot, tr, td, th{
 .table td:last-child button {
     margin-right: 5px;
 }
-.table td, .table th {
+
+.table td,
+.table th {
     text-align: center;
     vertical-align: middle;
 }
 
-.table > :not(caption) > * {
+.table> :not(caption)>* {
     border-width: 1px 0;
 }
+
 .nowrap {
     white-space: nowrap;
 }
@@ -17227,7 +17236,7 @@ label {
     height: auto;
 }
 
-.card-body-cus{
+.card-body-cus {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -17235,22 +17244,24 @@ label {
     margin-bottom: 20px;
 }
 
-.card-body-add-product-form{
+.card-body-add-product-form {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: left;
 }
-#add-product-form{
+
+#add-product-form {
     margin-right: 20px;
     margin-left: 20px;
 }
-.title-form{
+
+.title-form {
     font-weight: 100;
     margin-top: 10px;
 }
 
-.title-form-check-box{
+.title-form-check-box {
     font-weight: 100;
 }
 
@@ -17277,9 +17288,11 @@ label {
     width: fit-content;
     padding: 10px;
 }
-a .btn-delete{
+
+a .btn-delete {
     color: white;
 }
+
 .btn-delete:disabled {
     opacity: .5;
 }
@@ -17321,9 +17334,11 @@ a .btn-delete{
     width: fit-content;
     padding: 10px;
 }
-a .btn-delete-confirm{
+
+a .btn-delete-confirm {
     color: white;
 }
+
 .btn-delete-confirm:disabled {
     opacity: .5;
 }
@@ -17366,9 +17381,11 @@ a .btn-delete-confirm{
     width: fit-content;
     padding: 10px;
 }
-a .btn-update{
+
+a .btn-update {
     color: white;
 }
+
 .btn-update:disabled {
     opacity: .5;
 }
@@ -17386,12 +17403,40 @@ a .btn-update{
     background-color: #379237;
     border-color: #379237;
 }
+
 .circular-image {
-    width: 90px; /* Set the width and height to create a circular shape */
+    width: 90px;
+    /* Set the width and height to create a circular shape */
     height: 90px;
-    border-radius: 50%; /* Use border-radius to create a circle */
+    border-radius: 50%;
+    /* Use border-radius to create a circle */
 }
 
 
+/* Style for stars */
+.star-ratings {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 20px;
+    position: relative;
+}
 
+.star {
+    color: #ddd;
+}
 
+.star-ratings-filled {
+    color: #fdd835;
+    /* Màu vàng cho ngôi sao được điền */
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.star-ratings-empty {
+    display: block;
+    white-space: nowrap;
+}
