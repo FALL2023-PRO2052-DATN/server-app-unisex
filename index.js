@@ -2,27 +2,30 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const exphbs = require("express-handlebars");
 const session = require("express-session");
+const methodOverride = require('method-override');
 const flash = require("connect-flash");
 const path = require("path");
 const handlebarsHelpers = require("./helpers/handlebars-helpers.js");
 
 const overviewRouter = require('./routers/overview.admin.router.js');
-const bannerRouter = require("./routers/banner.admin.router.js");
-const categoryRouter = require("./routers/category.admin.router.js");
-const discountRouter = require("./routers/discount.admin.router.js");
-const sizeRouter = require("./routers/size.admin.router.js");
-const productRouter = require("./routers/product.admin.router.js");
-const productSizeRouter = require("./routers/product-size.admin.router.js");
-const reviewRouter = require("./routers/reviews.admin.router.js");
-const billRouter = require("./routers/bill.admin.router.js");
-const billDetailRouter = require("./routers/bill-detail.admin.router.js");
-const employeeRouter = require("./routers/employee.admin.router.js");
+const bannerRouter = require("./routers/admin/banner.router.js");
+const categoryRouter = require("./routers/admin/category.router.js");
+const discountRouter = require("./routers/admin/discount.router.js");
+const sizeRouter = require("./routers/admin/size.router.js");
+const productRouter = require("./routers/admin/product.router.js");
+const productSizeRouter = require("./routers/admin/product-size.router.js");
+const reviewRouter = require("./routers/admin/reviews.router.js");
+const billRouter = require("./routers/admin/bill.router.js");
+const billDetailRouter = require("./routers/admin/bill-detail.router.js");
+const employeeRouter = require("./routers/admin/employee.router.js");
 const authRouter = require("./routers/auth/auth.admin.router.js");
 // Router shipper
 const employeeShipperRouter = require("./routers/shipper/employee.shipper.router.js");
 const billShipperRouter = require("./routers/shipper/bill.shipper.router.js");
 
 const app = express();
+
+app.use(methodOverride('_method'));
 
 // express-session - flash message
 app.use(
@@ -35,8 +38,8 @@ app.use(
 app.use(flash());
 app.use(function (req, res, next) {
     (res.locals.success = req.flash("success")),
-        (res.locals.error = req.flash("error")),
-        (res.locals.warning = req.flash("warning"));
+    (res.locals.error = req.flash("error")),
+    (res.locals.warning = req.flash("warning"));
     next();
 });
 

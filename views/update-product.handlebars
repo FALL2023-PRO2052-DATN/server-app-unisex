@@ -2,463 +2,441 @@
 <html dir="ltr" lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/logo-icon.svg">
-    <title>Cập nhật sản phẩm</title>
-    <!-- Custom CSS -->
-    <link rel="stylesheet" type="text/css" href="/assets/extra-libs/multicheck/multicheck.css">
-    <link href="/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
-    <link href="/dist/css/style.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/css/multi-select-tag.css">
-    <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/js/multi-select-tag.js"></script>
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <!-- Favicon icon -->
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/logo-icon.svg">
+  <title>Cập nhật sản phẩm</title>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" type="text/css" href="/assets/extra-libs/multicheck/multicheck.css">
+  <link href="/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
+  <link href="/dist/css/style.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/css/multi-select-tag.css">
+  <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/js/multi-select-tag.js"></script>
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
 
 <body>
-    <!-- ============================================================== -->
-    <!-- Preloader - style you can find in spinners.css -->
-    <!-- ============================================================== -->
-    <div class="preloader" id="loader">
-        <div class="lds-ripple">
-            <div class="lds-pos"></div>
-            <div class="lds-pos"></div>
-        </div>
+  <!-- ============================================================== -->
+  <!-- Preloader - style you can find in spinners.css -->
+  <!-- ============================================================== -->
+  <div class="preloader" id="loader">
+    <div class="lds-ripple">
+      <div class="lds-pos"></div>
+      <div class="lds-pos"></div>
     </div>
+  </div>
+  <!-- ============================================================== -->
+  <!-- Main wrapper - style you can find in pages.scss -->
+  <!-- ============================================================== -->
+  <div id="main-wrapper">
     <!-- ============================================================== -->
-    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- Topbar header - style you can find in pages.scss -->
     <!-- ============================================================== -->
-    <div id="main-wrapper">
-        <!-- ============================================================== -->
-        <!-- Topbar header - style you can find in pages.scss -->
-        <!-- ============================================================== -->
-        <header class="topbar" data-navbarbg="skin5">
-            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
-                <div class="navbar-header" data-logobg="skin5">
-                    <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i
-                            class="ti-menu ti-close"></i></a>
-                    <a class="navbar-brand" href="index.html">
-                        <b class="logo-icon p-l-10">
-                            <img src="/assets/images/logo-icon.svg" alt="homepage" class="light-logo" />
-                        </b>
-                        <span class="logo-text">
-                            <img src="/assets/images/logo-text.svg" alt="homepage" class="light-logo" />
-                        </span>
-                    </a>
-                    <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)"
-                        data-toggle="collapse" data-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i
-                            class="ti-more"></i></a>
-                </div>
-                <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
-                    <ul class="navbar-nav float-left mr-auto">
-                        <li class="nav-item d-none d-md-block"><a
-                                class="nav-link sidebartoggler waves-effect waves-light" href="javascript:void(0)"
-                                data-sidebartype="mini-sidebar"><i class="mdi mdi-menu font-24"></i></a></li>
-                        <!-- ============================================================== -->
-                    </ul>
-                    <ul class="navbar-nav float-right">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href=""
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
-                                    src="/assets/images/users/1.jpg" alt="user" class="rounded-circle" width="31"></a>
-                            <div class="dropdown-menu dropdown-menu-right user-dd animated">
-                                <a class="dropdown-item" href="/admin/setting"><i class="ti-settings m-r-5 m-l-5"></i>
-                                    Cài đặt tài khoản</a>
-                                <a class="dropdown-item" href="/logout"><i class="fa fa-power-off m-r-5 m-l-5"></i>
-                                    Đăng xuất</a>
-                                <div class="dropdown-divider"></div>
-                                <div class="p-l-30 p-10"><a href="javascript:void(0)"
-                                        class="btn btn-sm btn-success btn-rounded">View
-                                        Profile</a></div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </header>
-        <!-- ============================================================== -->
-        <!-- End Topbar header -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Left Sidebar - style you can find in sidebar.scss  -->
-        <!-- ============================================================== -->
-        <aside class="left-sidebar" data-sidebarbg="skin5">
-            <div class="scroll-sidebar">
-                <nav class="sidebar-nav">
-                    <ul id="sidebarnav" class="p-t-30">
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/"
-                                aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Tổng
-                                    quan</span></a>
-                        </li>
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="/admin/banner" aria-expanded="false"><i class="mdi mdi-image-multiple"></i><span
-                                    class="hide-menu">Hình ảnh
-                                    banner</span></a></li>
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="/admin/category" aria-expanded="false"><i class="mdi mdi-file-document"></i><span
-                                    class="hide-menu">Danh mục sản
-                                    phẩm</span></a></li>
-                        <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark"
-                                href="javascript:void(0)" aria-expanded="false"><i
-                                    class="mdi mdi-package-variant-closed"></i><span class="hide-menu">Sản phẩm
-                                </span></a>
-                            <ul aria-expanded="false" class="collapse  first-level">
-                                <li class="sidebar-item"><a href="/admin/product" class="sidebar-link"><i
-                                            class="mdi mdi-format-list-bulleted"></i><span class="hide-menu"> Danh sách
-                                            sản phẩm </span></a></li>
-                                <li class="sidebar-item"><a href="/admin/product-size" class="sidebar-link"><i
-                                            class="mdi mdi-table-edit"></i><span class="hide-menu"> Quản lý kho
-                                        </span></a>
-                                </li>
-                                <li class="sidebar-item"><a href="/admin/size" class="sidebar-link"><i
-                                            class="mdi mdi-move-resize"></i><span class="hide-menu"> Kích thước sản phẩm
-                                        </span></a></li>
-                            </ul>
-                        </li>
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="/admin/bill" aria-expanded="false"><i class="mdi mdi-truck"></i><span
-                                    class="hide-menu">Đơn hàng</span></a></li>
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="/admin/discount" aria-expanded="false"><i class="mdi mdi-blur-linear"></i><span
-                                    class="hide-menu">Mã giảm giá</span></a>
-                        </li>
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="/admin/reviews" aria-expanded="false"><i
-                                    class="mdi mdi-comment-processing"></i><span class="hide-menu">Đánh giá sản
-                                    phẩm</span></a></li>
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="/admin/employee" aria-expanded="false"><i
-                                    class="mdi mdi-account-multiple"></i><span class="hide-menu">Nhân viên</span></a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </aside>
-        <!-- ============================================================== -->
-        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Page wrapper  -->
-        <!-- ============================================================== -->
-        <div class="page-wrapper">
+    <header class="topbar" data-navbarbg="skin5">
+      <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+        <div class="navbar-header" data-logobg="skin5">
+          <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i
+              class="ti-menu ti-close"></i></a>
+          <a class="navbar-brand" href="index.html">
+            <b class="logo-icon p-l-10">
+              <img src="/assets/images/logo-icon.svg" alt="homepage" class="light-logo" />
+            </b>
+            <span class="logo-text">
+              <img src="/assets/images/logo-text.svg" alt="homepage" class="light-logo" />
+            </span>
+          </a>
+          <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)"
+            data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation"><i class="ti-more"></i></a>
+        </div>
+        <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
+          <ul class="navbar-nav float-left mr-auto">
+            <li class="nav-item d-none d-md-block"><a class="nav-link sidebartoggler waves-effect waves-light"
+                href="javascript:void(0)" data-sidebartype="mini-sidebar"><i class="mdi mdi-menu font-24"></i></a></li>
             <!-- ============================================================== -->
-            <!-- Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- End Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- Container fluid  -->
-            <!-- ============================================================== -->
-            <div class="container-fluid">
-                <!-- ============================================================== -->
-                <!-- Start Page Content -->
-                <!-- ============================================================== -->
-                <!-- Thông báo khi thao tác với tác vụ CRUD --->
-                {{#if success}}
-                <div class="alert alert-success" role="alert">
-                    {{success}}
-                </div>
-                {{/if}}
-                {{#if error}}
-                <div class="alert alert-danger" role="alert">
-                    {{error}}
-                </div>
-                {{/if}}
-                {{#if warning}}
-                <div class="alert alert-warning" role="alert">
-                    {{warning}}
-                </div>
-                {{/if}}
+          </ul>
+          <ul class="navbar-nav float-right">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href=""
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="/assets/images/users/1.jpg"
+                  alt="user" class="rounded-circle" width="31"></a>
+              <div class="dropdown-menu dropdown-menu-right user-dd animated">
+                <a class="dropdown-item" href="/admin/setting"><i class="ti-settings m-r-5 m-l-5"></i>
+                  Cài đặt tài khoản</a>
+                <a class="dropdown-item" href="/logout"><i class="fa fa-power-off m-r-5 m-l-5"></i>
+                  Đăng xuất</a>
+                <div class="dropdown-divider"></div>
+                <div class="p-l-30 p-10"><a href="javascript:void(0)" class="btn btn-sm btn-success btn-rounded">View
+                    Profile</a></div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <!-- ============================================================== -->
+    <!-- End Topbar header -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+    <aside class="left-sidebar" data-sidebarbg="skin5">
+      <div class="scroll-sidebar">
+        <nav class="sidebar-nav">
+          <ul id="sidebarnav" class="p-t-30">
+            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/"
+                aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Tổng
+                  quan</span></a>
+            </li>
+            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/admin/banner"
+                aria-expanded="false"><i class="mdi mdi-image-multiple"></i><span class="hide-menu">Hình ảnh
+                  banner</span></a></li>
+            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                href="/admin/category" aria-expanded="false"><i class="mdi mdi-file-document"></i><span
+                  class="hide-menu">Danh mục sản
+                  phẩm</span></a></li>
+            <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark"
+                href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-package-variant-closed"></i><span
+                  class="hide-menu">Sản phẩm
+                </span></a>
+              <ul aria-expanded="false" class="collapse  first-level">
+                <li class="sidebar-item"><a href="/admin/product" class="sidebar-link"><i
+                      class="mdi mdi-format-list-bulleted"></i><span class="hide-menu"> Danh sách
+                      sản phẩm </span></a></li>
+                <li class="sidebar-item"><a href="/admin/product-size" class="sidebar-link"><i
+                      class="mdi mdi-table-edit"></i><span class="hide-menu"> Quản lý kho
+                    </span></a>
+                </li>
+                <li class="sidebar-item"><a href="/admin/size" class="sidebar-link"><i
+                      class="mdi mdi-move-resize"></i><span class="hide-menu"> Kích thước sản phẩm
+                    </span></a></li>
+              </ul>
+            </li>
+            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/admin/bill"
+                aria-expanded="false"><i class="mdi mdi-truck"></i><span class="hide-menu">Đơn hàng</span></a></li>
+            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                href="/admin/discount" aria-expanded="false"><i class="mdi mdi-blur-linear"></i><span
+                  class="hide-menu">Mã giảm giá</span></a>
+            </li>
+            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/admin/reviews"
+                aria-expanded="false"><i class="mdi mdi-comment-processing"></i><span class="hide-menu">Đánh giá sản
+                  phẩm</span></a></li>
+            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                href="/admin/employee" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span
+                  class="hide-menu">Nhân viên</span></a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </aside>
+    <!-- ============================================================== -->
+    <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper">
+      <!-- ============================================================== -->
+      <!-- Bread crumb and right sidebar toggle -->
+      <!-- ============================================================== -->
+      <!-- ============================================================== -->
+      <!-- End Bread crumb and right sidebar toggle -->
+      <!-- ============================================================== -->
+      <!-- ============================================================== -->
+      <!-- Container fluid  -->
+      <!-- ============================================================== -->
+      <div class="container-fluid">
+        <!-- ============================================================== -->
+        <!-- Start Page Content -->
+        <!-- ============================================================== -->
+        <!-- Thông báo khi thao tác với tác vụ CRUD --->
+        {{#if success}}
+        <div class="alert alert-success" role="alert">
+          {{success}}
+        </div>
+        {{/if}}
+        {{#if error}}
+        <div class="alert alert-danger" role="alert">
+          {{error}}
+        </div>
+        {{/if}}
+        {{#if warning}}
+        <div class="alert alert-warning" role="alert">
+          {{warning}}
+        </div>
+        {{/if}}
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body-cus" style="margin: 20px;">
+                <h5 class="card-title m-b-0">Thông tin chung</h5>
+              </div>
+              <form method="post" style="margin-left: 20px; margin-right: 20px;"
+                action="/admin/product/{{ product.san_pham_id }}/update?_method=PUT" enctype="multipart/form-data">
                 <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body-cus" style="margin: 20px;">
-                                <h5 class="card-title m-b-0">Thông tin chung</h5>
-                            </div>
-                            <form style="margin-left: 20px; margin-right: 20px;" action="/admin/product/update"
-                                method="POST" enctype="multipart/form-data">
-                                <div class="row">
-                                    <div class="col">
-                                        <input type="hidden" value="{{ product.san_pham_id }}" name="idProduct">
-                                        <label for="formGroupExampleInput" class="title-form">Tên sản phẩm</label>
-                                        <input type="text" class="form-control" id="formGroupExampleInput"
-                                            placeholder="Ví dụ: Áo thun trắng" value="{{product.ten_san_pham}}"
-                                            name="name">
-                                        <div class="mb-3">
-                                            <label for="formFile" class="title-form">
-                                                Chọn ảnh đại diện cho sản phẩm</label>
-                                            <input class="form-control" type="file" id="formFile" name="image">
-                                            <input type="hidden" value="{{product.hinh_anh}}" name="imgUrl">
-                                            <div
-                                                style="align-items: center; display: flex; text-align: center;flex-direction: column;                      ">
-                                                <img src="{{product.hinh_anh}}" class="img-thumbnail"
-                                                    style="margin-top: 10px; width: 200px; height: 200px;"
-                                                    id="previewImage">
-                                            </div>
-                                        </div>
-                                        <label for="formGroupExampleInput" class="title-form">Giá sản phẩm</label>
-                                        <input type="text" class="form-control" id="priceInput" name="price"
-                                            placeholder="Ví dụ: 200.000đ" value="{{product.gia_ban}}">
-                                        <label for="formGroupExampleInput" class="title-form">Mô tả sản phẩm</label>
-                                        <textarea class="form-control" aria-label="With textarea"
-                                            name="description">{{product.mo_ta_chi_tiet}}</textarea>
-                                        <label for="formGroupExampleInput" class="title-form">Thiết lập liên
-                                            quan</label>
-                                        <div class="form-check" style="margin-left: 20px;">
-                                            <input class="form-check-input" type="checkbox" value="1" name="outstanding"
-                                                id="flexCheckDefault" {{#equal product.noi_bat 1}} checked {{/equal}}>
-                                            <label class="title-form-check-box" for="flexCheckDefault">
-                                                Sản phẩm nổi bật
-                                            </label>
-                                        </div>
-                                        <div class="form-check" style="margin-left: 20px;">
-                                            <input class="form-check-input" type="checkbox" value="1" name="selling"
-                                                id="flexCheckDefault1" {{#equal product.moi_nhat 1}} checked {{/equal}}>
-                                            <label class="title-form-check-box" for="flexCheckDefault1">
-                                                Sản phẩm mới về
-                                            </label>
-                                        </div>
-                                        <label for="formGroupExampleInput" class="title-form">Danh mục</label>
-                                        <select class="custom-select" name="idCategory">
-                                            {{#each categories}}
-                                            <option value="{{this.id_danh_muc}}" {{#equal this.id_danh_muc
-                                                ../product.danh_muc_id}} selected {{/equal}}>
-                                                {{this.ten_danh_muc}}
-                                            </option>
-                                            {{/each}}
-                                        </select>
-                                        <label for="formGroupExampleInput" class="title-form">Giảm giá</label>
-                                        <input type="text" class="form-control" id="formGroupExampleInput"
-                                            name="discount" placeholder="Ví dụ: 20(%)" value="{{product.giam_gia}}">
-                                    </div>
+                  <div class="col">
+                    <input type="hidden" value="{{ product.san_pham_id }}" name="idProduct">
+                    <label for="formGroupExampleInput" class="title-form">Tên sản phẩm</label>
+                    <input type="text" class="form-control" id="formGroupExampleInput"
+                      placeholder="Ví dụ: Áo thun trắng" value="{{product.ten_san_pham}}" name="name">
+                    <div class="mb-3">
+                      <label for="formFile" class="title-form">
+                        Chọn ảnh đại diện cho sản phẩm</label>
+                      <input class="form-control" type="file" id="formFile" name="image">
+                      <input type="hidden" value="{{product.hinh_anh}}" name="imgUrl">
+                      <div
+                        style="align-items: center; display: flex; text-align: center;flex-direction: column;                      ">
+                        <img src="{{product.hinh_anh}}" class="img-thumbnail"
+                          style="margin-top: 10px; width: 200px; height: 200px;" id="previewImage">
+                      </div>
+                    </div>
+                    <label for="formGroupExampleInput" class="title-form">Giá sản phẩm</label>
+                    <input type="text" class="form-control" id="priceInput" name="price" placeholder="Ví dụ: 200.000đ"
+                      value="{{product.gia_ban}}">
+                    <label for="formGroupExampleInput" class="title-form">Mô tả sản phẩm</label>
+                    <textarea class="form-control" aria-label="With textarea"
+                      name="description">{{product.mo_ta_chi_tiet}}</textarea>
+                    <label for="formGroupExampleInput" class="title-form">Thiết lập liên
+                      quan</label>
+                    <div class="form-check" style="margin-left: 20px;">
+                      <input class="form-check-input" type="checkbox" value="1" name="outstanding" id="flexCheckDefault"
+                        {{#equal product.noi_bat 1}} checked {{/equal}}>
+                      <label class="title-form-check-box" for="flexCheckDefault">
+                        Sản phẩm nổi bật
+                      </label>
+                    </div>
+                    <div class="form-check" style="margin-left: 20px;">
+                      <input class="form-check-input" type="checkbox" value="1" name="selling" id="flexCheckDefault1"
+                        {{#equal product.moi_nhat 1}} checked {{/equal}}>
+                      <label class="title-form-check-box" for="flexCheckDefault1">
+                        Sản phẩm mới về
+                      </label>
+                    </div>
+                    <label for="formGroupExampleInput" class="title-form">Danh mục</label>
+                    <select class="custom-select" name="idCategory">
+                      {{#each categories}}
+                      <option value="{{this.id_danh_muc}}" {{#equal this.id_danh_muc ../product.danh_muc_id}} selected
+                        {{/equal}}>
+                        {{this.ten_danh_muc}}
+                      </option>
+                      {{/each}}
+                    </select>
+                    <label for="formGroupExampleInput" class="title-form">Giảm giá</label>
+                    <input type="text" class="form-control" id="formGroupExampleInput" name="discount"
+                      placeholder="Ví dụ: 20(%)" value="{{product.giam_gia}}">
+                  </div>
 
-                                </div>
-                                <button id="addButton" class="button-26" type="submit"
-                                    style="margin-top: 20px; margin-bottom: 20px;">Lưu thông tin</button>
-                            </form>
-                        </div>
+                </div>
+                <button id="addButton" class="button-26" type="submit"
+                  style="margin-top: 20px; margin-bottom: 20px;">Lưu thông tin</button>
+              </form>
+            </div>
 
-                        <div class="card" style="padding: 20px;">
-                            <div class="card-body-cus">
-                                <h5 class="card-title m-b-0">Phiên bản sản phẩm</h5>
-                                <button type="button" class="button-26" data-toggle="modal"
-                                    data-target="#modal-add-size" data-whatever="@mdo">Thêm kích thước</button>
-                            </div>
-                            <table class="table" id="myTable" style="width: 100%;">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">STT</th>
-                                        <th scope="col">Ảnh</th>
-                                        <th scope="col">Phiên bản sản phẩm</th>
-                                        <th scope="col">Tồn kho</th>
-                                        <th scope="col">Tác vụ</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {{#each productsSize}}
-                                    <tr>
-                                        <th scope="row" style="width: 10%;">{{calculateIndex @index}}</th>
-                                        <input type="hidden" value="{{this.id}}">
-                                        <td style="width: 10%"><img id="img-table-cus" src="{{this.anh_dai_dien}}"
-                                                alt="Hình ảnh"></td>
-                                        <td style="width: 30%;">{{this.ten_san_pham}} - {{this.ten_kich_thuoc}}</td>
-                                        <td style="width: 30%;">{{this.so_luong_ton_kho}}</td>
-                                        <td style="width: 30%;">
-                                            <button type="button" class="btn-update" data-toggle="modal"
-                                                data-target="#modal-update" data-json='{
+            <div class="card" style="padding: 20px;">
+              <div class="card-body-cus">
+                <h5 class="card-title m-b-0">Phiên bản sản phẩm</h5>
+                <button type="button" class="button-26" data-toggle="modal" data-target="#modal-add-size"
+                  data-whatever="@mdo">Thêm kích thước</button>
+              </div>
+              <table class="table" id="myTable" style="width: 100%;">
+                <thead>
+                  <tr>
+                    <th scope="col">STT</th>
+                    <th scope="col">Ảnh</th>
+                    <th scope="col">Phiên bản sản phẩm</th>
+                    <th scope="col">Tồn kho</th>
+                    <th scope="col">Tác vụ</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each productsSize}}
+                  <tr>
+                    <th scope="row" style="width: 10%;">{{calculateIndex @index}}</th>
+                    <input type="hidden" value="{{this.id}}">
+                    <td style="width: 10%"><img id="img-table-cus" src="{{this.anh_dai_dien}}" alt="Hình ảnh"></td>
+                    <td style="width: 30%;">{{this.ten_san_pham}} - {{this.ten_kich_thuoc}}</td>
+                    <td style="width: 30%;">{{this.so_luong_ton_kho}}</td>
+                    <td style="width: 30%;">
+                      <button type="button" class="btn-update" data-toggle="modal" data-target="#modal-update"
+                        data-json='{
                                                     "id_product_size": "{{this.id}}",
                                                     "so_luong": "{{this.so_luong_ton_kho}}",
                                                     "kich_thuoc_id": "{{this.kich_thuoc_id}}"
                                                 }'>
-                                                Cập nhật
-                                            </button>
-                                            <button type="button" class="btn-delete" data-toggle="modal"
-                                                data-target="#delete-modal-size" data-id="{{this.id}}">
-                                                Xoá
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    {{/each}}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <!--Modal thêm kích thước-->
-                <div class="modal" tabindex="-1" role="dialog" id="modal-add-size">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Thêm kích thước</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form action="/admin/product-size/create" method="POST">
-                                    <input type="hidden" name="idProduct" id="" value="{{product.san_pham_id}}">
-                                    <label for="formGroupExampleInput" class="title-form">Kích thước</label>
-                                    <select class="custom-select" name="size" id="sizeUpdate">
-                                        {{#each sizes}}
-                                        <option value="{{this.id}}" {{#equal this.id 0}}selected{{/equal}}>
-                                            Size {{this.ten_kich_thuoc}}
-                                        </option>
-                                        {{/each}}
-                                    </select>
-                                    <label for="formGroupExampleInput" class="title-form">Số lượng</label>
-                                    <input type="text" style="margin-top: 10px;" class="form-control" id="priceInput"
-                                        placeholder="Số lượng sản phẩm " name="quantity">
-                                    <div class="modal-footer" style="margin-top: 20px;">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-dismiss="modal">Huỷ</button>
-                                        <button href="#" type="submit" class="button-26"
-                                            style="color: white;">Thêm</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!--Modal cập nhật-->
-                <div class="modal" tabindex="-1" role="dialog" id="modal-update">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Cập nhật phiên bản</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form action="/admin/product-size/update" method="POST">
-                                    <label for="formGroupExampleInput" class="title-form">Id phiên bản</label>
-                                    <input type="text" style="margin-top: 10px;" class="form-control"
-                                        id="idProdctSizeUpdateInput" placeholder="Số lượng sản phẩm "
-                                        name="idProductSize" readonly>
-                                    <input type="hidden" name="idProduct" id="" value="{{product.san_pham_id}}">
-                                    <label for="formGroupExampleInput" class="title-form">Kích thước</label>
-                                    <select class="custom-select" name="size">
-                                        {{#each sizes}}
-                                        <option value="{{this.id}}">
-                                            Size {{this.ten_kich_thuoc}}
-                                        </option>
-                                        {{/each}}
-                                    </select>
-                                    <input type="text" style="margin-top: 10px;" class="form-control"
-                                        id="quantityInputUpdate" placeholder="Số lượng sản phẩm " name="quantity">
-                                    <div class="modal-footer" style="margin-top: 20px;">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-dismiss="modal">Huỷ</button>
-                                        <button href="#" type="submit" class="button-26"
-                                            style="color: white;">Lưu</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--Modal xoá danh mục-->
-                <div class="modal" tabindex="-1" role="dialog" id="delete-modal-size">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Hệ thống</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <p>Bạn có muốn xoá kích thước sản phẩm</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
-                                <form action="/admin/product-size/delete-for-update-product" method="POST">
-                                    <input type="hidden" name="idProduct" id="" value="{{product.san_pham_id}}">
-                                    <input type="hidden" name="idProductSize" id="idProductSizeInput">
-                                    <button href="#" type="submit" class="btn-delete-confirm"
-                                        style="color: white;">Xoá</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- ============================================================== -->
-                <!-- End PAge Content -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- Right sidebar -->
-                <!-- ============================================================== -->
-                <!-- .right-sidebar -->
-                <!-- ============================================================== -->
-                <!-- End Right sidebar -->
-                <!-- ============================================================== -->
+                        Cập nhật
+                      </button>
+                      <button type="button" class="btn-delete" data-toggle="modal" data-target="#delete-modal-size"
+                        data-id="{{this.id}}">
+                        Xoá
+                      </button>
+                    </td>
+                  </tr>
+                  {{/each}}
+                </tbody>
+              </table>
             </div>
-            <!-- ============================================================== -->
-            <!-- End Container fluid  -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- footer -->
-            <!-- ============================================================== -->
-            <footer class="footer text-center">
-                All Rights Reserved by Matrix-admin. Designed and Developed by <a
-                    href="https://wrappixel.com">WrapPixel</a>.
-            </footer>
-            <!-- ============================================================== -->
-            <!-- End footer -->
-            <!-- ============================================================== -->
+          </div>
+        </div>
+        <!--Modal thêm kích thước-->
+        <div class="modal" tabindex="-1" role="dialog" id="modal-add-size">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Thêm kích thước</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form action="/admin/product-size" method="POST">
+                  <input type="hidden" name="idProduct" id="" value="{{product.san_pham_id}}">
+                  <label for="formGroupExampleInput" class="title-form">Kích thước</label>
+                  <select class="custom-select" name="size" id="sizeUpdate">
+                    {{#each sizes}}
+                    <option value="{{this.id}}" {{#equal this.id 0}}selected{{/equal}}>
+                      Size {{this.ten_kich_thuoc}}
+                    </option>
+                    {{/each}}
+                  </select>
+                  <label for="formGroupExampleInput" class="title-form">Số lượng</label>
+                  <input type="text" style="margin-top: 10px;" class="form-control" id="priceInput"
+                    placeholder="Số lượng sản phẩm " name="quantity">
+                  <div class="modal-footer" style="margin-top: 20px;">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
+                    <button href="#" type="submit" class="button-26" style="color: white;">Thêm</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--Modal cập nhật-->
+        <div class="modal" tabindex="-1" role="dialog" id="modal-update">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Cập nhật phiên bản</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form method="POST" name="form-update-product-size">
+                  <input type="hidden" name="idProduct" id="" value="{{product.san_pham_id}}">
+                  <label for="formGroupExampleInput" class="title-form">Kích thước</label>
+                  <select class="custom-select" name="size">
+                    {{#each sizes}}
+                    <option value="{{this.id}}">
+                      Size {{this.ten_kich_thuoc}}
+                    </option>
+                    {{/each}}
+                  </select>
+                  <input type="text" style="margin-top: 10px;" class="form-control" id="quantityInputUpdate"
+                    placeholder="Số lượng sản phẩm " name="quantity">
+                  <div class="modal-footer" style="margin-top: 20px;">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
+                    <button href="#" type="submit" class="button-26" style="color: white;">Lưu</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--Modal xoá danh mục-->
+        <div class="modal" tabindex="-1" role="dialog" id="delete-modal-size">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Hệ thống</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>Bạn có muốn xoá kích thước sản phẩm</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
+                <form name="form-del-product-size" method="POST">
+                  <button href="#" type="submit" class="btn-delete-confirm" style="color: white;">Xoá</button>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
         <!-- ============================================================== -->
-        <!-- End Page wrapper  -->
+        <!-- End PAge Content -->
         <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Right sidebar -->
+        <!-- ============================================================== -->
+        <!-- .right-sidebar -->
+        <!-- ============================================================== -->
+        <!-- End Right sidebar -->
+        <!-- ============================================================== -->
+      </div>
+      <!-- ============================================================== -->
+      <!-- End Container fluid  -->
+      <!-- ============================================================== -->
+      <!-- ============================================================== -->
+      <!-- footer -->
+      <!-- ============================================================== -->
+      <footer class="footer text-center">
+        All Rights Reserved by Matrix-admin. Designed and Developed by <a href="https://wrappixel.com">WrapPixel</a>.
+      </footer>
+      <!-- ============================================================== -->
+      <!-- End footer -->
+      <!-- ============================================================== -->
     </div>
     <!-- ============================================================== -->
-    <!-- End Wrapper -->
+    <!-- End Page wrapper  -->
     <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- All Jquery -->
-    <!-- ============================================================== -->
-    <script src="/assets/libs/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap tether Core JavaScript -->
-    <script src="/assets/libs/popper.js/dist/umd/popper.min.js"></script>
-    <script src="/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- slimscrollbar scrollbar JavaScript -->
-    <script src="/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
-    <script src="/assets/extra-libs/sparkline/sparkline.js"></script>
-    <!--Wave Effects -->
-    <script src="/dist/js/waves.js"></script>
-    <!--Menu sidebar -->
-    <script src="/dist/js/sidebarmenu.js"></script>
-    <!--Custom JavaScript -->
-    <script src="/dist/js/custom.min.js"></script>
-    <!-- this page js -->
-    <script src="/assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
-    <script src="/assets/extra-libs/multicheck/jquery.multicheck.js"></script>
-    <script src="/assets/extra-libs/DataTables/datatables.min.js"></script>
-    <script>
-        /****************************************
-         *       Basic Table                   *
-         ****************************************/
-        $('#myTable').DataTable();
-    </script>
-    <script src="/dist/js/update-product.js"></script>
-    <script>
-        new MultiSelectTag('countries');
-    </script>
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Wrapper -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- All Jquery -->
+  <!-- ============================================================== -->
+  <script src="/assets/libs/jquery/dist/jquery.min.js"></script>
+  <!-- Bootstrap tether Core JavaScript -->
+  <script src="/assets/libs/popper.js/dist/umd/popper.min.js"></script>
+  <script src="/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+  <!-- slimscrollbar scrollbar JavaScript -->
+  <script src="/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+  <script src="/assets/extra-libs/sparkline/sparkline.js"></script>
+  <!--Wave Effects -->
+  <script src="/dist/js/waves.js"></script>
+  <!--Menu sidebar -->
+  <script src="/dist/js/sidebarmenu.js"></script>
+  <!--Custom JavaScript -->
+  <script src="/dist/js/custom.min.js"></script>
+  <!-- this page js -->
+  <script src="/assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
+  <script src="/assets/extra-libs/multicheck/jquery.multicheck.js"></script>
+  <script src="/assets/extra-libs/DataTables/datatables.min.js"></script>
+  <script>
+    /****************************************
+     *       Basic Table                   *
+     ****************************************/
+    $('#myTable').DataTable();
+  </script>
+  <script src="/dist/js/update-product.js"></script>
+  <script>
+    new MultiSelectTag('countries');
+  </script>
 </body>
 
 </html>

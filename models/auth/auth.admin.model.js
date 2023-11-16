@@ -1,8 +1,9 @@
 const database = require('../../database/database.js');
 
 const authenticateUser = async (username, password) => {
+    const values = [username, password]
     const query = `SELECT * FROM NhanVien WHERE ten_dang_nhap = ? AND mat_khau =? AND hienThi = 1 AND vai_tro = 'ADMIN';`;
-    return await database.queryDatabase(query, [username, password]);
+    return await database.queryDatabase(query, values);
 }
 
 const updateProfileUser = async (data) => {
@@ -17,7 +18,6 @@ const updateProfileUser = async (data) => {
         data.dateOfBirth,
         data.username,
     ];
-
     return await database.queryDatabase(query, values);
 }
 

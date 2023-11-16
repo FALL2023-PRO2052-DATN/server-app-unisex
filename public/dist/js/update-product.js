@@ -23,8 +23,13 @@ const table = document.querySelector('#myTable');
 table.addEventListener('click', function (event) {
     if (event.target.classList.contains('btn-delete')) {
         const id = event.target.getAttribute('data-id');
-        const idProductSizeInput = document.querySelector(`#idProductSizeInput`);
-        idProductSizeInput.value = id;
+
+        var formDel = document.forms["form-del-product-size"];
+        formDel.addEventListener('submit', function (e) {
+            e.preventDefault();
+            formDel.action = "/admin/product-size/" + id + "?_method=DELETE";
+            formDel.submit();
+        });
     }
 
     if (event.target.classList.contains('btn-update')) {
@@ -33,12 +38,17 @@ table.addEventListener('click', function (event) {
         const jsonObject = JSON.parse(jsonData);
 
         const quantityInputUpdate = document.querySelector(`#quantityInputUpdate`);
-        const idProdctSizeUpdateInput = document.querySelector(`#idProdctSizeUpdateInput`);
 
         quantityInputUpdate.value = jsonObject.so_luong;
-        idProdctSizeUpdateInput.value = jsonObject.id_product_size;
 
-        $( `option[value="${jsonObject.kich_thuoc_id}"]` ).prop( 'selected', 'selected' );
+        var formUpdate = document.forms["form-update-product-size"];
+        formUpdate.addEventListener('submit', function (e) {
+            e.preventDefault();
+            formUpdate.action = "/admin/product-size/" + jsonObject.id_product_size + "?_method=PUT"
+            formUpdate.submit();
+        });
+
+        $(`option[value="${jsonObject.kich_thuoc_id}"]`).prop('selected', 'selected');
     }
 });
 

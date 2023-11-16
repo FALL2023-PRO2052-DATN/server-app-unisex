@@ -4,8 +4,8 @@ const authMiddleware = require('../../middleware/auth-middleware.js');
 
 router.get('/login', authAdminController.renderPageLogin);
 router.post('/login', authAdminController.handleLogin);
+router.get('/logout', authMiddleware.signed, authAdminController.handleLogout);
 router.get('/admin/setting', authMiddleware.signed, authAdminController.renderPageSetting);
 router.post('/admin/update-profile', authMiddleware.signed, authAdminController.handleUpateProfileUser);
-router.get('/logout', authAdminController.handleLogout);
 
 module.exports = router;

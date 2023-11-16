@@ -1,6 +1,6 @@
 const signed = (req, res, next) => {
     if (!req.session.user) {
-        return res.redirect('/login');
+        return res.status(200).redirect('/login');
     }
     next();
 }

@@ -340,7 +340,7 @@
                             {{#equal bill.tinh_trang_giao_hang "Chờ xác nhận"}}
                             <div class="row" style="margin-left: 10px; margin-right: 10px; margin-bottom: 20px;">
                                 <div class="col-sm-6">
-                                    <form action="/admin/bill/confirm-order/{{bill.don_hang_id}}" method="POST">
+                                    <form action="/admin/bill/confirm-order/{{bill.don_hang_id}}?_method=PUT" method="POST">
                                         <button type="submit" class="btn btn-warning"
                                             style="width: 100%; height: 40px;">Xác
                                             nhận đơn hàng</button>
@@ -397,7 +397,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form id="image-upload-form" action="/admin/bill/cancel-order/{{bill.don_hang_id}}"
+                                <form id="image-upload-form" action="/admin/bill/cancel-order/{{bill.don_hang_id}}?_method=PUT"
                                     method="POST">
                                     <div class="form-group">
                                         <label for="image-upload" class="title-form">Nội dung</label>
