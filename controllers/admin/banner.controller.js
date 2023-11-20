@@ -10,8 +10,8 @@ const renderPageBanner = async (req, res) => {
   try {
     const banners = await bannerModel.getBanners();
     const bannersReversed = arrayHelpers.reverseArray(banners);
-    res.render('banner', { 
-      banners: bannersReversed 
+    res.render('banner', {
+      banners: bannersReversed
     });
   } catch (error) {
     console.error('Rendering banner failed', error);
