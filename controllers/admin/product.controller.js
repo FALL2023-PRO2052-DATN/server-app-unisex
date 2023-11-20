@@ -51,7 +51,7 @@ const insertProduct = (req, res) => {
 
           for (const size of sizes || [0]) {
             const data = { size, idProduct, quantity };
-            await productSizeModel.insert(data);
+            await productSizeModel.insertProductSize(data);
           }
 
           req.flash('success', 'Thêm sản phẩm thành công');
