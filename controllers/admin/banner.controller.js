@@ -49,7 +49,7 @@ const removeBanner = async (req, res) => {
   try {
     const results = await bannerModel.removeBanner(bannerID);
 
-    if (results.affectedRows > 0) {
+    if (results.changedRows > 0) {
       req.flash('success', 'Xoá banner thành công.');
     } else {
       req.flash('error', 'Xoá banner không thành công.');
