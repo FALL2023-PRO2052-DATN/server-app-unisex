@@ -1,51 +1,113 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const exphbs = require('express-handlebars');
-const hbs = exphbs.create({ defaultLayout: false });
+const express = require("express");
+const bodyParser = require("body-parser");
+const exphbs = require("express-handlebars");
+const session = require("express-session");
+const methodOverride = require('method-override');
+const flash = require("connect-flash");
+const path = require("path");
+const handlebarsHelpers = require("./helpers/handlebars-helpers.js");
+const attachSocketIO = require('./middleware/socket.io-middlware.js');
 
-const userRouter = require('./routers/user/account.user.routers')
-const bannerRouter = require('./routers/user/banner.user.routers')
-const productRouter = require('./routers/user/product.user.roters')
-const typeProductRouter = require('./routers/user/typeProduct.user.routers')
-const commentRouter = require('./routers/user/comment.user.routers')
-const cartRouter = require('./routers/user/cart.user.routers')
-const addressRouter = require('./routers/user/address.user.routers')
-const discountRouter = require('./routers/user/discount.user.routers')
-const orderRouter = require('./routers/user/order.user.routers')
-const billRouter = require('./routers/user/bill.user.routers')
-const userSettingRouter = require('./routers/user/user.user.routers')
-const notificationRouter = require('./routers/user/notification.router')
+const overviewRouter = require('./routers/overview.admin.router.js');
+const bannerRouter = require("./routers/admin/banner.router.js");
+const categoryRouter = require("./routers/admin/category.router.js");
+const discountRouter = require("./routers/admin/discount.router.js");
+const sizeRouter = require("./routers/admin/size.router.js");
+const productRouter = require("./routers/admin/product.router.js");
+const productSizeRouter = require("./routers/admin/product-size.router.js");
+const reviewRouter = require("./routers/admin/reviews.router.js");
+const billRouter = require("./routers/admin/bill.router.js");
+const billDetailRouter = require("./routers/admin/bill-detail.router.js");
+const employeeRouter = require("./routers/admin/employee.router.js");
+const authRouter = require("./routers/auth/auth.admin.router.js");
+// Router shipper
+const employeeShipperRouter = require("./routers/shipper/employee.shipper.router.js");
+const billShipperRouter = require("./routers/shipper/bill.shipper.router.js");
+
+const userRouterApi = require('./routers/user/account.user.routers')
+const bannerRouterApi = require('./routers/user/banner.user.routers')
+const productRouterApi = require('./routers/user/product.user.roters')
+const typeProductRouterApi = require('./routers/user/typeProduct.user.routers')
+const commentRouterApi = require('./routers/user/comment.user.routers')
+const cartRouterApi = require('./routers/user/cart.user.routers')
+const addressRouterApi = require('./routers/user/address.user.routers')
+const discountRouterApi = require('./routers/user/discount.user.routers')
+const orderRouterApi = require('./routers/user/order.user.routers')
+const billRouterApi = require('./routers/user/bill.user.routers')
+const userSettingRouterApi = require('./routers/user/user.user.routers')
+const notificationRouterApi = require('./routers/user/notification.router')
 
 const app = express();
+const server = require('http').createServer(app);
+// Sử dụng socket.io
+const io = require('socket.io')(server);
+// Sử dụng middleware để truyền io vào req
+app.use(attachSocketIO(io));
 
-// BodyParser
+app.use(methodOverride('_method'));
+
+// express-session - flash message
+app.use(
+    session({
+        secret: "unisex-app",
+        saveUninitialized: true,
+        resave: true,
+    })
+);
+app.use(flash());
+app.use(function (req, res, next) {
+    (res.locals.success = req.flash("success")),
+    (res.locals.error = req.flash("error")),
+    (res.locals.warning = req.flash("warning"));
+    next();
+});
+
+// body-parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// Handlebars
-app.engine('handlebars', hbs.engine);
-app.set('view engine', 'handlebars');
-app.use(express.static('public'));
+// express-handlebars
+app.engine("handlebars", exphbs.engine({ extname: 'handlebars', defaultLayout: null }));
+app.set("view engine", "handlebars");
 
-// Routing
-app.get('/', (req, res) => {
-  res.render('index');
+// public file
+app.use(express.static(path.join(__dirname, "/public")));
+
+// Hiển thị thông tin HTTP khi yêu cầu
+app.use((req, res, next) => {
+    console.log("🚀 ~ file: index.js:59 ~ app.use ~ req:", req.method + req.url);
+    next();
 });
+// routers
+app.use("/", overviewRouter);
+app.use("/", authRouter);
+app.use("/admin", bannerRouter);
+app.use("/admin", categoryRouter);
+app.use("/admin", discountRouter);
+app.use("/admin", sizeRouter);
+app.use("/admin", productRouter);
+app.use("/admin", productSizeRouter);
+app.use("/admin", reviewRouter);
+app.use("/admin", employeeRouter);
+app.use("/admin", billRouter);
+app.use("/admin", billDetailRouter);
+app.use("/api/shipper", employeeShipperRouter);
+app.use("/api/shipper", billShipperRouter);
 
-app.use("/api", userRouter)
-app.use("/api", bannerRouter)
-app.use("/api", productRouter)
-app.use("/api", typeProductRouter)
-app.use("/api", commentRouter)
-app.use("/api", cartRouter)
-app.use("/api", addressRouter)
-app.use("/api", discountRouter)
-app.use("/api", orderRouter)
-app.use("/api", billRouter)
-app.use("/api", userSettingRouter)
-app.use("/api", notificationRouter)
+app.use("/api", userRouterApi)
+app.use("/api", bannerRouterApi)
+app.use("/api", productRouterApi)
+app.use("/api", typeProductRouterApi)
+app.use("/api", commentRouterApi)
+app.use("/api", cartRouterApi)
+app.use("/api", addressRouterApi)
+app.use("/api", discountRouterApi)
+app.use("/api", orderRouterApi)
+app.use("/api", billRouterApi)
+app.use("/api", userSettingRouterApi)
+app.use("/api", notificationRouterApi)
 //
-const port = 3000;
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+const port = 3000 || process.env.DB_PORT;
+server.listen(port, () => {
+    console.log(`Example app listening on port ${port}`);
 });

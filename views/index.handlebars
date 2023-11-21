@@ -1,11 +1,539 @@
 <!DOCTYPE html>
-<html lang="en">
+<html dir="ltr" lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/logo-icon.svg">
+    <title>Trang chủ</title>
+    <!-- Custom CSS -->
+    <link href="/assets/libs/flot/css/float-chart.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/dist/css/style.min.css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
 </head>
+
 <body>
-    <h1>Hello</h1>
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <header class="topbar" data-navbarbg="skin5">
+            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+                <div class="navbar-header" data-logobg="skin5">
+                    <!-- This is for the sidebar toggle which is visible on mobile only -->
+                    <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i
+                            class="ti-menu ti-close"></i></a>
+                    <!-- ============================================================== -->
+                    <!-- Logo -->
+                    <!-- ============================================================== -->
+                    <a class="navbar-brand" href="/">
+                        <!-- Logo icon -->
+                        <b class="logo-icon p-l-10">
+                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                            <!-- Dark Logo icon -->
+                            <img src="/assets/images/logo-icon.svg" alt="homepage" class="light-logo" />
+
+                        </b>
+                        <!--End Logo icon -->
+                        <!-- Logo text -->
+                        <span class="logo-text">
+                            <!-- dark Logo text -->
+                            <img src="/assets/images/logo-text.svg" alt="homepage" class="light-logo" />
+
+                        </span>
+                        <!-- Logo icon -->
+                        <!-- <b class="logo-icon"> -->
+                        <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                        <!-- Dark Logo icon -->
+                        <!-- <img src="assets/images/logo-text.png" alt="homepage" class="light-logo" /> -->
+
+                        <!-- </b> -->
+                        <!--End Logo icon -->
+                    </a>
+                    <!-- ============================================================== -->
+                    <!-- End Logo -->
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    <!-- Toggle which is visible on mobile only -->
+                    <!-- ============================================================== -->
+                    <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)"
+                        data-toggle="collapse" data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i
+                            class="ti-more"></i></a>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
+                    <!-- ============================================================== -->
+                    <!-- toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav float-left mr-auto">
+                        <li class="nav-item d-none d-md-block"><a
+                                class="nav-link sidebartoggler waves-effect waves-light" href="javascript:void(0)"
+                                data-sidebartype="mini-sidebar"><i class="mdi mdi-menu font-24"></i></a></li>
+                        <!-- ============================================================== -->
+                    </ul>
+
+                    <!-- ============================================================== -->
+                    <!-- Right side toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav float-right">
+                        <!-- ============================================================== -->
+                        <!-- Comment -->
+                        <!-- ============================================================== -->
+                        <!-- ============================================================== -->
+                        <!-- End Comment -->
+                        <!-- ============================================================== -->
+                        <!-- ============================================================== -->
+                        <!-- Messages -->
+                        <!-- ============================================================== -->
+                        <!-- ============================================================== -->
+                        <!-- End Messages -->
+                        <!-- ============================================================== -->
+
+                        <!-- ============================================================== -->
+                        <!-- User profile and search -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href=""
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
+                                    src="/assets/images/users/1.jpg" alt="user" class="rounded-circle" width="31"></a>
+                            <div class="dropdown-menu dropdown-menu-right user-dd animated">
+                                <a class="dropdown-item" href="/admin/setting"><i class="ti-settings m-r-5 m-l-5"></i>
+                                    Cài đặt tài khoản</a>
+                                <a class="dropdown-item" href="/logout"><i class="fa fa-power-off m-r-5 m-l-5"></i>
+                                    Đăng xuất</a>
+                                <div class="dropdown-divider"></div>
+                                <div class="p-l-30 p-10"><a href="javascript:void(0)"
+                                        class="btn btn-sm btn-success btn-rounded">View
+                                        Profile</a></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <aside class="left-sidebar" data-sidebarbg="skin5">
+            <div class="scroll-sidebar">
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav" class="p-t-30">
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/"
+                                aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Tổng
+                                    quan</span></a>
+                        </li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                href="/admin/banner" aria-expanded="false"><i class="mdi mdi-image-multiple"></i><span
+                                    class="hide-menu">Hình ảnh
+                                    banner</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                href="/admin/category" aria-expanded="false"><i class="mdi mdi-file-document"></i><span
+                                    class="hide-menu">Danh mục sản
+                                    phẩm</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark"
+                                href="javascript:void(0)" aria-expanded="false"><i
+                                    class="mdi mdi-package-variant-closed"></i><span class="hide-menu">Sản phẩm
+                                </span></a>
+                            <ul aria-expanded="false" class="collapse  first-level">
+                                <li class="sidebar-item"><a href="/admin/product" class="sidebar-link"><i
+                                            class="mdi mdi-format-list-bulleted"></i><span class="hide-menu"> Danh sách
+                                            sản phẩm </span></a></li>
+                                <li class="sidebar-item"><a href="/admin/product-size" class="sidebar-link"><i
+                                            class="mdi mdi-table-edit"></i><span class="hide-menu"> Quản lý kho
+                                        </span></a>
+                                </li>
+                                <li class="sidebar-item"><a href="/admin/size" class="sidebar-link"><i
+                                            class="mdi mdi-move-resize"></i><span class="hide-menu"> Kích thước sản phẩm
+                                        </span></a></li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                href="/admin/bill" aria-expanded="false"><i class="mdi mdi-truck"></i><span
+                                    class="hide-menu">Đơn hàng</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                href="/admin/discount" aria-expanded="false"><i class="mdi mdi-blur-linear"></i><span
+                                    class="hide-menu">Mã giảm giá</span></a>
+                        </li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                href="/admin/reviews" aria-expanded="false"><i
+                                    class="mdi mdi-comment-processing"></i><span class="hide-menu">Đánh giá sản
+                                    phẩm</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                href="/admin/employee" aria-expanded="false"><i
+                                    class="mdi mdi-account-multiple"></i><span class="hide-menu">Nhân viên</span></a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <!-- Column -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card card-hover">
+                            <div class="box bg-cyan text-center">
+                                <h1 class="font-light text-white"><i class="mdi mdi-package-variant-closed"></i></h1>
+                                <h6 class="text-white">{{products.length}} sản phẩm</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card card-hover">
+                            <div class="box bg-danger text-center">
+                                <h1 class="font-light text-white"><i class="mdi mdi-table-edit"></i></h1>
+                                <h6 class="text-white">{{tong_ton_kho}} sản phâm tồn kho</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card card-hover">
+                            <div class="box bg-success text-center">
+                                <h1 class="font-light text-white"><i class="mdi mdi-truck"></i></h1>
+                                <h6 class="text-white">{{billsIsPaid.length}} đơn hàng đã thanh toán</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card card-hover">
+                            <div class="box bg-warning text-center">
+                                <h1 class="font-light text-white"><i class="mdi mdi-truck"></i></h1>
+                                <h6 class="text-white">{{billsUnConfirm.length}} chờ xác nhận</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-7" id="revenueChart-layout">
+                        <div class="card" style="padding: 20px;">
+                            <div class="card-body-cus">
+                                <h5 class="card-title m-b-0">Doanh thu</h5>
+                                <select id="selectYear" class="form-control form-control-sm"
+                                    style="width: auto; height: 22px;">
+                                    <option selected disabled>Chọn năm</option>
+                                    <option value="2020">2020</option>
+                                    <option value="2021">2021</option>
+                                    <option value="2022">2022</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2024">2024</option>
+                                </select>
+                            </div>
+                            <div class="card-group" style="margin-left: 10px; margin-right: 10px;">
+                                <canvas id="revenueChart" height="400"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5" id="myChart-layout">
+                        <div class="card" style="padding: 20px;">
+                            <div class="card-body-cus">
+                                <h5 class="card-title m-b-0">Đơn hàng</h5>
+                            </div>
+                            <div class="card-group" style="margin-left: 10px; margin-right: 10px;">
+                                <canvas id="myChart" height="400"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card" style="padding: 20px;">
+                            <div class="card-body-cus">
+                                <h5 class="card-title m-b-0">Đánh giá sản phẩm</h5>
+                            </div>
+                            <div class="card-group" style="margin-left: 10px; margin-right: 10px;">
+                                <canvas id="ratingChart" height="300"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card" style="padding: 20px;">
+                            <div class="card-body-cus">
+                                <h5 class="card-title m-b-0">Thống kê tồn kho</h5>
+                            </div>
+                            <div class="card-group" style="margin-left: 10px; margin-right: 10px;">
+                                <canvas id="inventoryChart" height="300"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            <footer class="footer text-center">
+                All Rights Reserved by Matrix-admin. Designed and Developed by <a
+                    href="https://wrappixel.com">WrapPixel</a>.
+            </footer>
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src="assets/libs/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="/assets/libs/popper.js/dist/umd/popper.min.js"></script>
+    <script src="/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <script src="/assets/extra-libs/sparkline/sparkline.js"></script>
+    <!--Wave Effects -->
+    <script src="/dist/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="/dist/js/sidebarmenu.js"></script>
+    <!--Custom JavaScript -->
+    <script src="/dist/js/custom.min.js"></script>
+    <!-- this page js -->
+    <script src="/assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
+    <script src="/assets/extra-libs/multicheck/jquery.multicheck.js"></script>
+    <script src="/assets/extra-libs/DataTables/datatables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>SƯ
+    <script>
+        /****************************************
+         *       Basic Table                   *
+         ****************************************/
+        $('#zero_config').DataTable();
+    </script>
+    <script>
+        // Tạo dữ liệu cho biểu đồ
+        const unpaidBillsCounts = {{{ unpaidBillsCount }}}; // Số lượng đánh giá cho mỗi mức đánh giá
+        const paidBillsCounts = {{{ paidBillsCount }}}; // Số lượng đánh giá cho mỗi mức đánh giá
+
+        const chartData = {
+            labels: ['Chờ xác nhận', 'Chờ lấy hàng', 'Đang giao hàng', 'Đã giao hàng', 'Đã huỷ'],
+            datasets: [
+                {
+                    label: 'Đã thanh toán',
+                    data: paidBillsCounts,
+                    backgroundColor: '#3874ff' // Màu xanh nhạt
+                },
+                {
+                    label: 'Chưa thanh toán',
+                    data: unpaidBillsCounts,
+                    backgroundColor: '#e5edff' // Màu xanh đậm
+                }
+            ],
+        };
+        // Tạo biểu đồ cột xếp chồng
+        // Tạo biểu đồ cột nhóm
+        const ctx = document.getElementById('myChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: chartData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { stacked: true },
+                    y: { beginAtZero: true },
+                },
+            },
+        });
+
+    </script>
+    <script>
+        // Function to update the chart based on the selected year
+        let chart;
+        function updateChart(yearSelected, revenueData) {
+            if (chart) {
+                chart.destroy(); // Destroy the previous chart if it exists.
+            }
+            let data = Array(12).fill(0);
+
+            // Filter the data for the selected year
+            const filteredData = revenueData.filter(item => item.year_order === yearSelected);
+
+            // Populate the data array with the monthly revenue
+            filteredData.forEach(item => {
+                const month = item.month_order;
+                if (month >= 1 && month <= 12) {
+                    data[month - 1] += item.tong_doanh_thu;
+                }
+            });
+
+            // Get the canvas context
+            const ctx = document.getElementById('revenueChart').getContext('2d');
+
+            // Configure the Chart.js chart
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Th1', 'Th2', 'Th3', 'Th4', 'Th5', 'Th6', 'Th7', 'Th8', 'Th9', 'Th10', 'Th11', 'Th12'],
+                    datasets: [
+                        {
+                            label: 'Doanh thu 12 tháng năm ' + yearSelected,
+                            data: data,
+                            borderColor: '#3874ff',
+                            borderWidth: 2,
+                            lineTension: 0.1
+                        },
+                    ],
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                beginAtZero: true,
+                                min: 0
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Event listener for the year select dropdown
+        document.getElementById("selectYear").addEventListener("change", function () {
+            const indexSelected = this.selectedIndex;
+            const optionSelected = this.options[indexSelected];
+            const yearSelected = parseInt(optionSelected.value, 10);
+
+            // Replace {{{ annualRevenues }}} with your actual data
+            const revenueData = {{{ annualRevenues }}};
+
+        // Call the updateChart function with the selected year and data
+        updateChart(yearSelected, revenueData);
+        });
+
+        // Initialize the chart with the current year
+        const revenueData = {{{ annualRevenues }}};
+        const currentYear = new Date().getFullYear();
+        updateChart(currentYear, revenueData);
+
+    </script>
+
+    <script>
+        const ratings = [5, 4, 3, 2, 1]; // Đánh giá từ 5 sao đến 1 sao
+        const ratingCounts = {{{ ratingCount }}}; // Số lượng đánh giá cho mỗi mức đánh giá
+
+        const ctx2 = document.getElementById('ratingChart').getContext('2d');
+
+        new Chart(ctx2, {
+            type: 'pie',
+            data: {
+                labels: ratings.map(rating => `${rating} sao`),
+                datasets: [{
+                    data: ratingCounts,
+                    backgroundColor: ['#3874ff', '#00A9FF', '#89CFF3', '#A0E9FF', '#CDF5FD'],
+                }],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                title: {
+                    display: true,
+                    text: 'Biểu đồ đánh giá sản phẩm',
+                },
+            },
+        });
+
+    </script>
+
+
+    <script>
+        // Dữ liệu số lượng tồn kho của sản phẩm
+        const productData = {{{ productStockByGroupStr }}}
+
+        // Tạo mảng tên sản phẩm và mảng số lượng tồn kho
+        const productNames = productData.map(item => item.ten_san_pham);
+        const inventoryCounts = productData.map(item => item.tong_ton_kho);
+
+        // Lấy thẻ canvas
+        const ctx3 = document.getElementById('inventoryChart').getContext('2d');
+
+        // Tạo biểu đồ cột dọc
+        new Chart(ctx3, {
+            type: 'bar',
+            data: {
+                labels: productNames, // Tên sản phẩm
+                datasets: [{
+                    label: 'Số lượng tồn kho',
+                    data: inventoryCounts, // Số lượng tồn kho
+                    backgroundColor: '#3874ff', // Màu cho cột
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+
+                    x: {
+                        ticks: {
+                            maxRotation: 90,
+                            minRotation: 80
+                        }
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
 </body>
+
 </html>

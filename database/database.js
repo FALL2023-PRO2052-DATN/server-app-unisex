@@ -21,7 +21,7 @@ const queryDatabase = (query, values) => {
             if (err) {
                 reject(err);
                 return;
-            }
+            } 
             resolve(results);
         });
     });
