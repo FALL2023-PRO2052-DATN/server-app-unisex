@@ -219,7 +219,8 @@
 							<div class="modal-footer">
 								<button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
 								<form method="POST" name="form-del">
-									<button href="#" type="submit" class="btn-delete-confirm" style="color: white;" id="btn_del_banner">Xoá</button>
+									<button href="#" type="submit" class="btn-delete-confirm" style="color: white;"
+										id="btn_del_banner">Xoá</button>
 								</form>
 							</div>
 						</div>
@@ -249,10 +250,78 @@
 	<script src="/assets/extra-libs/multicheck/jquery.multicheck.js"></script>
 	<script src="/assets/extra-libs/DataTables/datatables.min.js"></script>
 	<script>
-      /**************************************** * Basic Table *
-      ****************************************/ $('#myTable').DataTable();
+		// Custom table
+		$(document).ready(function () {
+			$('#myTable').DataTable({
+				language: {
+					processing: "Đang xử lý...",
+					search: "Tìm kiếm:",
+					lengthMenu: "Hiển thị _MENU_ mục",
+					info: "Hiển thị từ _START_ đến _END_ trên _TOTAL_ mục",
+					infoEmpty: "Không có mục nào để hiển thị",
+					infoFiltered: "(bị lọc từ _MAX_ mục tổng cộng)",
+				}
+			});
+		});
 	</script>
-	<script src="/dist/js/banner.js"></script>
+	<script>
+		// Hiển thị image khi chọn ảnh trong thư mục
+		document.addEventListener("DOMContentLoaded", function () {
+			const fileInput = document.getElementById("bannerImage");
+			const previewImage = document.getElementById("previewImage");
+			fileInput.addEventListener("change", function () {
+				if (fileInput.files.length > 0) {
+					const selectedImage = fileInput.files[0];
+					// Check if the selected file is an image
+					if (selectedImage.type.startsWith("image/")) {
+						const imageURL = URL.createObjectURL(selectedImage);
+						previewImage.src = imageURL;
+					} else {
+						// Handle non-image file selection here, if needed
+						console.log("Please select an image file.");
+					}
+				}
+			});
+
+			const addButton = document.getElementById('addButton');
+			addButton.addEventListener('click', function (event) {
+				//Lấy dữ liệu từ data-id của .button-delete
+				if (fileInput.files.length === 0) {
+					// Hiển thị alert khi không chọn ảnh
+					document.getElementById('alert-iamge-warning').style.display = 'block';
+					setTimeout(() => {
+						document.getElementById('alert-iamge-warning').style.display = 'none';
+					}, 4000);
+					event.preventDefault();
+				} 
+			});
+		});
+	</script>
+	<script>
+		// Ẩn thông báo sau 4 giây
+		const alerts = document.querySelectorAll('.alert');
+		alerts.forEach(function (alert) {
+			setTimeout(function () {
+				alert.style.display = 'none';
+			}, 4000);
+		});
+	</script>
+	<script>
+		// Xử lý form xoá banner 
+		const table = document.querySelector('#myTable');
+		table.addEventListener('click', function (event) {
+			if (event.target.classList.contains('btn-delete')) {
+				const id = event.target.getAttribute('data-id');
+				var deleteForm = document.forms["form-del"];
+
+				deleteForm.addEventListener('submit', function (e) {
+					e.preventDefault();
+					deleteForm.action = "/admin/banner/" + id + "?_method=PUT"
+					deleteForm.submit();
+				});
+			}
+		});
+	</script>
 </body>
 
 </html>

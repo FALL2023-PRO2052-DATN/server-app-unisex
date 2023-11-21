@@ -10,7 +10,9 @@ const renderPageBanner = async (req, res) => {
   try {
     const banners = await bannerModel.getBanners();
     const bannersReversed = arrayHelpers.reverseArray(banners);
-    res.status(200).render('banner', { banners: bannersReversed });
+    res.render('banner', {
+      banners: bannersReversed
+    });
   } catch (error) {
     console.error('Rendering banner failed', error);
   }
@@ -34,8 +36,7 @@ const insertBanner = async (req, res) => {
         } else {
           req.flash('error', 'Thêm banner không thành công.');
         }
-
-        res.status(200).redirect('/admin/banner');
+        res.redirect('back');
       } catch (error) {
         console.error('Inserter banner failed', error);
       }
@@ -44,11 +45,16 @@ const insertBanner = async (req, res) => {
 }
 
 const removeBanner = async (req, res) => {
+  const bannerID = req.params.bannerID;
   try {
-    const bannerID = req.params.bannerID;
-    await bannerModel.removeBanner(bannerID);
-    req.flash('success', 'Xoá banner thành công.');
-    res.status(200).redirect('/admin/banner');
+    const results = await bannerModel.removeBanner(bannerID);
+
+    if (results.changedRows > 0) {
+      req.flash('success', 'Xoá banner thành công.');
+    } else {
+      req.flash('error', 'Xoá banner không thành công.');
+    }
+    res.redirect('back');
   } catch (error) {
     console.error('Removing banner failed', error);
   }
