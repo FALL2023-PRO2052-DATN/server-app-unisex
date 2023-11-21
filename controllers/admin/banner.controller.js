@@ -54,7 +54,7 @@ const removeBanner = async (req, res) => {
     } else {
       req.flash('error', 'Xoá banner không thành công.');
     }
-    res.status(200).redirect('back');
+    res.redirect('back');
   } catch (error) {
     console.error('Removing banner failed', error);
   }
