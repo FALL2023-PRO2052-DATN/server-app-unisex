@@ -6,6 +6,7 @@ const methodOverride = require('method-override');
 const flash = require("connect-flash");
 const path = require("path");
 const handlebarsHelpers = require("./helpers/handlebars-helpers.js");
+const attachSocketIO = require('./middleware/socket.io-middlware.js');
 
 const overviewRouter = require('./routers/overview.admin.router.js');
 const bannerRouter = require("./routers/admin/banner.router.js");
@@ -24,6 +25,11 @@ const employeeShipperRouter = require("./routers/shipper/employee.shipper.router
 const billShipperRouter = require("./routers/shipper/bill.shipper.router.js");
 
 const app = express();
+const server = require('http').createServer(app);
+// Sử dụng socket.io
+const io = require('socket.io')(server);
+// Sử dụng middleware để truyền io vào req
+app.use(attachSocketIO(io));
 
 app.use(methodOverride('_method'));
 
@@ -76,6 +82,6 @@ app.use("/api/shipper", employeeShipperRouter);
 app.use("/api/shipper", billShipperRouter);
 
 const port = 3000 || process.env.DB_PORT;
-app.listen(port, () => {
+server.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });
