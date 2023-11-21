@@ -8,6 +8,7 @@ const path = require("path");
 const handlebarsHelpers = require("./helpers/handlebars-helpers.js");
 const attachSocketIO = require('./middleware/socket.io-middlware.js');
 
+// Router admin
 const overviewRouter = require('./routers/overview.admin.router.js');
 const bannerRouter = require("./routers/admin/banner.router.js");
 const categoryRouter = require("./routers/admin/category.router.js");
@@ -20,10 +21,12 @@ const billRouter = require("./routers/admin/bill.router.js");
 const billDetailRouter = require("./routers/admin/bill-detail.router.js");
 const employeeRouter = require("./routers/admin/employee.router.js");
 const authRouter = require("./routers/auth/auth.admin.router.js");
+
 // Router shipper
 const employeeShipperRouter = require("./routers/shipper/employee.shipper.router.js");
 const billShipperRouter = require("./routers/shipper/bill.shipper.router.js");
 
+// Router API user
 const userRouterApi = require('./routers/user/account.user.routers')
 const bannerRouterApi = require('./routers/user/banner.user.routers')
 const productRouterApi = require('./routers/user/product.user.roters')
@@ -48,18 +51,18 @@ app.use(methodOverride('_method'));
 
 // express-session - flash message
 app.use(
-    session({
-        secret: "unisex-app",
-        saveUninitialized: true,
-        resave: true,
-    })
+  session({
+    secret: "unisex-app",
+    saveUninitialized: true,
+    resave: true,
+  })
 );
 app.use(flash());
 app.use(function (req, res, next) {
-    (res.locals.success = req.flash("success")),
+  (res.locals.success = req.flash("success")),
     (res.locals.error = req.flash("error")),
     (res.locals.warning = req.flash("warning"));
-    next();
+  next();
 });
 
 // body-parser
@@ -75,10 +78,11 @@ app.use(express.static(path.join(__dirname, "/public")));
 
 // Hiển thị thông tin HTTP khi yêu cầu
 app.use((req, res, next) => {
-    console.log("🚀 ~ file: index.js:59 ~ app.use ~ req:", req.method + req.url);
-    next();
+  console.log("🚀 ~ file: index.js:59 ~ app.use ~ req:", req.method + req.url);
+  next();
 });
-// routers
+
+// routers admin
 app.use("/", overviewRouter);
 app.use("/", authRouter);
 app.use("/admin", bannerRouter);
@@ -91,9 +95,12 @@ app.use("/admin", reviewRouter);
 app.use("/admin", employeeRouter);
 app.use("/admin", billRouter);
 app.use("/admin", billDetailRouter);
+
+// rourters shipper
 app.use("/api/shipper", employeeShipperRouter);
 app.use("/api/shipper", billShipperRouter);
 
+// routers API
 app.use("/api", userRouterApi)
 app.use("/api", bannerRouterApi)
 app.use("/api", productRouterApi)
@@ -106,8 +113,8 @@ app.use("/api", orderRouterApi)
 app.use("/api", billRouterApi)
 app.use("/api", userSettingRouterApi)
 app.use("/api", notificationRouterApi)
-//
+
 const port = 3000 || process.env.DB_PORT;
 server.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
+  console.log(`Example app listening on port ${port}`);
 });
