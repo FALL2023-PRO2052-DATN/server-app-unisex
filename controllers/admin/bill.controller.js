@@ -35,6 +35,8 @@ const confirmBillFromPageBillDetail = async (req, res) => {
       userID= billToConfirm.nguoi_dung_id
     ];
     await notificationModel.insertNotification(data);
+    // Socket realtime notification android
+    req.io.emit('notification', "Đơn hàng " + id + " của bạn đã được xác nhận");
     req.flash('success', 'Xác nhận đơn hàng thành công.');
     res.redirect('/admin/bill-detail/' + id);
   } catch (error) {
@@ -59,6 +61,8 @@ const cancelBillFromPageBillDetail = async (req, res) => {
       userID= billToConfirm.nguoi_dung_id
     ];
     await notificationModel.insertNotification(data);
+    // Socket realtime notification android
+    req.io.emit('notification', "Đơn hàng " + id + " của bạn đã bị huỷ từ chủ của hàng");
     req.flash('success', 'Huỷ đơn hàng thành công');
     res.redirect('/admin/bill-detail/' + id);
   } catch (error) {
