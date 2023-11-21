@@ -28,15 +28,22 @@ const confirmBillFromPageBillDetail = async (req, res) => {
     const billToConfirm = bills.find((bill) => {
       return bill.id === id;
     });
-    const data = [
-      content= 'Đơn hàng của bạn đã được xác nhận',
-      imageUrl= 'null',
-      title= 'Đơn hàng ' + id,
-      userID= billToConfirm.nguoi_dung_id
-    ];
+    console.log("🚀 ~ file: bill.controller.js:31 ~ billToConfirm ~ billToConfirm:", billToConfirm)
+    const data = {
+      content: 'Đơn hàng của bạn đã được xác nhận',
+      imageUrl: 'null',
+      title: 'Đơn hàng ' + id,
+      userID: billToConfirm.nguoi_dung_id
+    };
     await notificationModel.insertNotification(data);
+
+    const notificationData = {
+      orderId: id,
+      message: "Đơn hàng " + id + " của bạn đã được xác nhận",
+      userId: billToConfirm.nguoi_dung_id
+    };
     // Socket realtime notification android
-    req.io.emit('notification', "Đơn hàng " + id + " của bạn đã được xác nhận");
+    req.io.emit('notification', notificationData);
     req.flash('success', 'Xác nhận đơn hàng thành công.');
     res.redirect('/admin/bill-detail/' + id);
   } catch (error) {
@@ -54,15 +61,21 @@ const cancelBillFromPageBillDetail = async (req, res) => {
     const billToConfirm = bills.find((bill) => {
       return bill.id === id;
     });
-    const data = [
-      content= 'Đơn hàng của bạn đã bị huỷ từ chủ của hàng.',
-      imageUrl= 'null',
-      title= 'Đơn hàng ' + id,
-      userID= billToConfirm.nguoi_dung_id
-    ];
+    const data = {
+      content: 'Đơn hàng của bạn đã bị huỷ từ chủ của hàng.',
+      imageUrl: 'null',
+      title: 'Đơn hàng ' + id,
+      userID: billToConfirm.nguoi_dung_id
+    };
     await notificationModel.insertNotification(data);
     // Socket realtime notification android
-    req.io.emit('notification', "Đơn hàng " + id + " của bạn đã bị huỷ từ chủ của hàng");
+    const notificationData = {
+      orderId: id,
+      message: "Đơn hàng " + id + " của bạn đã bị huỷ từ chủ của hàng",
+      userId: billToConfirm.nguoi_dung_id
+      // Thêm các trường dữ liệu khác nếu cần thiết
+    };
+    req.io.emit('notification', notificationData);
     req.flash('success', 'Huỷ đơn hàng thành công');
     res.redirect('/admin/bill-detail/' + id);
   } catch (error) {
