@@ -1,4 +1,4 @@
-const connection = require("../database/database.js")
+const connection = require("../../database/database.js")
 
 const readProductNew = (req, res) => {
   const query = "SELECT SanPham.id , SanPham.ten_san_pham, SanPham.anh_dai_dien, SanPham.gia_ban, SanPham.giam_gia, SanPham.mo_ta_chi_tiet, DanhMuc.ten_danh_muc " +

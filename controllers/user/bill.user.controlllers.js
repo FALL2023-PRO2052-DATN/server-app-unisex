@@ -1,4 +1,4 @@
-const connection = require("../database/database.js")
+const connection = require("../../database/database.js")
 
 const readBillByStatusId = (req, res) => {
     const { idUser, deliveryStatus } = req.body

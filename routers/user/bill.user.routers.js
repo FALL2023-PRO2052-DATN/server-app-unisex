@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const billController = require('../controllers/bill.user.controlllers');
+const billController = require('../../controllers/user/bill.user.controlllers');
 
 router.post('/read-byId-status-bill', billController.readBillByStatusId);
 router.post('/cancel-bill', billController.cancelBill);

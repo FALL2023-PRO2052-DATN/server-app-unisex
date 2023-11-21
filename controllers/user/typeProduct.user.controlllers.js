@@ -1,4 +1,4 @@
-const connection = require("../database/database.js")
+const connection = require("../../database/database.js")
 
 const readTypeProduct = (req, res) => {
     const query = "SELECT * FROM DanhMuc WHERE hienThi = 1"

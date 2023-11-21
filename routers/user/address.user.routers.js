@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const addressController = require('../controllers/address.user.controlllers');
+const addressController = require('../../controllers/user/address.user.controlllers');
 
 router.post('/read-address', addressController.readAddress);
 router.post('/get-list-address', addressController.getListAddress);

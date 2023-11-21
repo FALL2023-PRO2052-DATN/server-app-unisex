@@ -1,4 +1,5 @@
-const connection = require("../database/database.js")
+const connection = require("../../database/database.js")
+const model = require("../../models/user/discount.model.js")
 
 const readDiscountById = (req, res) => {
 
@@ -15,7 +16,17 @@ const readDiscountById = (req, res) => {
 }
 
 
+const readDiscount = async (req, res) => {
+    try {
+        const results = await model.readDiscount()
+        res.json({ status: "SUCCESS", discountList: results })
+    } catch (error) {
+        res.json({ status: "ERROR", error })
+    }
+}
+
 
 module.exports = {
     readDiscountById,
+    readDiscount
 }

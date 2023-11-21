@@ -1,5 +1,5 @@
 const e = require("express")
-const connection = require("../database/database.js")
+const connection = require("../../database/database.js")
 
 const readAddress = (req, res) => {
 
@@ -78,7 +78,7 @@ const insertAddress = (req, res) => {
 
 const updateAddress = (req, res) => {
     const { fullname, email, phone, address, defaultStatus, id, idDefault } = req.body;
-    
+
     const queryUpdateBefore = "UPDATE DiaChi SET ho_va_ten = ?, email = ?, dien_thoai = ?, dia_chi = ?, mac_dinh = ? WHERE id = ? "
     const queryUpdateLater = "UPDATE DiaChi SET mac_dinh = 0 WHERE id = ?"
     connection.con.beginTransaction((err) => {

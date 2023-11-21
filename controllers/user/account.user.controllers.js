@@ -1,4 +1,4 @@
-const connection = require("../database/database.js")
+const connection = require("../../database/database.js")
 
 const insertUser = (req, res) => {
   const { id } = req.body
