@@ -24,6 +24,19 @@ const authRouter = require("./routers/auth/auth.admin.router.js");
 const employeeShipperRouter = require("./routers/shipper/employee.shipper.router.js");
 const billShipperRouter = require("./routers/shipper/bill.shipper.router.js");
 
+const userRouterApi = require('./routers/user/account.user.routers')
+const bannerRouterApi = require('./routers/user/banner.user.routers')
+const productRouterApi = require('./routers/user/product.user.roters')
+const typeProductRouterApi = require('./routers/user/typeProduct.user.routers')
+const commentRouterApi = require('./routers/user/comment.user.routers')
+const cartRouterApi = require('./routers/user/cart.user.routers')
+const addressRouterApi = require('./routers/user/address.user.routers')
+const discountRouterApi = require('./routers/user/discount.user.routers')
+const orderRouterApi = require('./routers/user/order.user.routers')
+const billRouterApi = require('./routers/user/bill.user.routers')
+const userSettingRouterApi = require('./routers/user/user.user.routers')
+const notificationRouterApi = require('./routers/user/notification.router')
+
 const app = express();
 const server = require('http').createServer(app);
 // Sử dụng socket.io
@@ -81,6 +94,19 @@ app.use("/admin", billDetailRouter);
 app.use("/api/shipper", employeeShipperRouter);
 app.use("/api/shipper", billShipperRouter);
 
+app.use("/api", userRouterApi)
+app.use("/api", bannerRouterApi)
+app.use("/api", productRouterApi)
+app.use("/api", typeProductRouterApi)
+app.use("/api", commentRouterApi)
+app.use("/api", cartRouterApi)
+app.use("/api", addressRouterApi)
+app.use("/api", discountRouterApi)
+app.use("/api", orderRouterApi)
+app.use("/api", billRouterApi)
+app.use("/api", userSettingRouterApi)
+app.use("/api", notificationRouterApi)
+//
 const port = 3000 || process.env.DB_PORT;
 server.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
