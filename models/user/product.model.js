@@ -1,110 +1,76 @@
 const connection = require("../../database/database.js")
 
-const readProductNew = (req, res) => {
+// lấy danh sách sản phẩm mới 
+const readProductNew = async () => {
+
   const query = "SELECT SanPham.id , SanPham.ten_san_pham, SanPham.anh_dai_dien, SanPham.gia_ban, SanPham.giam_gia, SanPham.mo_ta_chi_tiet, DanhMuc.ten_danh_muc " +
     "FROM SanPham " +
     "INNER JOIN DanhMuc ON SanPham.danh_muc_id = DanhMuc.id " +
     "WHERE SanPham.moi_nhat = 1 AND SanPham.hienThi = 1"
 
-  connection.con.query(query, (err, results) => {
-    if (err) {
-      res.json({ status: "ERROR", err })
-    } else {
-      if (results.length > 0) {
-        res.json({ status: "SUCCESS", sanPham: results })
-      } else {
-        res.json({ status: "NOT FOUND" })
-      }
-    }
-  })
+  return await connection.queryDatabase(query, [])
+
 }
 
-const readProductOutsanding = (req, res) => {
+// lấy danh sách sản phẩm mới 
+const readProductOutsanding = async () => {
+
   const query = "SELECT SanPham.id , SanPham.ten_san_pham, SanPham.anh_dai_dien, SanPham.gia_ban, SanPham.giam_gia, SanPham.mo_ta_chi_tiet, DanhMuc.ten_danh_muc " +
     "FROM SanPham " +
     "INNER JOIN DanhMuc ON SanPham.danh_muc_id = DanhMuc.id " +
     "WHERE SanPham.noi_bat = 1 AND SanPham.hienThi = 1"
 
-  connection.con.query(query, (err, results) => {
-    if (err) {
-      res.json({ status: "ERROR", err })
-    } else {
-      if (results.length > 0) {
-        res.json({ status: "SUCCESS", sanPham: results })
-      } else {
-        res.json({ status: "NOT FOUND" })
-      }
-    }
-  })
+  return await connection.queryDatabase(query, [])
+
 }
 
-const readProductAll = (req, res) => {
+// lấy tất cả sản phẩm
+const readProductAll = async () => {
+
   const query = "SELECT SanPham.id , SanPham.ten_san_pham, SanPham.anh_dai_dien, SanPham.gia_ban, SanPham.giam_gia, SanPham.mo_ta_chi_tiet, DanhMuc.ten_danh_muc " +
     "FROM SanPham " +
     "INNER JOIN DanhMuc ON SanPham.danh_muc_id = DanhMuc.id " +
     "WHERE SanPham.hienThi = 1"
 
-  connection.con.query(query, (err, results) => {
-    if (err) {
-      res.json({ status: "ERROR", err })
-    } else {
-      if (results.length > 0) {
-        res.json({ status: "SUCCESS", sanPham: results })
-      } else {
-        res.json({ status: "NOT FOUND" })
-      }
-    }
-  })
+  return await connection.queryDatabase(query, [])
+
 }
 
-const readProductByIdDanhMuc = (req, res) => {
-  const { id } = req.body
+// lấy danh sách sản phẩm theo loại sản phẩm
+const readProductByIdDanhMuc = async (id) => {
+
   const query = "SELECT SanPham.id , SanPham.ten_san_pham, SanPham.anh_dai_dien, SanPham.gia_ban, SanPham.giam_gia, SanPham.mo_ta_chi_tiet, DanhMuc.ten_danh_muc " +
     "FROM SanPham " +
     "INNER JOIN DanhMuc ON SanPham.danh_muc_id = DanhMuc.id " +
     "WHERE SanPham.hienThi = 1 AND SanPham.danh_muc_id = ?"
 
-  connection.con.query(query, [id], (err, results) => {
-    if (err) {
-      res.json({ status: "ERROR", err })
-    } else {
-      res.json({ status: "SUCCESS", sanPham: results })
-    }
-  })
+  return await connection.queryDatabase(query, [id])
+
 }
 
-const readProductByIdProduct = (req, res) => {
-  const { id } = req.body
+// lấy sản phẩm theo id sản phẩm
+const readProductByIdProduct = async (id) => {
+
   const query = "SELECT SanPham.id , SanPham.ten_san_pham, SanPham.anh_dai_dien, SanPham.gia_ban, " +
     "SanPham.giam_gia, SanPham.mo_ta_chi_tiet, DanhMuc.ten_danh_muc, SanPham.danh_muc_id " +
     "FROM SanPham " +
     "INNER JOIN DanhMuc ON SanPham.danh_muc_id = DanhMuc.id " +
     "WHERE SanPham.hienThi = 1 AND SanPham.id = ?"
 
-  connection.con.query(query, [id], (err, results) => {
-    if (err) {
-      res.json({ status: "ERROR", err })
-    } else {
-      res.json({ status: "SUCCESS", sanPham: results })
-    }
-  })
+  return await connection.queryDatabase(query, [id])
+
 }
 
+// lấy size sản phẩm theo id sản phẩm
+const readSize_ProductByIdProduct = async (id) => {
 
-const readSize_ProductByIdProduct = (req, res) => {
-  const { id } = req.body
   const query = "SELECT KichThuoc_SanPham.kich_thuoc_id,  KichThuoc.ten_kich_thuoc, KichThuoc_SanPham.so_luong_ton_kho " +
     "FROM KichThuoc_SanPham " +
     "INNER JOIN KichThuoc ON KichThuoc_SanPham.kich_thuoc_id = KichThuoc.id " +
     "WHERE KichThuoc_SanPham.hienThi = 1 AND KichThuoc_SanPham.san_pham_id = ?"
 
-  connection.con.query(query, [id], (err, results) => {
-    if (err) {
-      res.json({ status: "ERROR", err })
-    } else {
-      res.json({ status: "SUCCESS", sizeProduct: results })
-    }
-  })
+  return await connection.queryDatabase(query, [id])
+
 }
 
 

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const productController = require('../../controllers/user/product.user.controllers');
+const productController = require('../../controllers/user/product.controller');
 
 router.get('/read-new-product', productController.readProductNew);
 router.get('/read-outstanding-product', productController.readProductOutsanding);

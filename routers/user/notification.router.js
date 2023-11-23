@@ -6,7 +6,7 @@ router.post("/read/notifications", controllers.readNotification)
 
 router.post("/insert/notification", controllers.insertNotification)
 
-router.get('/delete/notification', controllers.deleteNotification);
+router.post('/delete/notification', controllers.deleteNotification);
 
 
 module.exports = router
