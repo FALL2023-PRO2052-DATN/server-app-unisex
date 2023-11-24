@@ -1,7 +1,8 @@
 const connection = require("../../database/database.js")
 
-const readBillByStatusId = (req, res) => {
-    const { idUser, deliveryStatus } = req.body
+// lấy danh sách đơn hàng theo tình trạng đơn hàng, id người dùng, hiển thi = 1
+const readBillByStatusId = async (idUser, deliveryStatus) => {
+
     const query = "SELECT DonHang.id, DonHang.tinh_trang_giao_hang, DonHang.so_luong_don_hang, DonHang.thanh_tien, SanPham.ten_san_pham, SanPham.anh_dai_dien, DonHangChiTiet.don_gia, DonHangChiTiet.kich_thuoc, DonHangChiTiet.so_luong " +
         "FROM DonHang " +
         "JOIN DonHangChiTiet ON DonHang.id = DonHangChiTiet.don_hang_id " +
@@ -9,29 +10,13 @@ const readBillByStatusId = (req, res) => {
         "JOIN DiaChi ON DonHang.dia_chi_id = DiaChi.id " +
         "WHERE DonHang.hienThi = 1 AND DiaChi.nguoi_dung_id = ? AND DonHang.tinh_trang_giao_hang = ?"
 
-    connection.con.query(query, [idUser, deliveryStatus], (err, results) => {
-        if (err) {
-            res.json({ status: "ERROR", err })
-        } else {
+    return await connection.queryDatabase(query, [idUser, deliveryStatus])
 
-            // Sử dụng Set để loại bỏ các id trùng lặp từ mảng results
-
-            const uniqueBillIds = new Set();
-            const uniqueBillData = results.filter(result => {
-                if (!uniqueBillIds.has(result.id)) {
-                    uniqueBillIds.add(result.id);
-                    return true;
-                }
-                return false;
-            });
-
-            res.json({ status: "SUCCESS", billList: uniqueBillData })
-        }
-    })
 }
 
-const readBillById = (req, res) => {
-    const { id } = req.body
+// lấy danh sách đơn hàng chi tiết theo id đơn hàng và hiển thị = 1
+const readBillById = async (id) => {
+
     const query = "SELECT DonHang.id, DonHang.ghi_chu, DonHang.hinh_thuc_thanh_toan, DonHang.tinh_trang_giao_hang, DonHang.so_luong_don_hang, DonHang.thanh_tien, " +
         "SanPham.ten_san_pham, SanPham.anh_dai_dien, DonHangChiTiet.don_gia, DonHangChiTiet.kich_thuoc, DonHangChiTiet.so_luong, " +
         "DiaChi.ho_va_ten, DiaChi.email, DiaChi.dien_thoai, DiaChi.dia_chi, " +
@@ -43,43 +28,30 @@ const readBillById = (req, res) => {
         "LEFT JOIN GiamGia ON DonHang.giam_gia_id = GiamGia.id " +
         "WHERE DonHang.hienThi = 1 AND DonHang.id = ?";
 
-    connection.con.query(query, [id], (err, results) => {
-        if (err) {
-            res.json({ status: "ERROR", err })
-        } else {
-            res.json({ status: "SUCCESS", billList: results })
-        }
-    })
+    return await connection.queryDatabase(query, [id])
+
 }
 
-const readBillByIdForComment = (req, res) => {
-    const { id } = req.body
+// lấy danh sách đơn hàng để đánh giá theo id đơn hàng và hiển thị = 1
+const readBillByIdForComment = async (id) => {
+
     const query = "SELECT SanPham.id, SanPham.ten_san_pham, SanPham.anh_dai_dien, DonHangChiTiet.kich_thuoc " +
         "FROM DonHang " +
         "JOIN DonHangChiTiet ON DonHang.id = DonHangChiTiet.don_hang_id " +
         "JOIN SanPham ON DonHangChiTiet.san_pham_id = SanPham.id " +
         "WHERE DonHang.hienThi = 1 AND DonHang.id = ?";
 
-    connection.con.query(query, [id], (err, results) => {
-        if (err) {
-            res.json({ status: "ERROR", err })
-        } else {
-            res.json({ status: "SUCCESS", productList: results })
-        }
-    })
+    return await connection.queryDatabase(query, [id])
+
 }
 
-const cancelBill = (req, res) => {
-    const { id, reasonCancel } = req.body
+// hủy đơn hàng -> cập nhật lý do hủy đơn hàng theo id đơn hàng
+const cancelBill = async (id, reasonCancel) => {
+
     const query = "UPDATE DonHang SET ly_do_huy = ? , tinh_trang_giao_hang = 'Đã hủy' WHERE id = ?"
 
-    connection.con.query(query, [reasonCancel, id], (err, results) => {
-        if (err) {
-            res.json({ status: "ERROR", err })
-        } else {
-            res.json({ status: "SUCCESS" })
-        }
-    })
+    return await connection.queryDatabase(query, [id, reasonCancel])
+
 }
 
 module.exports = {

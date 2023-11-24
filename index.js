@@ -27,17 +27,17 @@ const employeeShipperRouter = require("./routers/shipper/employee.shipper.router
 const billShipperRouter = require("./routers/shipper/bill.shipper.router.js");
 
 // Router API user
-const userRouterApi = require('./routers/user/account.user.routers')
-const bannerRouterApi = require('./routers/user/banner.user.routers')
-const productRouterApi = require('./routers/user/product.user.roters')
+const userRouterApi = require('./routers/user/account.router')
+const bannerRouterApi = require('./routers/user/banner.router')
+const productRouterApi = require('./routers/user/product.roter.js')
 const typeProductRouterApi = require('./routers/user/typeProduct.user.routers')
-const commentRouterApi = require('./routers/user/comment.user.routers')
-const cartRouterApi = require('./routers/user/cart.user.routers')
-const addressRouterApi = require('./routers/user/address.user.routers')
-const discountRouterApi = require('./routers/user/discount.user.routers')
-const orderRouterApi = require('./routers/user/order.user.routers')
-const billRouterApi = require('./routers/user/bill.user.routers')
-const userSettingRouterApi = require('./routers/user/user.user.routers')
+const commentRouterApi = require('./routers/user/comment.router.js')
+const cartRouterApi = require('./routers/user/cart.router.js')
+const addressRouterApi = require('./routers/user/address.router.js')
+const discountRouterApi = require('./routers/user/discount.router.js')
+const orderRouterApi = require('./routers/user/order.router.js')
+const billRouterApi = require('./routers/user/bill.router.js')
+const userSettingRouterApi = require('./routers/user/user.router.js')
 const notificationRouterApi = require('./routers/user/notification.router')
 
 const app = express();
