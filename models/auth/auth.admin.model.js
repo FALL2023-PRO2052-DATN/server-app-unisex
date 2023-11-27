@@ -1,6 +1,6 @@
 const database = require('../../database/database.js');
 
-const authenticateUser = async (username, password) => {
+const authenticateUser = async ({ username, password }) => {
   const query = `SELECT * FROM NhanVien WHERE ten_dang_nhap = ? AND mat_khau =? AND hienThi = 1 AND vai_tro = 'ADMIN'`;
   const values = [username, password];
   return await database.queryDatabase(query, values);
