@@ -25,7 +25,7 @@
         <div class="navbar-header" data-logobg="skin5">
           <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i
               class="ti-menu ti-close"></i></a>
-          <a class="navbar-brand" href="index.html">
+          <a class="navbar-brand" href="/">
             <b class="logo-icon p-l-10">
               <img src="/assets/images/logo-icon.svg" alt="homepage" class="light-logo" />
 
@@ -182,12 +182,15 @@
                 </button>
               </div>
               <div class="modal-body">
-                <form id="image-upload-form" action="/admin/category" method="POST">
+                <form id="form-add" action="/admin/category" method="POST">
                   <div class="form-group">
                     <label for="image-upload" class="title-form">Tên danh mục</label>
                     <input type="text" data-toggle="tooltip" title="" class="form-control" name="categoryName"
                       id="categoryNameInput" placeholder="Ví dụ: Áo thun nam" required=""
                       data-original-title="A Tooltip for the input !">
+                    <div class="validate-message" id="message-categoryNameInput">
+                      Tên danh mục không hợp lệ.
+                    </div>
                     <div class="modal-footer" style="margin-top: 16px;">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
                       <button style="color: white;" type="submit" class="button-26" id="upload-image">Thêm mới</button>
@@ -211,7 +214,7 @@
                 </button>
               </div>
               <div class="modal-body">
-                <form name="form-update" method="POST">
+                <form name="form-update" method="POST" id="form-update">
                   <div class="form-group">
                     <input name="categoryID" type="hidden" data-toggle="tooltip" title="" class="form-control"
                       id="id_danh_muc_update_input" placeholder="Ví dụ: 01" required=""
@@ -220,6 +223,9 @@
                     <input name="categoryName" type="text" data-toggle="tooltip" title="" class="form-control"
                       id="ten_danh_muc_update_input" placeholder="Ví dụ: Áo thun nam" required=""
                       data-original-title="A Tooltip for the input !">
+                    <div class="validate-message" id="message-update-categoryNameInput">
+                      Tên danh mục không hợp lệ.
+                    </div>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
@@ -280,10 +286,108 @@
     /****************************************
      *       Basic Table                   *
      ****************************************/
-    $('#myTable').DataTable();
+    // Custom table
+    $(document).ready(function () {
+      $('#myTable').DataTable({
+        language: {
+          sProcessing: "Đang xử lý...",
+          sLengthMenu: "Xem _MENU_ mục",
+          sZeroRecords: "Không tìm thấy dòng nào phù hợp",
+          sInfo: "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+          sInfoEmpty: "Đang xem 0 đến 0 trong tổng số 0 mục",
+          sInfoFiltered: "(được lọc từ _MAX_ mục)",
+          sInfoPostFix: "",
+          sSearch: "Tìm:",
+          sUrl: "",
+          oPaginate: {
+            sFirst: "Đầu",
+            sPrevious: "Trước",
+            sNext: "Tiếp",
+            sLast: "Cuối"
+          }
+        }
+      });
+    });
   </script>
-  <!-- Danh mục sản phẩm JS -->
-  <script src="/dist/js/category-product.js"></script>
+  <script>
+    // Hàm cho phép nhập ký tự đặt biệt và số
+    // So khớp với bất kỳ ký tự nào trong dấu vuông
+    const isInvalidCategoryName = (input) => {
+      var regex = /[0-9-_.!@#$%^&*()<>,?;:{}]+/;
+      return regex.test(input);
+    };
+
+    // Xác thực dữ liệu from thêm danh mục
+    const formAdd = document.querySelector('#form-add');
+    formAdd.addEventListener('submit', function (event) {
+      const categoryNameInput = document.getElementById('categoryNameInput');
+      const messageCategoryNameInput = document.getElementById('message-categoryNameInput');
+
+      if (isInvalidCategoryName(categoryNameInput.value)) {
+        // Tên không hợp lệ
+        categoryNameInput.classList.add('is-invalid');
+        messageCategoryNameInput.style.display = 'block';
+        event.preventDefault();
+      } else {
+        categoryNameInput.classList.remove('is-invalid');
+        messageCategoryNameInput.style.display = 'none';
+      }
+    });
+
+    const table = document.querySelector('#myTable');
+    table.addEventListener('click', function (event) {
+      // XỬ lý nút xoá trong table
+      if (event.target.classList.contains('btn-delete')) {
+        const categoryID = event.target.getAttribute('data-id');
+
+        const formDelete = document.forms["form-del-category"];
+        formDelete.addEventListener('submit', function (e) {
+          // Gọi API xoá danh mục sản phẩm
+          formDelete.action = "/admin/category/" + categoryID + "/delete" + "?_method=PUT";
+          formDelete.submit();
+        });
+      }
+
+      // Xử lý nút cập nhật trong table
+      if (event.target.classList.contains('btn-update')) {
+        const jsonData = event.target.getAttribute('data-json');
+        const jsonObject = JSON.parse(jsonData);
+
+        const categoryNameInput = document.getElementById('ten_danh_muc_update_input');
+        categoryNameInput.value = jsonObject.ten_danh_muc;
+
+        // Xác thực dữ liệu from cập danh mục
+        const formUpdate = document.querySelector('#form-update');
+        const messageCategoryNameInput = document.getElementById('message-update-categoryNameInput');
+        categoryNameInput.classList.remove('is-invalid');
+        messageCategoryNameInput.style.display = 'none';
+
+        formUpdate.addEventListener('submit', function (event) {
+          if (isInvalidCategoryName(categoryNameInput.value)) {
+            // Tên danh mục không hợp lệ
+            categoryNameInput.classList.add('is-invalid');
+            messageCategoryNameInput.style.display = 'block';
+            event.preventDefault();
+          } else {
+            categoryNameInput.classList.remove('is-invalid');
+            messageCategoryNameInput.style.display = 'none';
+            // Thự hiện gọi API cập nhật danh mục sản phẩm
+            formUpdate.action = "/admin/category/" + jsonObject.id_danh_muc + "/update" + "?_method=PUT"
+            formUpdate.submit();
+          }
+        });
+      }
+    });
+  </script>
+
+  <script>
+    const alerts = document.querySelectorAll('.alert');
+    alerts.forEach(function (alert) {
+      setTimeout(function () {
+        alert.style.display = 'none';
+      }, 4000);
+    });
+  </script>
 </body>
 
 </html>

@@ -17440,3 +17440,10 @@ a .btn-update {
     display: block;
     white-space: nowrap;
 }
+
+.validate-message {
+    color: red; 
+    margin-top: 6px; 
+    font-size: 12px; 
+    display: none;
+}

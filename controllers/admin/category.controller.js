@@ -1,7 +1,6 @@
 const categoryModel = require('../../models/admin/category.model.js');
 const productModel = require('../../models/admin/product.model.js');
 const arrayHelpers = require('../../helpers/array-helpers.js');
-const validateHelpers = require('../../helpers/validate-helpers.js');
 
 const isCategoryNameExist = (categories, categoryName) => {
   return categories.some((category) => category.ten_danh_muc === categoryName);
@@ -11,7 +10,7 @@ const renderPageCategory = async (req, res) => {
   try {
     const categories = await categoryModel.getCategories();
     const categoriesReversed = arrayHelpers.reverseArray(categories);
-    res.status(200).render('category', { categories: categoriesReversed });
+    res.render('category', { categories: categoriesReversed });
   } catch (error) {
     console.error('Render page category error', error);
   }
@@ -29,16 +28,16 @@ const insertCategory = async (req, res) => {
       req.flash('success', 'Thêm danh mục thành công.');
     }
 
-    res.status(200).redirect('/admin/category');
+    res.redirect('back');
   } catch (error) {
-    console.error('Inserter category failed', error);
+    console.error('Insert category failed', error);
   }
 }
 
 const updateCategory = async (req, res) => {
   try {
     const categoryID = req.params.categoryID;
-    const categoryName = req.body.categoryName;
+    const categoryName = req.body.categoryName.trim();
     const categories = await categoryModel.getCategories();
 
     const categoryCurrentToUpdate = categories.find((category) => {
@@ -52,12 +51,19 @@ const updateCategory = async (req, res) => {
     if (isCategoryNameExist(categoriesExceptCurrent, categoryName)) {
       req.flash('warning', 'Cập nhật không thành công. Tên danh mục đã tồn tại.');
     } else {
-      const data = { categoryID, categoryName };
-      await categoryModel.updateCategory(data);
-      req.flash('success', 'Cập nhật danh mục thành công.');
+      const results = await categoryModel.updateCategory({
+        categoryID,
+        categoryName
+      });
+
+      if (results.changedRows > 0) {
+        req.flash('success', 'Cập nhật danh mục thành công.');
+      } else {
+        req.flash('warning', 'Không có thay đổi nào được thực hiện.');
+      }
     }
 
-    res.status(200).redirect('/admin/category');
+    res.redirect('back');
   } catch (error) {
     console.error('Update category failed', error);
   }
@@ -66,18 +72,23 @@ const updateCategory = async (req, res) => {
 const removeCategory = async (req, res) => {
   try {
     const categoryID = req.params.categoryID;
-    const products = await productModel.getProductsByCategoryId(categoryID);
+    const products = await productModel.getProductsByCategoryID(categoryID);
 
     if (products.length > 0) {
       req.flash('warning', 'Không thể xóa danh mục. Đã có sản phẩm thuộc danh mục này.');
     } else {
-      await categoryModel.removeCategory(categoryID);
-      req.flash('success', 'Xóa danh mục thành công.');
+      const results = await categoryModel.removeCategory(categoryID);
+
+      if (results.changedRows > 0) {
+        req.flash('success', 'Xóa danh mục thành công.');
+      } else {
+        req.flash('error', 'Xóa danh mục không thành công.');
+      }
     }
 
-    res.status(200).redirect('/admin/category');
+    res.redirect('back');
   } catch (error) {
-    console.error('Removing category failed', error);
+    console.error('Remove category failed', error);
   }
 }
 
