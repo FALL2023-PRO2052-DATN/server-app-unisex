@@ -25,7 +25,7 @@
         <div class="navbar-header" data-logobg="skin5">
           <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i
               class="ti-menu ti-close"></i></a>
-          <a class="navbar-brand" href="index.html">
+          <a class="navbar-brand" href="/">
             <b class="logo-icon p-l-10">
               <img src="/assets/images/logo-icon.svg" alt="homepage" class="light-logo" />
             </b>
@@ -150,7 +150,7 @@
                   <tr>
                     <input type="hidden" name="" id="" value="{{this.id}}">
                     <th scope="row" style="width: 10%;">{{calculateIndex @index}}</th>
-                    <td style="width: 30%;">Size {{this.ten_kich_thuoc}}</td>
+                    <td style="width: 30%;">{{this.ten_kich_thuoc}}</td>
                     <td style="width: 30%;">{{this.mo_ta_chi_tiet}}</td>
                     <td style="width: 30%;">
                       <button type="button" class="btn-update" data-toggle="modal" data-target="#update-size-modal"
@@ -185,16 +185,19 @@
                 </button>
               </div>
               <div class="modal-body">
-                <form id="image-upload-form" action="/admin/size" method="POST" name="form-insert">
+                <form id="form-add" action="/admin/size" method="POST" name="form-insert">
                   <div class="form-group">
                     <label for="image-upload" class="title-form">Tên kích thước</label>
-                    <input type="text" data-toggle="tooltip" title="" class="form-control" id="validationDefault05"
+                    <input type="text" data-toggle="tooltip" title="" class="form-control" id="sizeNameInputAdd"
                       placeholder="Ví dụ: M" required="" name="sizeName"
                       data-original-title="A Tooltip for the input !">
+                    <div class="validate-message" id="message-SizeNameInputAdd">
+                      Tên kích thước không hợp lệ
+                    </div>
                   </div>
                   <div class="form-group">
                     <label for="image-upload" class="title-form">Mô tả</label>
-                    <textarea name="sizeDescription" class="form-control"></textarea>
+                    <textarea name="sizeDescription" class="form-control" id="sizeDescriptionInputAdd"></textarea>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
@@ -218,7 +221,7 @@
                 </button>
               </div>
               <div class="modal-body">
-                <form id="image-upload-form" name="form-update" method="POST">
+                <form id="form-update" name="form-update" method="POST">
                   <div class="form-group">
                     <input type="hidden" data-toggle="tooltip" title="" class="form-control"
                       id="id_kich_thuoc_update_input" placeholder="Ví dụ: 1" required="" name="sizeID"
@@ -227,6 +230,9 @@
                     <input type="text" data-toggle="tooltip" title="" class="form-control"
                       id="ten_kich_thuoc_update_input" placeholder="Ví dụ: M" required="" name="sizeName"
                       data-original-title="A Tooltip for the input !">
+                    <div class="validate-message" id="message-SizeNameInputUpdate">
+                      Tên kích thước không hợp lệ
+                    </div>
                   </div>
                   <div class="form-group">
                     <label for="image-upload" class="title-form">Mô tả</label>
@@ -292,9 +298,112 @@
     /****************************************
      *       Basic Table                   *
      ****************************************/
-    $('#myTable').DataTable();
+    // Custom table
+    $(document).ready(function () {
+      $('#myTable').DataTable({
+        language: {
+          sProcessing: "Đang xử lý...",
+          sLengthMenu: "Xem _MENU_ mục",
+          sZeroRecords: "Không tìm thấy dòng nào phù hợp",
+          sInfo: "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+          sInfoEmpty: "Đang xem 0 đến 0 trong tổng số 0 mục",
+          sInfoFiltered: "(được lọc từ _MAX_ mục)",
+          sInfoPostFix: "",
+          sSearch: "Tìm:",
+          sUrl: "",
+          oPaginate: {
+            sFirst: "Đầu",
+            sPrevious: "Trước",
+            sNext: "Tiếp",
+            sLast: "Cuối"
+          }
+        }
+      });
+    });
   </script>
-  <script src="/dist/js/size.js"></script>
+  <script>
+    // Kiểm tra tính hợp lệ của tên kích thước
+    const isInvalidSizeName = (input) => {
+      var regex = /[0-9-_.!@#$%^&*()<>,?;:{}]+/;
+      return regex.test(input);
+    };
+
+    // FORM THÊM SIZE
+    const formAdd = document.querySelector('#form-add');
+    formAdd.addEventListener('submit', function (event) {
+      // VALIDATE TÊN KÍCH THƯỚC
+      const sizeNameInputAdd = document.getElementById('sizeNameInputAdd');
+      const messSizeNameInputAdd = document.getElementById('message-SizeNameInputAdd');
+      if (isInvalidSizeName(sizeNameInputAdd.value)) {
+        // Tên không hợp lệ
+        sizeNameInputAdd.classList.add('is-invalid');
+        messSizeNameInputAdd.style.display = 'block';
+        event.preventDefault();
+      } else {
+        sizeNameInputAdd.classList.remove('is-invalid');
+        messSizeNameInputAdd.style.display = 'none';
+      }
+    });
+
+    const table = document.querySelector('#myTable');
+    table.addEventListener('click', function (event) {
+      // XỬ lý nút xoá trong table
+      if (event.target.classList.contains('btn-delete')) {
+        const id = event.target.getAttribute('data-id');
+        console.log(id);
+        var formDel = document.forms["form-del"];
+        formDel.addEventListener('submit', function (e) {
+          e.preventDefault();
+          formDel.action = "/admin/size/" + id + "/delete" + "?_method=PUT"
+          formDel.submit();
+        });
+      }
+
+      if (event.target.classList.contains('btn-update')) {
+        // Chuyển json thành object .Lấy dữ liệu từ data-json của .button update
+        const jsonData = event.target.getAttribute('data-json');
+        const jsonObject = JSON.parse(jsonData);
+
+        const id_kich_thuoc_update_input = document.querySelector(`#id_kich_thuoc_update_input`);
+        const sizeNameInputUpdate = document.querySelector(`#ten_kich_thuoc_update_input`);
+        const mo_ta_chi_tiet_update_input = document.querySelector(`#mo_ta_chi_tiet_update_input`);
+
+        id_kich_thuoc_update_input.value = jsonObject.id;
+        sizeNameInputUpdate.value = jsonObject.ten_kich_thuoc;
+        mo_ta_chi_tiet_update_input.value = jsonObject.mo_ta_chi_tiet;
+
+        const messSizeNameInputUpdate = document.getElementById('message-SizeNameInputUpdate');
+        sizeNameInputUpdate.classList.remove('is-invalid');
+        messSizeNameInputUpdate.style.display = 'none';
+
+        const formUpdate = document.getElementById("form-update");
+        formUpdate.addEventListener('submit', function (event) {
+          if (isInvalidSizeName(sizeNameInputUpdate.value)) {
+            // Tên không hợp lệ
+            sizeNameInputUpdate.classList.add('is-invalid');
+            messSizeNameInputUpdate.style.display = 'block';
+            event.preventDefault();
+          } else {
+            sizeNameInputUpdate.classList.remove('is-invalid');
+            messSizeNameInputUpdate.style.display = 'none';
+            formUpdate.action = "/admin/size/" + jsonObject.id + "/update" + "?_method=PUT"
+            formUpdate.submit();
+          }
+        });
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+      // Ẩn các thông báo đang hiện thị sau 4 giây hiển thị
+      const alerts = document.querySelectorAll('.alert');
+
+      alerts.forEach(function (alert) {
+        setTimeout(function () {
+          alert.style.display = 'none';
+        }, 4000);
+      });
+    });
+  </script>
 </body>
 
 </html>

@@ -1,3 +1,46 @@
+// Kiểm tra tính hợp lệ của tên kích thước
+const isInvalidSizeName = (input) => {
+  var regex = /[0-9-_.!@#$%^&*()<>,?;:{}]+/;
+  return regex.test(input);
+};
+
+// Kiểm tra tính hợp lệ của mô tả kích thước
+const isInvalidSizeDescription = (input) => {
+  var regex = /[_!@#$%^&*()<>,?;{}]+/;
+  return regex.test(input);
+};
+
+const formAdd = document.querySelector('#form-add');
+formAdd.addEventListener('submit', function (event) {
+  // Tên kích thước
+  const sizeNameInputAdd = document.getElementById('sizeNameInputAdd');
+  const messSizeNameInputAdd = document.getElementById('message-SizeNameInputAdd');
+
+  if (isInvalidSizeName(sizeNameInputAdd.value)) {
+    // Tên không hợp lệ
+    sizeNameInputAdd.classList.add('is-invalid');
+    messSizeNameInputAdd.style.display = 'block';
+    event.preventDefault();
+  } else {
+    sizeNameInputAdd.classList.remove('is-invalid');
+    messSizeNameInputAdd.style.display = 'none';
+  }
+
+  const sizeDescriptionInputAdd = document.getElementById('sizeDescriptionInputAdd');
+  const messageSizeDescriptionInputAdd = document.getElementById('message-SizeDescriptionInputAdd');
+  if (isInvalidSizeDescription(sizeDescriptionInputAdd.value)) {
+    // kích thước không hợp lệ
+    sizeDescriptionInputAdd.classList.add('is-invalid');
+    messageSizeDescriptionInputAdd.style.display = 'block';
+    event.preventDefault();
+  } else {
+    sizeDescriptionInputAdd.classList.remove('is-invalid');
+    messageSizeDescriptionInputAdd.style.display = 'none';
+  }
+});
+
+
+
 const table = document.querySelector('#myTable');
 
 table.addEventListener('click', function (event) {
