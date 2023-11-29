@@ -132,7 +132,7 @@
           <div class="col-12">
             <div class="card" style="padding: 20px;">
               <div class="card-body-cus">
-                <h5 class="card-title m-b-0">Danh sách danh mục ({{categories.length}})</h5>
+                <h5 class="card-title m-b-0">Quản lý danh mục sản phẩm</h5>
                 <button type="button" class="button-26" data-toggle="modal" data-target="#exampleModal"
                   data-whatever="@mdo">Thêm danh mục sản phẩm</button>
               </div>
@@ -142,7 +142,7 @@
                     <th scope="col">STT</th>
                     <th scope="col">Tên danh mục</th>
                     <th scope="col">Số lượng sản phẩm thuộc danh mục </th>
-                    <th scope="col">Tác vụ</th>
+                    <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -305,7 +305,8 @@
             sNext: "Tiếp",
             sLast: "Cuối"
           }
-        }
+        },
+        lengthMenu: [10, 20, 50, 100, 200],
       });
     });
   </script>

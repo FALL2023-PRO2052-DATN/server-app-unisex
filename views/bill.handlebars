@@ -227,13 +227,13 @@
                   <tr>
                     <th scope="col">STT</th>
                     <th scope="col">Mã đơn hàng</th>
-                    <th scope="col">Mã người dùng</th>
                     <th scope="col">Ngày đặt hàng</th>
                     <th scope="col">Hình thức thanh toán</th>
                     <th scope="col">Trạng thái thanh toán</th>
                     <th scope="col">Trạng thái đơn hàng</th>
+                    <th scope="col">Nhân viên giao hàng</th>
                     <th scope="col">Tổng tiền</th>
-                    <th scope="col">Tác vụ</th>
+                    <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -241,7 +241,6 @@
                   <tr>
                     <th scope="row" style="width: 10%;">{{calculateIndex @index}}</th>
                     <td scope="row" style="width: 10%;">{{this.id}}</td>
-                    <td style="width: 10%;">{{this.nguoi_dung_id}}</td>
                     <td style="width: 10%;">{{formatDate this.ngay_dat}}</td>
                     <td style="width: 15%;">{{this.hinh_thuc_thanh_toan}}</td>
                     <td style="width: 10%;">
@@ -275,6 +274,7 @@
                       <a href="" class="badge badge-light" style="font-size: 13px;">Đã huỷ</a>
                       {{/equal}}
                     </td>
+                    <td style="width: 10%;">{{this.ho_va_ten}}</td>
                     <td style="width: 10%;">{{formatCurrency this.thanh_tien}}</td>
                     <td style="width: 10%;">
                       <a type="button" style="color: white;" class="button-26" href="/admin/bill-detail/{{this.id}}">
