@@ -25,7 +25,7 @@
         <div class="navbar-header" data-logobg="skin5">
           <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="/javascript:void(0)"><i
               class="ti-menu ti-close"></i></a>
-          <a class="navbar-brand" href="index.html">
+          <a class="navbar-brand" href="/">
             <!-- Logo icon -->
             <b class="logo-icon p-l-10">
               <img src="/assets/images/logo-icon.svg" alt="homepage" class="light-logo" />
@@ -218,7 +218,28 @@
     /****************************************
      *       Basic Table                   *
      ****************************************/
-    $('#myTable').DataTable();
+    // Custom table
+    $(document).ready(function () {
+      $('#myTable').DataTable({
+        language: {
+          sProcessing: "Đang xử lý...",
+          sLengthMenu: "Xem _MENU_ mục",
+          sZeroRecords: "Không tìm thấy dòng nào phù hợp",
+          sInfo: "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+          sInfoEmpty: "Đang xem 0 đến 0 trong tổng số 0 mục",
+          sInfoFiltered: "(được lọc từ _MAX_ mục)",
+          sInfoPostFix: "",
+          sSearch: "Tìm:",
+          sUrl: "",
+          oPaginate: {
+            sFirst: "Đầu",
+            sPrevious: "Trước",
+            sNext: "Tiếp",
+            sLast: "Cuối"
+          }
+        }
+      });
+    });
   </script>
   <script src="/dist/js/reviews.js"></script>
 </body>

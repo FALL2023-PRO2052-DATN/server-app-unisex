@@ -16,9 +16,9 @@ const getReviews = async () => {
   return await database.queryDatabase(query, []);
 };
 
-const removeReviews = async (reviewID) => {
-  const query = `UPDATE DanhGia SET hienThi = 0 WHERE id=?`;
-  return await database.queryDatabase(query, [reviewID]);
+const removeReview = async (reviewID) => {
+  const query = `UPDATE DanhGia SET hienThi = '0' WHERE id = ?`;
+    return await database.queryDatabase(query, [reviewID]);
 }
 
 const getRatingCountsReview = async () => {
@@ -39,6 +39,6 @@ const getRatingCountsReview = async () => {
 
 module.exports = {
   getReviews,
-  removeReviews,
+  removeReview,
   getRatingCountsReview
 }
