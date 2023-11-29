@@ -239,7 +239,7 @@
                     <th scope="col">Ảnh</th>
                     <th scope="col">Phiên bản sản phẩm</th>
                     <th scope="col">Tồn kho</th>
-                    <th scope="col">Trạng thái đơn hàng</th>
+                    <th scope="col">Trạng thái</th>
                     <th scope="col">Tác vụ</th>
                   </tr>
                 </thead>
@@ -317,7 +317,28 @@
     /****************************************
      *       Basic Table                   *
      ****************************************/
-    $('#myTable').DataTable();
+    // Custom table
+    $(document).ready(function () {
+      $('#myTable').DataTable({
+        language: {
+          sProcessing: "Đang xử lý...",
+          sLengthMenu: "Xem _MENU_ mục",
+          sZeroRecords: "Không tìm thấy dòng nào phù hợp",
+          sInfo: "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+          sInfoEmpty: "Đang xem 0 đến 0 trong tổng số 0 mục",
+          sInfoFiltered: "(được lọc từ _MAX_ mục)",
+          sInfoPostFix: "",
+          sSearch: "Tìm:",
+          sUrl: "",
+          oPaginate: {
+            sFirst: "Đầu",
+            sPrevious: "Trước",
+            sNext: "Tiếp",
+            sLast: "Cuối"
+          }
+        }
+      });
+    });
   </script>
   <script src="/dist/js/product-size.js"></script>
 

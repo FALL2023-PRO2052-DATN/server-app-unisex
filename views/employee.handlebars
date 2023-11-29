@@ -226,11 +226,32 @@
   <script src="/assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
   <script src="/assets/extra-libs/multicheck/jquery.multicheck.js"></script>
   <script src="/assets/extra-libs/DataTables/datatables.min.js"></script>
-  <script>
+   <script>
     /****************************************
      *       Basic Table                   *
      ****************************************/
-    $('#myTable').DataTable();
+    // Custom table
+    $(document).ready(function () {
+      $('#myTable').DataTable({
+        language: {
+          sProcessing: "Đang xử lý...",
+          sLengthMenu: "Xem _MENU_ mục",
+          sZeroRecords: "Không tìm thấy dòng nào phù hợp",
+          sInfo: "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+          sInfoEmpty: "Đang xem 0 đến 0 trong tổng số 0 mục",
+          sInfoFiltered: "(được lọc từ _MAX_ mục)",
+          sInfoPostFix: "",
+          sSearch: "Tìm:",
+          sUrl: "",
+          oPaginate: {
+            sFirst: "Đầu",
+            sPrevious: "Trước",
+            sNext: "Tiếp",
+            sLast: "Cuối"
+          }
+        }
+      });
+    });
   </script>
   <script>
     const table = document.querySelector('#myTable');

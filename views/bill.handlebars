@@ -2,23 +2,23 @@
 <html dir="ltr" lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/logo-icon.svg">
-    <title>Danh sách đơn hàng</title>
-    <!-- Custom CSS -->
-    <link rel="stylesheet" type="text/css" href="/assets/extra-libs/multicheck/multicheck.css">
-    <link href="/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css">
-    <link href="/dist/css/style.min.css" rel="stylesheet">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <!-- Favicon icon -->
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/logo-icon.svg">
+  <title>Danh sách đơn hàng</title>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" type="text/css" href="/assets/extra-libs/multicheck/multicheck.css">
+  <link href="/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css">
+  <link href="/dist/css/style.min.css" rel="stylesheet">
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
@@ -26,334 +26,346 @@
 
 <body>
 
-    <!-- ============================================================== -->
-    <!-- Preloader - style you can find in spinners.css -->
-    <!-- ============================================================== -->
-    <div class="preloader">
-        <div class="lds-ripple">
-            <div class="lds-pos"></div>
-            <div class="lds-pos"></div>
-        </div>
+  <!-- ============================================================== -->
+  <!-- Preloader - style you can find in spinners.css -->
+  <!-- ============================================================== -->
+  <div class="preloader">
+    <div class="lds-ripple">
+      <div class="lds-pos"></div>
+      <div class="lds-pos"></div>
     </div>
+  </div>
+  <!-- ============================================================== -->
+  <!-- Main wrapper - style you can find in pages.scss -->
+  <!-- ============================================================== -->
+  <div id="main-wrapper">
     <!-- ============================================================== -->
-    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- Topbar header - style you can find in pages.scss -->
     <!-- ============================================================== -->
-    <div id="main-wrapper">
-        <!-- ============================================================== -->
-        <!-- Topbar header - style you can find in pages.scss -->
-        <!-- ============================================================== -->
-        <header class="topbar" data-navbarbg="skin5">
-            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
-                <div class="navbar-header" data-logobg="skin5">
-                    <!-- This is for the sidebar toggle which is visible on mobile only -->
-                    <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i
-                            class="ti-menu ti-close"></i></a>
-                    <!-- ============================================================== -->
-                    <!-- Logo -->
-                    <!-- ============================================================== -->
-                    <a class="navbar-brand" href="index.html">
-                        <!-- Logo icon -->
-                        <b class="logo-icon p-l-10">
-                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                            <!-- Dark Logo icon -->
-                            <img src="/assets/images/logo-icon.svg" alt="homepage" class="light-logo" />
+    <header class="topbar" data-navbarbg="skin5">
+      <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+        <div class="navbar-header" data-logobg="skin5">
+          <!-- This is for the sidebar toggle which is visible on mobile only -->
+          <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i
+              class="ti-menu ti-close"></i></a>
+          <!-- ============================================================== -->
+          <!-- Logo -->
+          <!-- ============================================================== -->
+          <a class="navbar-brand" href="index.html">
+            <!-- Logo icon -->
+            <b class="logo-icon p-l-10">
+              <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+              <!-- Dark Logo icon -->
+              <img src="/assets/images/logo-icon.svg" alt="homepage" class="light-logo" />
 
-                        </b>
-                        <!--End Logo icon -->
-                        <!-- Logo text -->
-                        <span class="logo-text">
-                            <!-- dark Logo text -->
-                            <img src="/assets/images/logo-text.svg" alt="homepage" class="light-logo" />
+            </b>
+            <!--End Logo icon -->
+            <!-- Logo text -->
+            <span class="logo-text">
+              <!-- dark Logo text -->
+              <img src="/assets/images/logo-text.svg" alt="homepage" class="light-logo" />
 
-                        </span>
-                        <!-- Logo icon -->
-                        <!-- <b class="logo-icon"> -->
-                        <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                        <!-- Dark Logo icon -->
-                        <!-- <img src="assets/images/logo-text.png" alt="homepage" class="light-logo" /> -->
+            </span>
+            <!-- Logo icon -->
+            <!-- <b class="logo-icon"> -->
+            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+            <!-- Dark Logo icon -->
+            <!-- <img src="assets/images/logo-text.png" alt="homepage" class="light-logo" /> -->
 
-                        <!-- </b> -->
-                        <!--End Logo icon -->
-                    </a>
-                    <!-- ============================================================== -->
-                    <!-- End Logo -->
-                    <!-- ============================================================== -->
-                    <!-- ============================================================== -->
-                    <!-- Toggle which is visible on mobile only -->
-                    <!-- ============================================================== -->
-                    <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)"
-                        data-toggle="collapse" data-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i
-                            class="ti-more"></i></a>
-                </div>
-                <!-- ============================================================== -->
-                <!-- End Logo -->
-                <!-- ============================================================== -->
-                <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
-                    <!-- ============================================================== -->
-                    <!-- toggle and nav items -->
-                    <!-- ============================================================== -->
-                    <ul class="navbar-nav float-left mr-auto">
-                        <li class="nav-item d-none d-md-block"><a
-                                class="nav-link sidebartoggler waves-effect waves-light" href="javascript:void(0)"
-                                data-sidebartype="mini-sidebar"><i class="mdi mdi-menu font-24"></i></a></li>
-                        <!-- ============================================================== -->
-                    </ul>
-
-                    <!-- ============================================================== -->
-                    <!-- Right side toggle and nav items -->
-                    <!-- ============================================================== -->
-                    <ul class="navbar-nav float-right">
-                        <!-- ============================================================== -->
-                        <!-- Comment -->
-                        <!-- ============================================================== -->
-                        <!-- ============================================================== -->
-                        <!-- End Comment -->
-                        <!-- ============================================================== -->
-                        <!-- ============================================================== -->
-                        <!-- Messages -->
-                        <!-- ============================================================== -->
-                        <!-- ============================================================== -->
-                        <!-- End Messages -->
-                        <!-- ============================================================== -->
-
-                        <!-- ============================================================== -->
-                        <!-- User profile and search -->
-                        <!-- ============================================================== -->
-                        <ul class="navbar-nav float-right">
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href=""
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
-                                        src="/assets/images/users/1.jpg" alt="user" class="rounded-circle"
-                                        width="31"></a>
-                                <div class="dropdown-menu dropdown-menu-right user-dd animated">
-                                    <a class="dropdown-item" href="/admin/setting"><i
-                                            class="ti-settings m-r-5 m-l-5"></i>
-                                        Cài đặt tài khoản</a>
-                                    <a class="dropdown-item" href="/logout"><i class="fa fa-power-off m-r-5 m-l-5"></i>
-                                        Đăng xuất</a>
-                                    <div class="dropdown-divider"></div>
-                                    <div class="p-l-30 p-10"><a href="javascript:void(0)"
-                                            class="btn btn-sm btn-success btn-rounded">View
-                                            Profile</a></div>
-                                </div>
-                            </li>
-                        </ul>
-                        <!-- ============================================================== -->
-                        <!-- User profile and search -->
-                        <!-- ============================================================== -->
-                    </ul>
-                </div>
-            </nav>
-        </header>
-        <!-- ============================================================== -->
-        <!-- End Topbar header -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Left Sidebar - style you can find in sidebar.scss  -->
-        <!-- ============================================================== -->
-        <aside class="left-sidebar" data-sidebarbg="skin5">
-            <div class="scroll-sidebar">
-                <nav class="sidebar-nav">
-                    <ul id="sidebarnav" class="p-t-30">
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/"
-                                aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Tổng
-                                    quan</span></a>
-                        </li>
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="/admin/banner" aria-expanded="false"><i class="mdi mdi-image-multiple"></i><span
-                                    class="hide-menu">Hình ảnh
-                                    banner</span></a></li>
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="/admin/category" aria-expanded="false"><i class="mdi mdi-file-document"></i><span
-                                    class="hide-menu">Danh mục sản
-                                    phẩm</span></a></li>
-                        <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark"
-                                href="javascript:void(0)" aria-expanded="false"><i
-                                    class="mdi mdi-package-variant-closed"></i><span class="hide-menu">Sản phẩm
-                                </span></a>
-                            <ul aria-expanded="false" class="collapse  first-level">
-                                <li class="sidebar-item"><a href="/admin/product" class="sidebar-link"><i
-                                            class="mdi mdi-format-list-bulleted"></i><span class="hide-menu"> Danh sách
-                                            sản phẩm </span></a></li>
-                                <li class="sidebar-item"><a href="/admin/product-size" class="sidebar-link"><i
-                                            class="mdi mdi-table-edit"></i><span class="hide-menu"> Quản lý kho
-                                        </span></a>
-                                </li>
-                                <li class="sidebar-item"><a href="/admin/size" class="sidebar-link"><i
-                                            class="mdi mdi-move-resize"></i><span class="hide-menu"> Kích thước sản phẩm
-                                        </span></a></li>
-                            </ul>
-                        </li>
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="/admin/bill" aria-expanded="false"><i class="mdi mdi-truck"></i><span
-                                    class="hide-menu">Đơn hàng</span></a></li>
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="/admin/discount" aria-expanded="false"><i class="mdi mdi-blur-linear"></i><span
-                                    class="hide-menu">Mã giảm giá</span></a>
-                        </li>
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="/admin/reviews" aria-expanded="false"><i
-                                    class="mdi mdi-comment-processing"></i><span class="hide-menu">Đánh giá sản
-                                    phẩm</span></a></li>
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="/admin/employee" aria-expanded="false"><i
-                                    class="mdi mdi-account-multiple"></i><span class="hide-menu">Nhân viên</span></a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </aside>
-        <!-- ============================================================== -->
-        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Page wrapper  -->
-        <!-- ============================================================== -->
-        <div class="page-wrapper">
-            <!-- ============================================================== -->
-            <!-- Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- End Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- Container fluid  -->
-            <!-- ============================================================== -->
-            <div class="container-fluid">
-                <!-- ============================================================== -->
-                <!-- Start Page Content -->
-                <!-- ============================================================== -->
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card" style="padding: 20px;">
-                            <div class="card-body-cus">
-                                <h5 class="card-title m-b-0">Danh sách đơn hàng</h5>
-                            </div>
-                            <table class="table" id="myTable">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">STT</th>
-                                        <th scope="col">Mã đơn hàng</th>
-                                        <th scope="col">Mã người dùng</th>
-                                        <th scope="col">Ngày đặt hàng</th>
-                                        <th scope="col">Hình thức thanh toán</th>
-                                        <th scope="col">Trạng thái thanh toán</th>
-                                        <th scope="col">Trạng thái đơn hàng</th>
-                                        <th scope="col">Tổng tiền</th>
-                                        <th scope="col">Tác vụ</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {{#each bills}}
-                                    <tr>
-                                        <th scope="row" style="width: 10%;">{{calculateIndex @index}}</th>
-                                        <td scope="row" style="width: 10%;">{{this.id}}</td>
-                                        <td style="width: 10%;">{{this.nguoi_dung_id}}</td>
-                                        <td style="width: 10%;">{{formatDate this.ngay_dat}}</td>
-                                        <td style="width: 15%;">{{this.hinh_thuc_thanh_toan}}</td>
-                                        <td style="width: 10%;">
-                                            {{#equal this.trang_thai_thanh_toan "Chưa thanh toán"}}
-                                            <a href="" class="badge badge-danger" style="font-size: 13px;">Chưa thanh
-                                                toán</a>
-                                            {{/equal}}
-                                            {{#equal this.trang_thai_thanh_toan "Đã thanh toán"}}
-                                            <a href="" class="badge badge-success" style="font-size: 13px;">Đã thanh
-                                                toán</a>
-                                            {{/equal}}
-                                        </td>
-                                        <td style="width: 10%;">
-                                            {{#equal this.tinh_trang_giao_hang "Chờ xác nhận"}}
-                                            <a href="" class="badge badge-warning" style="font-size: 13px;">Chờ xác
-                                                nhận</a>
-                                            {{/equal}}
-                                            {{#equal this.tinh_trang_giao_hang "Chờ lấy hàng"}}
-                                            <a href="#" class="badge badge-info" style="font-size: 13px;">Chờ lấy
-                                                hàng</a>
-                                            {{/equal}}
-                                            {{#equal this.tinh_trang_giao_hang "Đang giao hàng"}}
-                                            <a href="" class="badge badge-primary" style="font-size: 13px;">Đang giao
-                                                hàng</a>
-                                            {{/equal}}
-                                            {{#equal this.tinh_trang_giao_hang "Đã giao hàng"}}
-                                            <a href="" class="badge badge-success" style="font-size: 13px;">Giao hàng
-                                                thành công</a>
-                                            {{/equal}}
-                                            {{#equal this.tinh_trang_giao_hang "Đã hủy"}}
-                                            <a href="" class="badge badge-light" style="font-size: 13px;">Đã huỷ</a>
-                                            {{/equal}}
-                                        </td>
-                                        <td style="width: 10%;">{{formatCurrency this.thanh_tien}}</td>
-                                        <td style="width: 10%;">
-                                            <a type="button" style="color: white;" class="button-26"
-                                                href="/admin/bill-detail/{{this.id}}">
-                                                Xem chi tiết
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    {{/each}}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <!-- ============================================================== -->
-                <!-- End PAge Content -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- Right sidebar -->
-                <!-- ============================================================== -->
-                <!-- .right-sidebar -->
-                <!-- ============================================================== -->
-                <!-- End Right sidebar -->
-                <!-- ============================================================== -->
-            </div>
-            <!-- ============================================================== -->
-            <!-- End Container fluid  -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- footer -->
-            <!-- ============================================================== -->
-            <footer class="footer text-center">
-                Unisexx Sotre - Thời trang cho mọi người <a href="">Unisex.com</a>.
-            </footer>
-            <!-- ============================================================== -->
-            <!-- End footer -->
-            <!-- ============================================================== -->
+            <!-- </b> -->
+            <!--End Logo icon -->
+          </a>
+          <!-- ============================================================== -->
+          <!-- End Logo -->
+          <!-- ============================================================== -->
+          <!-- ============================================================== -->
+          <!-- Toggle which is visible on mobile only -->
+          <!-- ============================================================== -->
+          <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)"
+            data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation"><i class="ti-more"></i></a>
         </div>
         <!-- ============================================================== -->
-        <!-- End Page wrapper  -->
+        <!-- End Logo -->
         <!-- ============================================================== -->
+        <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
+          <!-- ============================================================== -->
+          <!-- toggle and nav items -->
+          <!-- ============================================================== -->
+          <ul class="navbar-nav float-left mr-auto">
+            <li class="nav-item d-none d-md-block"><a class="nav-link sidebartoggler waves-effect waves-light"
+                href="javascript:void(0)" data-sidebartype="mini-sidebar"><i class="mdi mdi-menu font-24"></i></a></li>
+            <!-- ============================================================== -->
+          </ul>
+
+          <!-- ============================================================== -->
+          <!-- Right side toggle and nav items -->
+          <!-- ============================================================== -->
+          <ul class="navbar-nav float-right">
+            <!-- ============================================================== -->
+            <!-- Comment -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- End Comment -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Messages -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- End Messages -->
+            <!-- ============================================================== -->
+
+            <!-- ============================================================== -->
+            <!-- User profile and search -->
+            <!-- ============================================================== -->
+            <ul class="navbar-nav float-right">
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href=""
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
+                    src="/assets/images/users/1.jpg" alt="user" class="rounded-circle" width="31"></a>
+                <div class="dropdown-menu dropdown-menu-right user-dd animated">
+                  <a class="dropdown-item" href="/admin/setting"><i class="ti-settings m-r-5 m-l-5"></i>
+                    Cài đặt tài khoản</a>
+                  <a class="dropdown-item" href="/logout"><i class="fa fa-power-off m-r-5 m-l-5"></i>
+                    Đăng xuất</a>
+                  <div class="dropdown-divider"></div>
+                  <div class="p-l-30 p-10"><a href="javascript:void(0)" class="btn btn-sm btn-success btn-rounded">View
+                      Profile</a></div>
+                </div>
+              </li>
+            </ul>
+            <!-- ============================================================== -->
+            <!-- User profile and search -->
+            <!-- ============================================================== -->
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <!-- ============================================================== -->
+    <!-- End Topbar header -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+    <aside class="left-sidebar" data-sidebarbg="skin5">
+      <div class="scroll-sidebar">
+        <nav class="sidebar-nav">
+          <ul id="sidebarnav" class="p-t-30">
+            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/"
+                aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Tổng
+                  quan</span></a>
+            </li>
+            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/admin/banner"
+                aria-expanded="false"><i class="mdi mdi-image-multiple"></i><span class="hide-menu">Hình ảnh
+                  banner</span></a></li>
+            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                href="/admin/category" aria-expanded="false"><i class="mdi mdi-file-document"></i><span
+                  class="hide-menu">Danh mục sản
+                  phẩm</span></a></li>
+            <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark"
+                href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-package-variant-closed"></i><span
+                  class="hide-menu">Sản phẩm
+                </span></a>
+              <ul aria-expanded="false" class="collapse  first-level">
+                <li class="sidebar-item"><a href="/admin/product" class="sidebar-link"><i
+                      class="mdi mdi-format-list-bulleted"></i><span class="hide-menu"> Danh sách
+                      sản phẩm </span></a></li>
+                <li class="sidebar-item"><a href="/admin/product-size" class="sidebar-link"><i
+                      class="mdi mdi-table-edit"></i><span class="hide-menu"> Quản lý kho
+                    </span></a>
+                </li>
+                <li class="sidebar-item"><a href="/admin/size" class="sidebar-link"><i
+                      class="mdi mdi-move-resize"></i><span class="hide-menu"> Kích thước sản phẩm
+                    </span></a></li>
+              </ul>
+            </li>
+            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/admin/bill"
+                aria-expanded="false"><i class="mdi mdi-truck"></i><span class="hide-menu">Đơn hàng</span></a></li>
+            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                href="/admin/discount" aria-expanded="false"><i class="mdi mdi-blur-linear"></i><span
+                  class="hide-menu">Mã giảm giá</span></a>
+            </li>
+            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/admin/reviews"
+                aria-expanded="false"><i class="mdi mdi-comment-processing"></i><span class="hide-menu">Đánh giá sản
+                  phẩm</span></a></li>
+            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                href="/admin/employee" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span
+                  class="hide-menu">Nhân viên</span></a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </aside>
+    <!-- ============================================================== -->
+    <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper">
+      <!-- ============================================================== -->
+      <!-- Bread crumb and right sidebar toggle -->
+      <!-- ============================================================== -->
+      <!-- ============================================================== -->
+      <!-- End Bread crumb and right sidebar toggle -->
+      <!-- ============================================================== -->
+      <!-- ============================================================== -->
+      <!-- Container fluid  -->
+      <!-- ============================================================== -->
+      <div class="container-fluid">
+        <!-- ============================================================== -->
+        <!-- Start Page Content -->
+        <!-- ============================================================== -->
+        <div class="row">
+          <div class="col-12">
+            <div class="card" style="padding: 20px;">
+              <div class="card-body-cus">
+                <h5 class="card-title m-b-0">Danh sách đơn hàng</h5>
+              </div>
+              <table class="table" id="myTable">
+                <thead>
+                  <tr>
+                    <th scope="col">STT</th>
+                    <th scope="col">Mã đơn hàng</th>
+                    <th scope="col">Mã người dùng</th>
+                    <th scope="col">Ngày đặt hàng</th>
+                    <th scope="col">Hình thức thanh toán</th>
+                    <th scope="col">Trạng thái thanh toán</th>
+                    <th scope="col">Trạng thái đơn hàng</th>
+                    <th scope="col">Tổng tiền</th>
+                    <th scope="col">Tác vụ</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each bills}}
+                  <tr>
+                    <th scope="row" style="width: 10%;">{{calculateIndex @index}}</th>
+                    <td scope="row" style="width: 10%;">{{this.id}}</td>
+                    <td style="width: 10%;">{{this.nguoi_dung_id}}</td>
+                    <td style="width: 10%;">{{formatDate this.ngay_dat}}</td>
+                    <td style="width: 15%;">{{this.hinh_thuc_thanh_toan}}</td>
+                    <td style="width: 10%;">
+                      {{#equal this.trang_thai_thanh_toan "Chưa thanh toán"}}
+                      <a href="" class="badge badge-danger" style="font-size: 13px;">Chưa thanh
+                        toán</a>
+                      {{/equal}}
+                      {{#equal this.trang_thai_thanh_toan "Đã thanh toán"}}
+                      <a href="" class="badge badge-success" style="font-size: 13px;">Đã thanh
+                        toán</a>
+                      {{/equal}}
+                    </td>
+                    <td style="width: 10%;">
+                      {{#equal this.tinh_trang_giao_hang "Chờ xác nhận"}}
+                      <a href="" class="badge badge-warning" style="font-size: 13px;">Chờ xác
+                        nhận</a>
+                      {{/equal}}
+                      {{#equal this.tinh_trang_giao_hang "Chờ lấy hàng"}}
+                      <a href="#" class="badge badge-info" style="font-size: 13px;">Chờ lấy
+                        hàng</a>
+                      {{/equal}}
+                      {{#equal this.tinh_trang_giao_hang "Đang giao hàng"}}
+                      <a href="" class="badge badge-primary" style="font-size: 13px;">Đang giao
+                        hàng</a>
+                      {{/equal}}
+                      {{#equal this.tinh_trang_giao_hang "Đã giao hàng"}}
+                      <a href="" class="badge badge-success" style="font-size: 13px;">Giao hàng
+                        thành công</a>
+                      {{/equal}}
+                      {{#equal this.tinh_trang_giao_hang "Đã hủy"}}
+                      <a href="" class="badge badge-light" style="font-size: 13px;">Đã huỷ</a>
+                      {{/equal}}
+                    </td>
+                    <td style="width: 10%;">{{formatCurrency this.thanh_tien}}</td>
+                    <td style="width: 10%;">
+                      <a type="button" style="color: white;" class="button-26" href="/admin/bill-detail/{{this.id}}">
+                        Xem chi tiết
+                      </a>
+                    </td>
+                  </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End PAge Content -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Right sidebar -->
+        <!-- ============================================================== -->
+        <!-- .right-sidebar -->
+        <!-- ============================================================== -->
+        <!-- End Right sidebar -->
+        <!-- ============================================================== -->
+      </div>
+      <!-- ============================================================== -->
+      <!-- End Container fluid  -->
+      <!-- ============================================================== -->
+      <!-- ============================================================== -->
+      <!-- footer -->
+      <!-- ============================================================== -->
+      <footer class="footer text-center">
+        Unisexx Sotre - Thời trang cho mọi người <a href="">Unisex.com</a>.
+      </footer>
+      <!-- ============================================================== -->
+      <!-- End footer -->
+      <!-- ============================================================== -->
     </div>
     <!-- ============================================================== -->
-    <!-- End Wrapper -->
+    <!-- End Page wrapper  -->
     <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- All Jquery -->
-    <!-- ============================================================== -->
-    <script src="/assets/libs/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap tether Core JavaScript -->
-    <script src="/assets/libs/popper.js/dist/umd/popper.min.js"></script>
-    <script src="/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- slimscrollbar scrollbar JavaScript -->
-    <script src="/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
-    <script src="/assets/extra-libs/sparkline/sparkline.js"></script>
-    <!--Wave Effects -->
-    <script src="/dist/js/waves.js"></script>
-    <!--Menu sidebar -->
-    <script src="/dist/js/sidebarmenu.js"></script>
-    <!--Custom JavaScript -->
-    <script src="/dist/js/custom.min.js"></script>
-    <!-- this page js -->
-    <script src="/assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
-    <script src="/assets/extra-libs/multicheck/jquery.multicheck.js"></script>
-    <script src="/assets/extra-libs/DataTables/datatables.min.js"></script>
-    <script>
-        /****************************************
-         *       Basic Table                   *
-         ****************************************/
-        $('#myTable').DataTable();
-    </script>
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Wrapper -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- All Jquery -->
+  <!-- ============================================================== -->
+  <script src="/assets/libs/jquery/dist/jquery.min.js"></script>
+  <!-- Bootstrap tether Core JavaScript -->
+  <script src="/assets/libs/popper.js/dist/umd/popper.min.js"></script>
+  <script src="/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+  <!-- slimscrollbar scrollbar JavaScript -->
+  <script src="/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+  <script src="/assets/extra-libs/sparkline/sparkline.js"></script>
+  <!--Wave Effects -->
+  <script src="/dist/js/waves.js"></script>
+  <!--Menu sidebar -->
+  <script src="/dist/js/sidebarmenu.js"></script>
+  <!--Custom JavaScript -->
+  <script src="/dist/js/custom.min.js"></script>
+  <!-- this page js -->
+  <script src="/assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
+  <script src="/assets/extra-libs/multicheck/jquery.multicheck.js"></script>
+  <script src="/assets/extra-libs/DataTables/datatables.min.js"></script>
+  <script>
+    /****************************************
+     *       Basic Table                   *
+     ****************************************/
+    // Custom table
+    $(document).ready(function () {
+      $('#myTable').DataTable({
+        language: {
+          sProcessing: "Đang xử lý...",
+          sLengthMenu: "Xem _MENU_ mục",
+          sZeroRecords: "Không tìm thấy dòng nào phù hợp",
+          sInfo: "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+          sInfoEmpty: "Đang xem 0 đến 0 trong tổng số 0 mục",
+          sInfoFiltered: "(được lọc từ _MAX_ mục)",
+          sInfoPostFix: "",
+          sSearch: "Tìm:",
+          sUrl: "",
+          oPaginate: {
+            sFirst: "Đầu",
+            sPrevious: "Trước",
+            sNext: "Tiếp",
+            sLast: "Cuối"
+          }
+        }
+      });
+    });
+  </script>
 
 </body>
 
