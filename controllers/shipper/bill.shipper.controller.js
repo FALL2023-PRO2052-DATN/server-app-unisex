@@ -39,18 +39,17 @@ const updateBill = async (req, res) => {
         const { idShipper, idBill, billStatus, statusPay } = req.body;
         await billShipperModel.updateBill(billStatus, idShipper, idBill, statusPay);
         if (billStatus == 'Đã giao hàng') {
-            console.log("Cập nhật số lượng")
             const billDetails = await billShipperModel.getBillsDetailByBillId(idBill);
             // Cập nhật lại sô lượng sản phẩm nếu có
             billDetails.forEach(async product => {
                 const quantityOrder = product.so_luong;
                 const productID = product.san_pham_id;
                 const nameSize = product.kich_thuoc;
-                
+
                 const productSizes = await productSizeModel.getProductSizes();
                 // Lấy thong tin product theo mã sản phẩm và tên kích thước trong đơn hàng chi tiết 
                 const productSizeObject = productSizes.find(productSize => productSize.san_pham_id === productID && productSize.ten_kich_thuoc === nameSize);
-                if(productSizeObject) {
+                if (productSizeObject) {
                     const quantity = productSizeObject.so_luong_ton_kho - quantityOrder
                     // Cập nhạt lại số lượng theo productSizeObject đã tìm thấy
                     await productSizeModel.updateQuantityProductSize({
@@ -59,6 +58,16 @@ const updateBill = async (req, res) => {
                     });
                 }
             });
+            const bill = await billShipperModel.getBillById(idBill);
+
+            // Socket realtime notification android
+            const notificationData = {
+                orderId: idBill,
+                message: "Đơn hàng " + idBill + " của bạn đã giao thành công",
+                userId: bill[0].nguoi_dung_id
+                // Thêm các trường dữ liệu khác nếu cần thiết
+            };
+            req.io.emit('notification', notificationData);
         }
         res.json({ status: 'success' });
     } catch (error) {
