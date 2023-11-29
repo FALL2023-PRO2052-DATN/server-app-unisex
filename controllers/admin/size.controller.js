@@ -10,9 +10,9 @@ const renderPageSize = async (req, res) => {
   try {
     const sizes = await sizeModel.getSizes();
     const sizesReversed = arrayHelpers.reverseArray(sizes);
-    res.status(200).render('size', { sizes: sizesReversed });
+    res.render('size', { sizes: sizesReversed });
   } catch (error) {
-    console.log('Render page size failed', error);
+    console.error('Render page size failed', error);
   }
 }
 
@@ -24,14 +24,16 @@ const insertSize = async (req, res) => {
     if (isSizeNameExist(sizes, sizeName)) {
       req.flash('warning', 'Thêm không thành công. Tên kích thước đã tồn tại.');
     } else {
-      const data = { sizeName, sizeDescription };
-      await sizeModel.insertSize(data);
+      await sizeModel.insertSize({
+        sizeName,
+        sizeDescription
+      });
       req.flash('success', 'Thêm kích thước thành công');
     }
 
-    res.status(200).redirect('/admin/size');
+    res.redirect('back');
   } catch (error) {
-    console.log('Inserter size falied', error);
+    console.error('Insert size falied', error);
   }
 }
 
@@ -52,14 +54,22 @@ const updateSize = async (req, res) => {
     if (isSizeNameExist(sizesExceptCurrent, sizeName)) {
       req.flash('warning', 'Cập nhật không thành công. Tên kích thước đã tồn tại.');
     } else {
-      const data = { sizeID, sizeName, sizeDescription };
-      await sizeModel.updateSize(data);
-      req.flash('success', 'Cập nhật kích thước thành công.');
+      const results = await sizeModel.updateSize({
+        sizeID,
+        sizeName,
+        sizeDescription
+      });
+
+      if (results.changedRows > 0) {
+        req.flash('success', 'Cập nhật kích thước thành công.');
+      } else {
+        req.flash('warning', 'Không có thay đổi nào được thực hiện.');
+      }
     }
 
-    res.status(200).redirect('/admin/size');
+    res.redirect('back');
   } catch (error) {
-    console.log('Removing size error', error);
+    console.error('Update size falied', error);
   }
 }
 
@@ -71,13 +81,18 @@ const removeSize = async (req, res) => {
     if (productsWithSize.length > 0) {
       req.flash('warning', 'Xoá kích thước không thành công. Đã có sản phẩm thuộc kích thước này.');
     } else {
-      await sizeModel.removeSize(sizeID);
-      req.flash('success', 'Xoá kích thước thành công.');
+      const results = await sizeModel.removeSize(sizeID);
+
+      if (results.changedRows > 0) {
+        req.flash('success', 'Xoá kích thước thành công.');
+      } else {
+        req.flash('error', 'Xoá kích thước không thành công.');
+      }
     }
 
-    res.status(200).redirect('/admin/size');
+    res.redirect('back');
   } catch (error) {
-    console.log('Removing size failed', error);
+    console.error('Removing size failed', error);
   }
 }
 

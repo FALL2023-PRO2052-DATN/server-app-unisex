@@ -144,7 +144,7 @@
           <div class="col-12">
             <div class="card" style="padding: 20px;">
               <div class="card-body-cus">
-                <h5 class="card-title m-b-0">Danh sách sản phẩm ({{products.length}})</h5>
+                <h5 class="card-title m-b-0">Quản lý sản phẩm</h5>
                 <a href="/admin/product/page-insert" class="button-26" style="color: white;">Thêm sản
                   phẩm</a>
               </div>
@@ -152,7 +152,7 @@
                 <thead>
                   <tr>
                     <th scope="col">STT</th>
-                    <th scope="col">Ảnh</th>
+                    <th scope="col"></th>
                     <th scope="col">Tên sản phẩm</th>
                     <th scope="col">Giá bán</th>
                     <th scope="col">Giảm giá</th>
@@ -161,7 +161,7 @@
                     <th scope="col">Mô tả</th>
                     <th scope="col">Kích thước</th>
                     <th scope="col">Danh mục</th>
-                    <th scope="col">Tác vụ</th>
+                    <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -251,7 +251,29 @@
     /****************************************
      *       Basic Table                   *
      ****************************************/
-    $('#myTable').DataTable();
+    // Custom table
+    $(document).ready(function () {
+      $('#myTable').DataTable({
+        language: {
+          sProcessing: "Đang xử lý...",
+          sLengthMenu: "Xem _MENU_ mục",
+          sZeroRecords: "Không tìm thấy dòng nào phù hợp",
+          sInfo: "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+          sInfoEmpty: "Đang xem 0 đến 0 trong tổng số 0 mục",
+          sInfoFiltered: "(được lọc từ _MAX_ mục)",
+          sInfoPostFix: "",
+          sSearch: "Tìm:",
+          sUrl: "",
+          oPaginate: {
+            sFirst: "Đầu",
+            sPrevious: "Trước",
+            sNext: "Tiếp",
+            sLast: "Cuối"
+          }
+        },
+        lengthMenu: [10, 20, 50, 100, 200],
+      });
+    });
   </script>
   <script src="/dist/js/product.js"></script>
 

@@ -6,21 +6,24 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 const renderPageLogin = async (req, res) => {
-  res.status(200).render('login');
+  res.render('login');
 }
 
 const handleLogin = async (req, res) => {
   const { username, password } = req.body;
   try {
-    const loginResults = await authAdminModel.authenticateUser(username, password);
+    const loginResults = await authAdminModel.authenticateUser({
+      username,
+      password
+    });
 
     if (loginResults.length > 0) {
       const user = loginResults[0];
       req.session.user = user;
-      res.status(200).redirect('/');
+      res.redirect('/');
     } else {
       req.flash('error', 'Đăng nhập không thành công.');
-      res.status(200).redirect('/login');
+      res.redirect('/login');
     }
   } catch (error) {
     console.error('Login failed', error);
@@ -32,14 +35,14 @@ const handleLogout = async (req, res) => {
     if (error) {
       console.error('Logout falied', error);
     } else {
-      res.status(200).redirect('/login');
+      res.redirect('/login');
     }
   });
 }
 
 const renderPageSetting = async (req, res) => {
   const user = req.session.user;
-  res.status(200).render('setting', { user });
+  res.render('setting', { user });
 }
 
 const handleUpateProfileUser = async (req, res) => {
@@ -72,7 +75,7 @@ const handleUpateProfileUser = async (req, res) => {
         req.flash('error', 'Cập nhật thông tin không thành công.');
       }
 
-      res.status(200).redirect('/admin/setting');
+      res.redirect('/admin/setting');
     } catch (error) {
       console.error('Update profile failed', error);
     }
@@ -81,7 +84,7 @@ const handleUpateProfileUser = async (req, res) => {
 
 const updateUserSession = async (username, req) => {
   const results = await authAdminModel.getCurrentUser(username);
-  
+
   const currentUser = results[0];
   if (currentUser) {
     req.session.user = currentUser;

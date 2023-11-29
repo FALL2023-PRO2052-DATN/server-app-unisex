@@ -3,13 +3,18 @@ const database = require('../../database/database.js');
 const getAll = async () => {
     const query = `SELECT
                         DonHang.*,
-                        DiaChi.nguoi_dung_id
+                        DiaChi.nguoi_dung_id,
+                        NhanVien.ho_va_ten
                     FROM
                         shop_clothes.DonHang
                     JOIN
                         shop_clothes.DiaChi
                     ON
                         DonHang.dia_chi_id = DiaChi.id
+                    LEFT JOIN
+                        shop_clothes.NhanVien
+                    ON
+                        NhanVien.ten_dang_nhap = DonHang.nhan_vien_id
                     WHERE
                         DonHang.hienThi = 1;`;
     return await database.queryDatabase(query, []);

@@ -25,7 +25,7 @@
 				<div class="navbar-header" data-logobg="skin5">
 					<a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i
 							class="ti-menu ti-close"></i></a>
-					<a class="navbar-brand" href="index.html">
+					<a class="navbar-brand" href="/admin/banner">
 						<b class="logo-icon p-l-10">
 							<img src="/assets/images/logo-icon.svg" alt="homepage" class="light-logo" />
 						</b>
@@ -128,7 +128,7 @@
 					<div class="col-12">
 						<div class="card" style="padding: 20px;">
 							<div class="card-body-cus">
-								<h5 class="card-title m-b-0">Danh sách banner ({{banners.length}})</h5>
+								<h5 class="card-title m-b-0">Quản lý banner</h5>
 								<button type="button" class="button-26" data-toggle="modal" data-target="#exampleModal">
 									Thêm banner
 								</button>
@@ -137,17 +137,19 @@
 								<thead>
 									<tr>
 										<th scope="col">STT</th>
-										<th scope="col">Ảnh</th>
-										<th scope="col">Tác vụ</th>
+										<th scope="col"></th>
+										<th scope="col">Url</th>
+										<th scope="col"></th>
 									</tr>
 								</thead>
 								<tbody>
 									{{#each banners}}
 									<tr>
 										<input type="hidden" value="{{this.id}}">
-										<th scope="row" style="width: 50px;">{{calculateIndex @index}}</th>
-										<td style="width: 400px; height: 200px ;"><img id="img-table-cus" src="{{this.anh_banner}}"
+										<th scope="row" style="width: 30px;">{{calculateIndex @index}}</th>
+										<td><img style="width: 220px; height: 100px;" id="img-table-cus" src="{{this.anh_banner}}"
 												alt="Hình ảnh" /></td>
+										<td scope="row"><a style="color: #2962ff;" href="{{this.anh_banner}}">{{this.anh_banner}}</a></td>
 										<td>
 											<button type="button" class="btn-delete" data-toggle="modal" data-target="#ModalDel"
 												data-id="{{this.id}}">
@@ -269,7 +271,8 @@
 						sNext: "Tiếp",
 						sLast: "Cuối"
 					}
-				}
+				},
+				lengthMenu: [5, 10, 20, 50, 100, 200],
 			});
 		});
 	</script>

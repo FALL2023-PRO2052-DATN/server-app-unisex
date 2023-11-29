@@ -21,7 +21,8 @@ const getProducts = async () => {
   return await database.queryDatabase(query, []);
 }
 
-const getProductsByCategoryId = async (categoryID) => {
+// Lấy danh sách sản phẩm theo mã danh mục
+const getProductsByCategoryID = async (categoryID) => {
   const query = 'SELECT * FROM SanPham WHERE danh_muc_id = ? AND hienThi = 1';
   return await database.queryDatabase(query, [categoryID]);
 }
@@ -87,7 +88,7 @@ const removeProduct = async (productID) => {
 module.exports = {
   getProducts,
   getProductByID,
-  getProductsByCategoryId,
+  getProductsByCategoryID,
   insertProduct,
   updateProduct,
   removeProduct

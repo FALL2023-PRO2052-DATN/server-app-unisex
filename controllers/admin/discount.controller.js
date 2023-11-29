@@ -9,7 +9,7 @@ const renderPageDiscount = async (req, res) => {
   try {
     const discounts = await discountModel.getDiscounts();
     const discountReversed = arrayHelpers.reverseArray(discounts);
-    res.status(200).render('discount', { discounts: discountReversed });
+    res.render('discount', { discounts: discountReversed });
   } catch (error) {
     console.error('Render page discount failed', error);
   }
@@ -23,12 +23,14 @@ const insertDiscount = async (req, res) => {
     if (isDiscountExist(discounts, discountCode)) {
       req.flash('warning', 'Thêm không thành công. Mã code giảm giá đã tồn tại.');
     } else {
-      const data = { discountCode, discountValue };
-      await discountModel.insertDiscount(data);
+      await discountModel.insertDiscount({
+        discountCode,
+        discountValue
+      });
       req.flash('success', 'Thêm mã giảm giá thành công.');
     }
 
-    res.status(200).redirect('/admin/discount');
+    res.redirect('back');
   } catch (error) {
     console.error('Inserter discount error', error);
   }
@@ -51,12 +53,20 @@ const updateDiscount = async (req, res) => {
     if (isDiscountExist(discountsExceptCurrent, discountCode)) {
       req.flash('warning', 'Cập nhật không thành công. Mã code giảm giá đã tồn tại.');
     } else {
-      const data = { discountID, discountCode, discountValue };
-      await discountModel.updateDiscount(data);
-      req.flash('success', 'Cập nhật mã giảm giá thành công.');
+      const results = await discountModel.updateDiscount({
+        discountID,
+        discountCode,
+        discountValue
+      });
+
+      if (results.changedRows > 0) {
+        req.flash('success', 'Cập nhật mã giảm giá thành công.');
+      } else {
+        req.flash('warning', 'Không có thay đổi nào được thực hiện.');
+      }
     }
 
-    res.status(200).redirect('/admin/discount');
+    res.redirect('back');
   } catch (error) {
     console.error('Update discount failed', error);
   }
@@ -65,9 +75,15 @@ const updateDiscount = async (req, res) => {
 const removeDiscount = async (req, res) => {
   try {
     const discountID = req.params.discountID;
-    await discountModel.removeDiscount(discountID);
-    req.flash('success', 'Xoá mã giảm giá thành công.');
-    res.redirect('/admin/discount');
+    const results = await discountModel.removeDiscount(discountID);
+
+    if (results.changedRows > 0) {
+      req.flash('success', 'Xoá mã giảm giá thành công.');
+    } else {
+      req.flash('error', 'Xoá giảm giá không thành công.');
+    }
+
+    res.redirect('back');
   } catch (error) {
     console.error('Removing discount failed', error);
   }

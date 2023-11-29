@@ -5,7 +5,7 @@ const renderPageReview = async (req, res) => {
   try {
     const reviews = await reviewsModel.getReviews();
     const reviewsReversed = arrayHelpers.reverseArray(reviews);
-    res.status(200).render("reviews", { reviews: reviewsReversed });
+    res.render('reviews', { reviews: reviewsReversed });
   } catch (error) {
     console.error('Render page review failed', error);
   }
@@ -13,10 +13,16 @@ const renderPageReview = async (req, res) => {
 
 const removeReview = async (req, res) => {
   try {
-    const { reviewID } = req.params.reviewID;
-    await reviewsModel.removeReviews(reviewID);
-    req.flash("success", "Xoá đánh giá thành công.");
-    res.redirect("/admin/reviews");
+    const reviewID = req.params.reviewID;
+    const results = await reviewsModel.removeReview(reviewID);
+
+    if (results.changedRows > 0) {
+      req.flash("success", "Xoá đánh giá thành công.");
+    } else {
+      req.flash("error", "Xoá đánh giá không thành công.");
+    }
+
+    res.redirect('back');
   } catch (error) {
     console.error('Removing review failed', error);
   }
