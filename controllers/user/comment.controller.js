@@ -25,7 +25,21 @@ const insertComment = async (req, res) => {
 
 }
 
+
+const readCommentByStar = async (req, res) => {
+
+  try {
+    const { id, star } = req.body
+    const results = await model.readCommentByIdStar(id, star)
+    res.json({ status: "SUCCESS", commentList: results })
+  } catch (error) {
+    res.json({ status: "ERROR", error })
+  }
+
+}
+
 module.exports = {
   readCommentByIdProduct,
-  insertComment
+  insertComment,
+  readCommentByStar
 }

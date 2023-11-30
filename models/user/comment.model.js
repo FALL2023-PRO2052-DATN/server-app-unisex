@@ -22,7 +22,21 @@ const insertComment = async (pointComment, content, idUser, idProduct) => {
 
 }
 
+//lấy danh sách đánh giá theo sản phẩm theo số sao đánh giá và hiển thị = 1
+const readCommentByIdStar = async (id, star) => {
+
+  const query = "SELECT  NguoiDung.ho_va_ten, NguoiDung.anh_dai_dien, " +
+    "DanhGia.ngay_danh_gia , DanhGia.diem_danh_gia, DanhGia.noi_dung " +
+    "FROM DanhGia " +
+    "INNER JOIN NguoiDung ON DanhGia.nguoi_dung_id = NguoiDung.id " +
+    "WHERE DanhGia.hienThi = 1 AND DanhGia.san_pham_id = ? AND DanhGia.diem_danh_gia >= ? AND DanhGia.diem_danh_gia < ? + 1"
+
+  return await connection.queryDatabase(query, [id, star, star])
+
+}
+
 module.exports = {
   readCommentByIdProduct,
-  insertComment
+  insertComment,
+  readCommentByIdStar
 }

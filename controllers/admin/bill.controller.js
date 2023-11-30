@@ -11,7 +11,7 @@ const renderPageBill = async (req, res) => {
   try {
     const bills = await billAdminModel.getAll();
     const billsReversed = arrayHelpers.reverseArray(bills);
-    res.status(200).render('bill', { 
+    res.status(200).render('bill', {
       bills: billsReversed
     });
   } catch (error) {
