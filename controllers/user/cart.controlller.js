@@ -17,7 +17,7 @@ const insertCart = async (req, res) => {
     try {
         const { quantity, price, size, userId, productId } = req.body
         const results = await model.insertCart(quantity, price, size, userId, productId)
-        res.json({ status: "SUCCESS", results })
+        res.json(results)
     } catch (error) {
         res.json({ status: "ERROR", error })
     }
