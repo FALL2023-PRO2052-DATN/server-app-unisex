@@ -1,7 +1,7 @@
 const database = require('../../database/database.js');
 
 const getBanners = async () => {
-  const query = `SELECT * FROM Banner WHERE hienThi = 1`;
+  const query = `SELECT * FROM Banner`;
   return await database.queryDatabase(query, []);
 }
 
@@ -10,13 +10,19 @@ const insertBanner = async (imgUrl) => {
   return await database.queryDatabase(query, [imgUrl]);
 }
 
+const updateBannerStatus = async ({ bannerID, bannerStatus }) => {
+  const query = `UPDATE Banner SET hienThi = ? WHERE id = ?`;
+  return await database.queryDatabase(query, [bannerStatus, bannerID]);
+}
+
 const removeBanner = async (bannerID) => {
-  const query = `UPDATE Banner SET hienThi = 0 WHERE id = ?`;
+  const query = `DELETE FROM Banner WHERE id = ?`;
   return await database.queryDatabase(query, [bannerID]);
 }
 
 module.exports = {
   getBanners,
   insertBanner,
+  updateBannerStatus,
   removeBanner
 }

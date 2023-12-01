@@ -13,6 +13,7 @@
 	<title>Danh sách banner</title>
 	<!-- Custom CSS -->
 	<link rel="stylesheet" type="text/css" href="/assets/extra-libs/multicheck/multicheck.css">
+	<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;700&display=swap" rel="stylesheet">
 	<link href="/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
 	<link href="/dist/css/style.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css">
@@ -139,6 +140,8 @@
 										<th scope="col">STT</th>
 										<th scope="col"></th>
 										<th scope="col">Url</th>
+										<th scope="col">Trạng thái</th>
+										<th scope="col">Hiển thị</th>
 										<th scope="col"></th>
 									</tr>
 								</thead>
@@ -150,7 +153,26 @@
 										<td><img style="width: 220px; height: 100px;" id="img-table-cus" src="{{this.anh_banner}}"
 												alt="Hình ảnh" /></td>
 										<td scope="row"><a style="color: #2962ff;" href="{{this.anh_banner}}">{{this.anh_banner}}</a></td>
-										<td>
+										<td style="width: 10%;">
+											{{#equal this.hienThi 0}}
+											<a href="" class="badge badge-danger" style="font-size: 13px;">Inactive</a>
+											{{/equal}}
+											{{#equal this.hienThi 1}}
+											<a href="" class="badge badge-success" style="font-size: 13px;">Active</a>
+											{{/equal}}
+										</td>
+										<td scope="row">
+											<form action="/admin/banner/{{this.id}}?_method=PUT" method="POST">
+												<input type="hidden" name="bannerStatus" value="{{this.hienThi}}">
+												<button type="submit" id="toggle-active-banner"
+													class="btn btn-secondary btn-toggle {{#equal this.hienThi 1}}active{{/equal}}"
+													data-toggle="submit">
+													<div class="handle"></div>
+												</button>
+											</form>
+										</td>
+										</td>
+										<td scope="row">
 											<button type="button" class="btn-delete" data-toggle="modal" data-target="#ModalDel"
 												data-id="{{this.id}}">
 												Xoá
@@ -263,7 +285,7 @@
 					sInfoEmpty: "Đang xem 0 đến 0 trong tổng số 0 mục",
 					sInfoFiltered: "(được lọc từ _MAX_ mục)",
 					sInfoPostFix: "",
-					sSearch: "Tìm:",
+					sSearch: "Tìm kiếm:",
 					sUrl: "",
 					oPaginate: {
 						sFirst: "Đầu",
@@ -328,7 +350,7 @@
 
 				deleteForm.addEventListener('submit', function (e) {
 					e.preventDefault();
-					deleteForm.action = "/admin/banner/" + id + "?_method=PUT"
+					deleteForm.action = "/admin/banner/" + id + "?_method=DELETE"
 					deleteForm.submit();
 				});
 			}

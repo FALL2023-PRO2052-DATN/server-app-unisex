@@ -43,12 +43,39 @@ const insertBanner = async (req, res) => {
   });
 }
 
+const updateBannerStatus = async (req, res) => {
+  const bannerID = req.params.bannerID;
+  const bannerStatus = parseInt(req.body.bannerStatus);
+
+  try {
+    const STATUS_ACTIVE = 1;
+    const STATUS_INACTIVE = 0;
+    const bannerStatusUpdate = bannerStatus === STATUS_INACTIVE ? STATUS_ACTIVE : STATUS_INACTIVE;
+
+    const results = await bannerModel.updateBannerStatus({
+      bannerID,
+      bannerStatus: bannerStatusUpdate
+    });
+
+    if (results.changedRows > 0) {
+      console.log("Update banner successfully");
+    } else {
+      console.log("Update banner failure");
+    }
+
+    res.redirect('back');
+  } catch (error) {
+    console.error('Update banner failed', error);
+  }
+}
+
 const removeBanner = async (req, res) => {
   const bannerID = req.params.bannerID;
+
   try {
     const results = await bannerModel.removeBanner(bannerID);
 
-    if (results.changedRows > 0) {
+    if (results.affectedRows > 0) {
       req.flash('success', 'Xoá banner thành công.');
     } else {
       req.flash('error', 'Xoá banner không thành công.');
@@ -63,5 +90,6 @@ const removeBanner = async (req, res) => {
 module.exports = {
   renderPageBanner,
   insertBanner,
+  updateBannerStatus,
   removeBanner
 }
