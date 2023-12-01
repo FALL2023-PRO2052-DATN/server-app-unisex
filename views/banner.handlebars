@@ -149,11 +149,12 @@
 									{{#each banners}}
 									<tr>
 										<input type="hidden" value="{{this.id}}">
-										<th scope="row" style="width: 30px;">{{calculateIndex @index}}</th>
+										<th scope="row" style="width: 5%;">{{calculateIndex @index}}</th>
 										<td><img style="width: 220px; height: 100px;" id="img-table-cus" src="{{this.anh_banner}}"
 												alt="Hình ảnh" /></td>
-										<td scope="row"><a style="color: #2962ff;" href="{{this.anh_banner}}">{{this.anh_banner}}</a></td>
-										<td style="width: 10%;">
+										<td scope="row" style="width: 50%;"><a style="color: #2962ff;"
+												href="{{this.anh_banner}}">{{this.anh_banner}}</a></td>
+										<td style="width: 10%">
 											{{#equal this.hienThi 0}}
 											<a href="" class="badge badge-danger" style="font-size: 13px;">Inactive</a>
 											{{/equal}}
@@ -172,7 +173,7 @@
 											</form>
 										</td>
 										</td>
-										<td scope="row">
+										<td scope="row" style="width: 10%;">
 											<button type="button" class="btn-delete" data-toggle="modal" data-target="#ModalDel"
 												data-id="{{this.id}}">
 												Xoá

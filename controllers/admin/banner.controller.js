@@ -8,6 +8,7 @@ const upload = multer({ storage: storage });
 
 const renderPageBanner = async (req, res) => {
   try {
+    // Lấy danh sách banner
     const banners = await bannerModel.getBanners();
     const bannersReversed = arrayHelpers.reverseArray(banners);
     res.render('banner', { banners: bannersReversed });
@@ -25,10 +26,12 @@ const insertBanner = async (req, res) => {
 
     if (req.file) {
       try {
+        // Tải ảnh lên Cloudinary với ảnh đã chọn
         const imageBuffer = req.file.buffer;
         const imgUrl = await cloudinary.uploadImageToCloudinary(imageBuffer);
 
         if (imgUrl) {
+          // Thêm mới banner với hình ảnh vừa được tải lên Cloudinary
           await bannerModel.insertBanner(imgUrl);
           req.flash('success', 'Thêm banner thành công.');
         } else {
@@ -52,6 +55,7 @@ const updateBannerStatus = async (req, res) => {
     const STATUS_INACTIVE = 0;
     const bannerStatusUpdate = bannerStatus === STATUS_INACTIVE ? STATUS_ACTIVE : STATUS_INACTIVE;
 
+    // Cập nhật trạng thái hiển thị của banner
     const results = await bannerModel.updateBannerStatus({
       bannerID,
       bannerStatus: bannerStatusUpdate
@@ -73,6 +77,7 @@ const removeBanner = async (req, res) => {
   const bannerID = req.params.bannerID;
 
   try {
+    // Xoá banner theo mã banner: bannerID
     const results = await bannerModel.removeBanner(bannerID);
 
     if (results.affectedRows > 0) {

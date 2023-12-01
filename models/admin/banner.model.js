@@ -10,9 +10,13 @@ const insertBanner = async (imgUrl) => {
   return await database.queryDatabase(query, [imgUrl]);
 }
 
-const updateBannerStatus = async ({ bannerID, bannerStatus }) => {
+const updateBannerStatus = async (data) => {
+  const values = [
+    data.bannerStatus,
+    data.bannerID
+  ];
   const query = `UPDATE Banner SET hienThi = ? WHERE id = ?`;
-  return await database.queryDatabase(query, [bannerStatus, bannerID]);
+  return await database.queryDatabase(query, values);
 }
 
 const removeBanner = async (bannerID) => {
