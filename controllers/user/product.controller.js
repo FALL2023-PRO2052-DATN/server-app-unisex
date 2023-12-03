@@ -70,6 +70,20 @@ const readSize_ProductByIdProduct = async (req, res) => {
 
 }
 
+const readProductByListId = async (req, res) => {
+
+  try {
+    const { idUser, idList } = req.body
+
+    const listCart = JSON.parse(idList)
+
+    const results = await model.readProductByListId(idUser, listCart)
+    res.json({ status: "SUCCESS", cartList: results })
+  } catch (error) {
+    res.json({ status: "ERROR", error })
+  }
+
+}
 
 
 
@@ -79,6 +93,6 @@ module.exports = {
   readProductAll,
   readProductByIdDanhMuc,
   readProductByIdProduct,
-  readSize_ProductByIdProduct
-
+  readSize_ProductByIdProduct,
+  readProductByListId
 }

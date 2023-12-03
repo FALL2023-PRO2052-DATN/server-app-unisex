@@ -73,6 +73,18 @@ const readSize_ProductByIdProduct = async (id) => {
 
 }
 
+// lấy danh sách sản phẩm theo danh sách id sản phẩm
+const readProductByListId = async (idUser, idList) => {
+
+  const query = "SELECT GioHang.id, SanPham.ten_san_pham, SanPham.anh_dai_dien, SanPham.giam_gia, " +
+    "GioHang.so_luong, GioHang.don_gia, GioHang.kich_thuoc, GioHang.san_pham_id " +
+    "FROM GioHang " +
+    "INNER JOIN SanPham ON GioHang.san_pham_id = SanPham.id " +
+    "WHERE GioHang.hienThi = 1 AND GioHang.nguoi_dung_id = ? AND GioHang.id IN (?)"
+
+  return await connection.queryDatabase(query, [idUser, idList])
+
+}
 
 
 
@@ -82,6 +94,6 @@ module.exports = {
   readProductAll,
   readProductByIdDanhMuc,
   readProductByIdProduct,
-  readSize_ProductByIdProduct
-
+  readSize_ProductByIdProduct,
+  readProductByListId
 }
