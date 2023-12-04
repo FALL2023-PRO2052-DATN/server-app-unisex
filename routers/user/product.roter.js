@@ -8,5 +8,6 @@ router.get('/read-all-product', productController.readProductAll);
 router.post('/read-byId-category-product', productController.readProductByIdDanhMuc);
 router.post('/read-byId-product', productController.readProductByIdProduct);
 router.post('/read-byId-product-size', productController.readSize_ProductByIdProduct);
+router.post('/id/list/products', productController.readProductByListId);
 
 module.exports = router;    
