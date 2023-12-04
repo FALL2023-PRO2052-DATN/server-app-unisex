@@ -8,6 +8,7 @@ const upload = multer({ storage: storage });
 
 const renderPageBanner = async (req, res) => {
   try {
+    // Lấy danh sách banner
     const banners = await bannerModel.getBanners();
     const bannersReversed = arrayHelpers.reverseArray(banners);
     res.render('banner', { banners: bannersReversed });
@@ -25,10 +26,12 @@ const insertBanner = async (req, res) => {
 
     if (req.file) {
       try {
+        // Tải ảnh lên Cloudinary với ảnh đã chọn
         const imageBuffer = req.file.buffer;
         const imgUrl = await cloudinary.uploadImageToCloudinary(imageBuffer);
 
         if (imgUrl) {
+          // Thêm mới banner với hình ảnh vừa được tải lên Cloudinary
           await bannerModel.insertBanner(imgUrl);
           req.flash('success', 'Thêm banner thành công.');
         } else {
@@ -43,12 +46,41 @@ const insertBanner = async (req, res) => {
   });
 }
 
-const removeBanner = async (req, res) => {
+const updateBannerStatus = async (req, res) => {
   const bannerID = req.params.bannerID;
+  const bannerStatus = parseInt(req.body.bannerStatus);
+
   try {
-    const results = await bannerModel.removeBanner(bannerID);
+    const STATUS_ACTIVE = 1;
+    const STATUS_INACTIVE = 0;
+    const bannerStatusUpdate = bannerStatus === STATUS_INACTIVE ? STATUS_ACTIVE : STATUS_INACTIVE;
+
+    // Cập nhật trạng thái hiển thị của banner
+    const results = await bannerModel.updateBannerStatus({
+      bannerID,
+      bannerStatus: bannerStatusUpdate
+    });
 
     if (results.changedRows > 0) {
+      console.log("Update banner successfully");
+    } else {
+      console.log("Update banner failure");
+    }
+
+    res.redirect('back');
+  } catch (error) {
+    console.error('Update banner failed', error);
+  }
+}
+
+const removeBanner = async (req, res) => {
+  const bannerID = req.params.bannerID;
+
+  try {
+    // Xoá banner theo mã banner: bannerID
+    const results = await bannerModel.removeBanner(bannerID);
+
+    if (results.affectedRows > 0) {
       req.flash('success', 'Xoá banner thành công.');
     } else {
       req.flash('error', 'Xoá banner không thành công.');
@@ -63,5 +95,6 @@ const removeBanner = async (req, res) => {
 module.exports = {
   renderPageBanner,
   insertBanner,
+  updateBannerStatus,
   removeBanner
 }
