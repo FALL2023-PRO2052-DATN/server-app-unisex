@@ -50,7 +50,7 @@ const cancelBill = async (id, reasonCancel) => {
 
     const query = "UPDATE DonHang SET ly_do_huy = ? , tinh_trang_giao_hang = 'Đã hủy' WHERE id = ?"
 
-    return await connection.queryDatabase(query, [id, reasonCancel])
+    return await connection.queryDatabase(query, [reasonCancel, id])
 
 }
 
