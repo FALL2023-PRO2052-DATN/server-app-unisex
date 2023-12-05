@@ -1,10 +1,12 @@
 const billShipperModel = require('../../models/shipper/bill.shipper.model');
 const productSizeModel = require('../../models/shipper/product-size.model.js');
+const arrayHelpers = require('../../helpers/array-helpers.js');
 
 const getAllByStatusBillWaitConfirm = async (req, res) => {
     try {
         const results = await billShipperModel.getAllByStatusBillWaitConfirm();
-        res.json(results);
+        const resultsReversed = arrayHelpers.reverseArray(results);
+        res.json(resultsReversed);
     } catch (error) {
         console.log(error);
         res.json({ status: "erorr" });
