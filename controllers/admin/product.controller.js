@@ -49,7 +49,13 @@ const insertProduct = (req, res) => {
           const resultInsertProduct = await productModel.insertProduct(data);
           const idProduct = resultInsertProduct.insertId;
 
-          for (const size of sizes || [0]) {
+          // Kiểm tra size người dùng chọn mảng hay là đối tượng
+          if (!Array.isArray(sizes)) {
+            sizes = [sizes];
+          }
+
+          // Thực hiện thêm kích thước sản phẩm
+          for (const size of sizes) {
             const data = { size, idProduct, quantity };
             await productSizeModel.insertProductSize(data);
           }
