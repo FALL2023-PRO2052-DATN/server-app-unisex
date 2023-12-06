@@ -1,9 +1,11 @@
 const productSizeMode = require('../../models/admin/product-size.model.js');
+const arrayHelpers = require('../../helpers/array-helpers.js');
 
 const renderPageProductSize = async (req, res) => {
   try {
     const productSizes = await productSizeMode.getProductSizes();  
-    res.status(200).render('product-size', { productSizes });
+    const productSizesReversed = arrayHelpers.reverseArray(productSizes);
+    res.status(200).render('product-size', { productSizes: productSizes });
   } catch (error) {
     console.error(error);
     res.status(500).send('Server error: ' + error.message);
