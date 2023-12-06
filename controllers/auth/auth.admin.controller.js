@@ -12,6 +12,7 @@ const renderPageLogin = async (req, res) => {
 const handleLogin = async (req, res) => {
   const { username, password } = req.body;
   try {
+    // Xác thực người dùng
     const loginResults = await authAdminModel.authenticateUser({
       username,
       password
@@ -26,7 +27,7 @@ const handleLogin = async (req, res) => {
       res.redirect('/login');
     }
   } catch (error) {
-    console.error('Login failed', error);
+    console.error('Login failure', error);
   }
 }
 
@@ -41,7 +42,7 @@ const handleLogout = async (req, res) => {
 }
 
 const renderPageSetting = async (req, res) => {
-  const user = req.session.user;
+  const user = req.session.user;  
   res.render('setting', { user });
 }
 
@@ -65,7 +66,7 @@ const handleUpateProfileUser = async (req, res) => {
       if (newImgUrl) {
         data.imgUrl = newImgUrl;
       }
-
+      // Cập nhật thông tin admin
       const updateProfileUserResults = await authAdminModel.updateProfileUser(data);
 
       if (updateProfileUserResults) {
@@ -83,11 +84,13 @@ const handleUpateProfileUser = async (req, res) => {
 }
 
 const updateUserSession = async (username, req) => {
+  // Cập nhật lại phiên bản người dùng hiện tại
   const results = await authAdminModel.getCurrentUser(username);
 
   const currentUser = results[0];
   if (currentUser) {
     req.session.user = currentUser;
+    console.log("🚀 ~ file: auth.admin.controller.js:93 ~ updateUserSession ~ user:", req.session.use)
   }
 }
 
