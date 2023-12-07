@@ -5,7 +5,7 @@ const renderPageProductSize = async (req, res) => {
   try {
     const productSizes = await productSizeMode.getProductSizes();  
     const productSizesReversed = arrayHelpers.reverseArray(productSizes);
-    res.status(200).render('product-size', { productSizes: productSizes });
+    res.status(200).render('product-size', { productSizes: productSizesReversed });
   } catch (error) {
     console.error(error);
     res.status(500).send('Server error: ' + error.message);

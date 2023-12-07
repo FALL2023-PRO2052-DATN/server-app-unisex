@@ -221,7 +221,7 @@
                         <div class="card card-hover">
                             <div class="box bg-cyan text-center">
                                 <h1 class="font-light text-white"><i class="mdi mdi-package-variant-closed"></i></h1>
-                                <h6 class="text-white">{{products.length}} sản phẩm</h6>
+                                <h6 class="text-white">{{productCount}} sản phẩm</h6>
                             </div>
                         </div>
                     </div>
@@ -230,7 +230,7 @@
                         <div class="card card-hover">
                             <div class="box bg-danger text-center">
                                 <h1 class="font-light text-white"><i class="mdi mdi-table-edit"></i></h1>
-                                <h6 class="text-white">{{tong_ton_kho}} sản phâm tồn kho</h6>
+                                <h6 class="text-white">{{totalInventoryProduct}} sản phâm tồn kho</h6>
                             </div>
                         </div>
                     </div>
@@ -239,7 +239,7 @@
                         <div class="card card-hover">
                             <div class="box bg-success text-center">
                                 <h1 class="font-light text-white"><i class="mdi mdi-truck"></i></h1>
-                                <h6 class="text-white">{{billsIsPaid.length}} đơn hàng đã thanh toán</h6>
+                                <h6 class="text-white">{{billPaidCount}} đơn hàng đã thanh toán</h6>
                             </div>
                         </div>
                     </div>
@@ -248,7 +248,7 @@
                         <div class="card card-hover">
                             <div class="box bg-warning text-center">
                                 <h1 class="font-light text-white"><i class="mdi mdi-truck"></i></h1>
-                                <h6 class="text-white">{{billsUnConfirm.length}} chờ xác nhận</h6>
+                                <h6 class="text-white">{{billWaitConfirmCount}} đơn chờ xác nhận</h6>
                             </div>
                         </div>
                     </div>
@@ -314,9 +314,8 @@
             <!-- footer -->
             <!-- ============================================================== -->
             <footer class="footer text-center">
-                All Rights Reserved by Matrix-admin. Designed and Developed by <a
-                    href="https://wrappixel.com">WrapPixel</a>.
-            </footer>
+				Unisex Store - Thời trang cho mọi người <a href="/">Unisex.com</a>.
+			</footer>
             <!-- ============================================================== -->
             <!-- End footer -->
             <!-- ============================================================== -->
@@ -453,31 +452,33 @@
             const yearSelected = parseInt(optionSelected.value, 10);
 
             // Replace {{{ annualRevenues }}} with your actual data
-            const revenueData = {{{ annualRevenues }}};
+            const revenues = {{{ revenues }}};
 
-        // Call the updateChart function with the selected year and data
-        updateChart(yearSelected, revenueData);
+            // Call the updateChart function with the selected year and data
+            updateChart(yearSelected, revenues);
         });
 
         // Initialize the chart with the current year
-        const revenueData = {{{ annualRevenues }}};
+        const revenues = {{{ revenues }}};
         const currentYear = new Date().getFullYear();
-        updateChart(currentYear, revenueData);
+        updateChart(currentYear, revenues);
 
     </script>
 
     <script>
-        const ratings = [5, 4, 3, 2, 1]; // Đánh giá từ 5 sao đến 1 sao
-        const ratingCounts = {{{ ratingCount }}}; // Số lượng đánh giá cho mỗi mức đánh giá
+        // Điểm đánh giá từ 5 sao đến 1 sao
+        const reviewPoints = [5, 4, 3, 2, 1]; 
+        // Số lượng đánh giá theo điểm
+        const reviewCount = {{{ reviewCount }}};
 
         const ctx2 = document.getElementById('ratingChart').getContext('2d');
 
         new Chart(ctx2, {
             type: 'pie',
             data: {
-                labels: ratings.map(rating => `${rating} sao`),
+                labels: reviewPoints.map(rating => `${rating} sao`),
                 datasets: [{
-                    data: ratingCounts,
+                    data: reviewCount,
                     backgroundColor: ['#3874ff', '#00A9FF', '#89CFF3', '#A0E9FF', '#CDF5FD'],
                 }],
             },
@@ -496,11 +497,11 @@
 
     <script>
         // Dữ liệu số lượng tồn kho của sản phẩm
-        const productData = {{{ productStockByGroupStr }}}
+        const sumQuantityProductSizes = {{{ sumQuantityProductSizes }}}
 
         // Tạo mảng tên sản phẩm và mảng số lượng tồn kho
-        const productNames = productData.map(item => item.ten_san_pham);
-        const inventoryCounts = productData.map(item => item.tong_ton_kho);
+        const productNames = sumQuantityProductSizes.map(item => item.ten_san_pham);
+        const inventoryCounts = sumQuantityProductSizes.map(item => item.tong_ton_kho);
 
         // Lấy thẻ canvas
         const ctx3 = document.getElementById('inventoryChart').getContext('2d');
