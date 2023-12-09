@@ -20,14 +20,18 @@ const pageAdminOverView = async (req, res) => {
         const unpaidBills = [];
         const paidBills = [];
 
+        // Lặp qua mỗi trạng thái giao hàng
         for (const status of statusBills) {
+            // Đếm số lượng của mỗi trạng thái giao hàng theo từng trạng thái thanh toán chưa thanh toán ('Chưa thanh toán') và đã thanh toán ('Đã thanh toán')
             const countUnpaid = await billAdminModel.countBillsWithStatus('Chưa thanh toán', status);
             const countPaid = await billAdminModel.countBillsWithStatus('Đã thanh toán', status);
 
+            // Push số lượng đơn hàng chưa thanh toán vào mảng unpaidBills và số lượng đơn hàng đã thanh toán vào mảng paidBills
             unpaidBills.push({ status, count: countUnpaid[0].so_luong_don_hang });
             paidBills.push({ status, count: countPaid[0].so_luong_don_hang });
         }
 
+        // Chuyển mảng số lượng đơn hàng chưa thanh toán và đã thanh toán thành chuỗi JSON
         const unpaidBillsCount = JSON.stringify(unpaidBills.map(item => item.count));
         const paidBillsCount = JSON.stringify(paidBills.map(item => item.count));
 

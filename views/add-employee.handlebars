@@ -222,8 +222,11 @@
                     <input type="text" class="form-control" id="usernameInput" placeholder="Ví dụ: nguyenvana"
                       name="username" required="">
                     <label for="formGroupExampleInput" class="title-form">Mật khẩu</label>
-                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Ví dụ: abc"
-                      value="abcxyz" readonly name="password" required="">
+                    <div class="input-group">
+                      <input type="text" class="form-control" id="passwordInput" placeholder="Ví dụ: abc" value="abcxyz"
+                        readonly name="password" required="">
+                      <button type="button" class="button-26" id="generatePasswordBtn">Làm mới</button>
+                    </div>
                   </div>
                   <div class="col">
                     <label for="formGroupExampleInput" class="title-form">Họ và tên</label>
@@ -414,6 +417,33 @@
           alert.style.display = 'none';
         }, 4000);
       });
+    });
+  </script>
+
+  <script>
+    function genPass() {
+      // define result variable 
+      var password = "";
+      // define allowed characters
+      var characters = "0123456789@=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+      // define length of password character
+      var long = "20";
+      for (var i = 0; i < long; i++) {
+        // generate password
+        gen = characters.charAt(Math.floor(Math.random() * characters.length));
+        password += gen;
+      }
+
+      // send the output to the input
+      document.getElementById('passwordInput').value = password;
+    }
+
+    genPass();
+
+    const generatePasswordBtn = document.getElementById("generatePasswordBtn");
+    generatePasswordBtn.addEventListener("click", () => {
+      genPass();
     });
   </script>
 </body>
