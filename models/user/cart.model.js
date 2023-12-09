@@ -4,10 +4,12 @@ const connection = require("../../database/database.js")
 const readCartById = async (id) => {
 
     const query = "SELECT GioHang.id, SanPham.ten_san_pham, SanPham.anh_dai_dien, SanPham.giam_gia, " +
-        "GioHang.so_luong, GioHang.don_gia, GioHang.kich_thuoc, GioHang.san_pham_id " +
+        "GioHang.so_luong, GioHang.don_gia, GioHang.kich_thuoc, GioHang.san_pham_id, KichThuoc_SanPham.so_luong_ton_kho " +
         "FROM GioHang " +
         "INNER JOIN SanPham ON GioHang.san_pham_id = SanPham.id " +
-        "WHERE GioHang.hienThi = 1 AND GioHang.nguoi_dung_id = ?"
+        "INNER JOIN KichThuoc_SanPham ON SanPham.id = KichThuoc_SanPham.san_pham_id " +
+        "INNER JOIN KichThuoc kt ON KichThuoc_SanPham.kich_thuoc_id = kt.id " +
+        "WHERE GioHang.hienThi = 1 AND GioHang.nguoi_dung_id = ? AND kt.ten_kich_thuoc = GioHang.kich_thuoc"
 
     return await connection.queryDatabase(query, [id])
 
