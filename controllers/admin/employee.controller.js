@@ -37,11 +37,11 @@ const insertEmployee = async (req, res) => {
           const data = { username, fullName, phoneNumber, password, address, gender, dateOfBirth, imgUrl };
           await employeeModel.insertEmployee(data);
           req.flash('success', 'Thêm nhân viên thành công');
-          res.status(200).redirect('/admin/employee/insert');
+          res.status(200).redirect('back');
         }
       } catch (error) {
         req.flash('warning', 'Tên đăng nhập đã tồn tại');
-        res.status(200).redirect('/admin/employee/page-insert');
+        res.status(200).redirect('back');
       }
     }
   });
@@ -51,8 +51,8 @@ const removeEmployee = async (req, res) => {
   try {
     const employeeID = req.params.employeeID;
     await employeeModel.removeEmployee(employeeID);
-    req.flash('success', 'Xoá Xoá nhân viên thành công.');
-    res.status(200).redirect('/admin/employee');
+    req.flash('success', 'Xoá nhân viên thành công.');
+    res.status(200).redirect('back');
   } catch (error) {
     console.error('Removing employee failed', error);
   }

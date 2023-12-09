@@ -19,15 +19,17 @@ const login = async (req, res) => {
 // Cập nhật thông tin nhân viên
 const updateProfile = async (req, res) => {
     try {
-        const { fullname, phoneNumber, username, address, gender,dateOfBirth } = req.body;
+        const { fullname, phoneNumber, username, address, gender,dateOfBirth, imageUpdate } = req.body;
         const data = {
             fullname,
             phoneNumber,
             address,
             gender,
             dateOfBirth,
-            username
+            username,
+            imageUpdate
         }
+        console.log("🚀 ~ file: employee.shipper.controller.js:32 ~ updateProfile ~ data.imageUpdate:", data.imageUpdate)
         await employeeShipperModel.updateProfile(data);
         res.json({ status: "success" });
     } catch (error) {

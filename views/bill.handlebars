@@ -27,15 +27,6 @@
 <body>
 
   <!-- ============================================================== -->
-  <!-- Preloader - style you can find in spinners.css -->
-  <!-- ============================================================== -->
-  <div class="preloader">
-    <div class="lds-ripple">
-      <div class="lds-pos"></div>
-      <div class="lds-pos"></div>
-    </div>
-  </div>
-  <!-- ============================================================== -->
   <!-- Main wrapper - style you can find in pages.scss -->
   <!-- ============================================================== -->
   <div id="main-wrapper">
@@ -220,7 +211,7 @@
           <div class="col-12">
             <div class="card" style="padding: 20px;">
               <div class="card-body-cus">
-                <h5 class="card-title m-b-0">Danh sách đơn hàng</h5>
+                <h5 class="card-title m-b-0">Quản lý đơn hàng</h5>
               </div>
               <table class="table" id="myTable">
                 <thead>
@@ -239,7 +230,7 @@
                 <tbody>
                   {{#each bills}}
                   <tr>
-                    <th scope="row" style="width: 10%;">{{calculateIndex @index}}</th>
+                    <th scope="row" style="width: 5%;">{{calculateIndex @index}}</th>
                     <td scope="row" style="width: 10%;">{{this.id}}</td>
                     <td style="width: 10%;">{{formatDate this.ngay_dat}}</td>
                     <td style="width: 15%;">{{this.hinh_thuc_thanh_toan}}</td>
@@ -274,7 +265,13 @@
                       <a href="" class="badge badge-light" style="font-size: 13px;">Đã huỷ</a>
                       {{/equal}}
                     </td>
-                    <td style="width: 10%;">{{this.ho_va_ten}}</td>
+                    <td style="width: 10%;">
+                      {{#equal this.ho_va_ten null}}
+                      <a href="" class="badge badge-light" style="font-size: 13px;">Trống</a>
+                      {{else}}
+                      <a href="" class="badge badge-success" style="font-size: 13px;">{{this.ho_va_ten}}</a>
+                      {{/equal}}
+                    </td>
                     <td style="width: 10%;">{{formatCurrency this.thanh_tien}}</td>
                     <td style="width: 10%;">
                       <a type="button" style="color: white;" class="button-26" href="/admin/bill-detail/{{this.id}}">

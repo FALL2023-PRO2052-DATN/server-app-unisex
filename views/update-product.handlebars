@@ -206,7 +206,7 @@
                       value="{{product.gia_ban}}">
                     <label for="formGroupExampleInput" class="title-form">Mô tả sản phẩm</label>
                     <textarea class="form-control" aria-label="With textarea"
-                      name="description">{{product.mo_ta_chi_tiet}}</textarea>
+                      name="description" style="height: 200px;">{{product.mo_ta_chi_tiet}}</textarea>
                     <label for="formGroupExampleInput" class="title-form">Thiết lập liên
                       quan</label>
                     <div class="form-check" style="margin-left: 20px;">
@@ -233,8 +233,8 @@
                       {{/each}}
                     </select>
                     <label for="formGroupExampleInput" class="title-form">Giảm giá</label>
-                    <input name="discount" type="number" class="form-control" id="formGroupExampleInput" min="1"
-                      max="100" placeholder="Ví dụ: 20(% có thể để trống)" required="">
+                    <input name="discount" type="number" class="form-control" id="formGroupExampleInput" min="0"
+                      max="100" placeholder="Ví dụ: 20(% có thể để trống)" required="" value="{{product.giam_gia}}">
                   </div>
 
                 </div>
@@ -310,8 +310,8 @@
                     {{/each}}
                   </select>
                   <label for="formGroupExampleInput" class="title-form">Số lượng</label>
-                  <input type="text" style="margin-top: 10px;" class="form-control" id="priceInput"
-                    placeholder="Số lượng sản phẩm " name="quantity">
+                  <input type="number" style="margin-top: 10px;" class="form-control" id="priceInput"
+                    placeholder="Số lượng sản phẩm " name="quantity" min="1">
                   <div class="modal-footer" style="margin-top: 20px;">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
                     <button href="#" type="submit" class="button-26" style="color: white;">Thêm</button>
@@ -343,8 +343,8 @@
                     </option>
                     {{/each}}
                   </select>
-                  <input type="text" style="margin-top: 10px;" class="form-control" id="quantityInputUpdate"
-                    placeholder="Số lượng sản phẩm " name="quantity">
+                  <input type="number" style="margin-top: 10px;" class="form-control" id="quantityInputUpdate"
+                    placeholder="Số lượng sản phẩm " name="quantity" min="0">
                   <div class="modal-footer" style="margin-top: 20px;">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
                     <button href="#" type="submit" class="button-26" style="color: white;">Lưu</button>

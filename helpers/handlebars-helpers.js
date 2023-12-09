@@ -34,11 +34,13 @@ Handlebars.registerHelper('formatDate', function (date) {
 });
 
 Handlebars.registerHelper('reverseDate', function (dateString) {
+    console.log("🚀 ~ file: handlebars-helpers.js:37 ~ dateString:", dateString)
     // Reverse the format from 'dd/mm/yyyy' to 'YYYY-MM-DD'
-    const formattedDate = moment(dateString).format('YYYY-MM-DD');
+    const formattedDate = moment(dateString, 'DD/MM/YYYY').format('YYYY-MM-DD');
+    console.log("🚀 ~ file: handlebars-helpers.js:40 ~ formattedDate:", formattedDate)
     const reversedDate = formattedDate;
     return reversedDate;
-  });
+});
 
 // Số thứ tự item trong datatable
 Handlebars.registerHelper('calculateIndex', function (index) {

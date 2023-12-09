@@ -148,8 +148,8 @@
               <div class="card-body-cus" style="margin: 20px;">
                 <h5 class="card-title m-b-0">Cài đặt tài khoản</h5>
               </div>
-              <form style="margin-left: 20px; margin-right: 20px;" action="/admin/update-profile?_method=PUT" method="POST"
-                enctype="multipart/form-data">
+              <form style="margin-left: 20px; margin-right: 20px;" action="/admin/update-profile?_method=PUT"
+                method="POST" enctype="multipart/form-data" id="form-update">
                 <div class="row">
                   <div class="col">
                     <div class="mb-3">
@@ -172,11 +172,17 @@
                   </div>
                   <div class="col">
                     <label for="formGroupExampleInput" class="title-form">Họ và tên</label>
-                    <input type="text" class="form-control" id="priceInput" name="fullName"
+                    <input type="text" class="form-control" id="fullNameInput" name="fullName"
                       placeholder="Ví dụ: Nguyễn Văn A" required="" value="{{user.ho_va_ten}}">
+                    <div class="validate-message" id="message-fullnameInput">
+                      Họ và tên không hợp lệ.
+                    </div>
                     <label for="formGroupExampleInput" class="title-form">Điện thoại</label>
-                    <input type="number" class="form-control" id="formGroupExampleInput" name="phoneNumber"
+                    <input type="number" class="form-control" id="phoneNumberInput" name="phoneNumber"
                       placeholder="Ví dụ: 0909-xxx-xxx" required="" value="{{user.dien_thoai}}">
+                    <div class="validate-message" id="message-phoneNumberInput">
+                      Số điện thoại không hợp lệ.
+                    </div>
                     <label for="formGroupExampleInput" class="title-form">Địa chỉ</label>
                     <input type="text" class="form-control" id="formGroupExampleInput" value="{{user.dia_chi}}"
                       name="address" placeholder="Ví dụ: Số nhà B, Đường A" required="">
@@ -190,8 +196,11 @@
                         Khác</option>
                     </select>
                     <label for="formGroupExampleInput" class="title-form">Ngày sinh</label>
-                    <input type="date" class="form-control" id="date" placeholder="Ví dụ: Số nhà B, Đường A"
+                    <input type="date" class="form-control" id="dateOfBirthInput" placeholder="Ví dụ: Số nhà B, Đường A"
                       name="dateOfBirth" required="" value="{{reverseDate (formatDate user.ngay_sinh)}}">
+                    <div class="validate-message" id="message-dateOfBirthInput">
+                      Ngày sinh không hợp lệ. Bạn nhập ngày sinh đủ 18 tuổi.
+                    </div>
                   </div>
                 </div>
                 <button id="addButton" class="button-26" type="submit"
@@ -266,6 +275,77 @@
           alert.style.display = 'none';
         }, 4000);
       });
+    });
+  </script>
+
+  <script>
+    // So khớp với bất kỳ ký tự nào trong dấu vuông
+    const isInvalidFullName = (input) => {
+      var regex = /[0-9-_.!@#$%^&*()<>,?;:{}]+/;
+      return regex.test(input);
+    };
+
+    const isValid10To11DigitPhoneNumber = (phoneNumber) => {
+      const regex = /^\d{10,11}$/;
+      return regex.test(phoneNumber);
+    };
+
+    const isValidDateOfBirth = (dateOfBirth) => {
+      // Lấy ngày hiện tại
+      const today = new Date();
+
+      // Tính toán tuổi từ ngày hiện tại đến ngày sinh
+      const age = today.getFullYear() - dateOfBirth.getFullYear() -
+        (today.getMonth() < dateOfBirth.getMonth() ? 1 : 0) -
+        (today.getDate() < dateOfBirth.getDate() ? 1 : 0);
+
+      // Nếu tuổi đủ 18 thì hợp lệ
+      return age >= 18;
+    };
+
+
+    const fullnameInput = document.getElementById('fullNameInput');
+    const messageFullnameInput = document.getElementById('message-fullnameInput');
+
+    const phoneNumberInput = document.getElementById('phoneNumberInput');
+    const messagePhoneNumber = document.getElementById('message-phoneNumberInput');
+
+    const dateOfBirthInput = document.getElementById('dateOfBirthInput');
+    const messagedateOfBirthInput = document.getElementById('message-dateOfBirthInput');
+
+    const formUpdateProfile = document.getElementById('form-update');
+    formUpdateProfile.addEventListener('submit', function (event) {
+
+      if (isInvalidFullName(fullnameInput.value)) {
+        // Tên không hợp lệ
+        fullnameInput.classList.add('is-invalid');
+        messageFullnameInput.style.display = 'block'
+        event.preventDefault();
+      } else {
+        fullnameInput.classList.remove('is-invalid');
+        messageFullnameInput.style.display = 'none'
+      }
+
+      if (!isValid10To11DigitPhoneNumber(phoneNumberInput.value)) {
+        // Số không hợp lệ
+        phoneNumberInput.classList.add('is-invalid');
+        messagePhoneNumber.style.display = 'block'
+        event.preventDefault();
+      } else {
+        phoneNumberInput.classList.remove('is-invalid');
+        messagePhoneNumber.style.display = 'none'
+      }
+
+      if (!isValidDateOfBirth(new Date(dateOfBirthInput.value))) {
+        // Ngày sinh không hợp lệ
+        dateOfBirthInput.classList.add('is-invalid');
+        messagedateOfBirthInput.style.display = 'block'
+        event.preventDefault();
+      } else {
+        // Ngày sinh hợp lệ
+        dateOfBirthInput.classList.remove('is-invalid');
+        messagedateOfBirthInput.style.display = 'none'
+      }
     });
   </script>
 </body>

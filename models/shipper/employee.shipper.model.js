@@ -6,8 +6,8 @@ const login = async (username, password) => {
 }
 
 const updateProfile = async (data) => {
-    const query = `UPDATE NhanVien SET ho_va_ten = ?, dien_thoai = ?, dia_chi=?, gioi_tinh=?, ngay_sinh=? WHERE ten_dang_nhap = ?`;
-    const values = [data.fullname, data.phoneNumber, data.address, data.gender, data.dateOfBirth, data.username];
+    const query = `UPDATE NhanVien SET ho_va_ten = ?, dien_thoai = ?, dia_chi=?, gioi_tinh=?, ngay_sinh=?, anh_dai_dien=? WHERE ten_dang_nhap = ?`;
+    const values = [data.fullname, data.phoneNumber, data.address, data.gender, data.dateOfBirth, data.imageUpdate,data.username];
     return await database.queryDatabase(query, values);
 }
 

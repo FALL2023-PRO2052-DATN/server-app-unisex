@@ -20,7 +20,7 @@ const getAll = async () => {
     return await database.queryDatabase(query, []);
 }
 
-const getAllByStatusPay = async (status_paid) => {
+const getBillsByStatusPay = async (status_paid) => {
     const query = `SELECT
                         DonHang.*,
                         DiaChi.nguoi_dung_id
@@ -35,7 +35,7 @@ const getAllByStatusPay = async (status_paid) => {
     return await database.queryDatabase(query, [status_paid]);
 }
 
-const getAllByStatusBill = async (status_bill) => {
+const getBillsByStatusShip = async (status_bill) => {
     const query = `SELECT
                         DonHang.*,
                         DiaChi.nguoi_dung_id
@@ -118,8 +118,8 @@ module.exports = {
     getBillById,
     confirmBill,
     cancelBill,
-    getAllByStatusPay,
-    getAllByStatusBill,
+    getBillsByStatusPay,
+    getBillsByStatusShip,
     countBillsWithStatus,
     getRevenue
 }

@@ -10,66 +10,93 @@ const handleError = (res, error) => {
 
 const pageAdminOverView = async (req, res) => {
     try {
-        // Lấy danh sách sản phẩm
-        const products = await productAdminModel.getProducts();
-        // Đếm số lượng sản phẩm tồn kho
-        const getTotalStock = await productSizeAdminModel.getTotalStock();
-        const tong_ton_kho = getTotalStock[0].tong_ton_kho;
-        // Lấy tổng đơn thanh toán
-        const billsIsPaid = await billAdminModel.getAllByStatusPay('Đã thanh toán');
-        // Lấy danh sách đơn hàng chờ xác nhận
-        const billsUnConfirm = await billAdminModel.getAllByStatusBill('Chờ xác nhận');
-        // Lấy danh sách đánh giá
-        const reviews = await reviewAdminModel.getRatingCountsReview();
-        // Chuyển thành str để gửi qua script
-        const ratingCount = JSON.stringify(reviews.map(item => item.so_luong));
-        // Lấy sản phẩm và số lượng tồn kho 
-        const productStockByGroup = await productSizeAdminModel.getProductStockByGroup();
-        // Chuyển thành str để gửi qua script
-        const productStockByGroupStr = JSON.stringify(productStockByGroup);
-        // Danh sách đơn hàng chưa thanh toán với các trạng thái 
+        const productCount = await getProductCount();
+        const totalInventoryProduct = await getTotalInventoryProduct();
+        const billPaidCount = await getBillByStatusPaidCount();
+        const billWaitConfirmCount = await getBillByStatusWaitConfirmCount();
+
+        // Chart thống kê đơn hàng
         const statusBills = ['Chờ xác nhận', 'Chờ lấy hàng', 'Đang giao hàng', 'Đã giao hàng', 'Đã huỷ'];
         const unpaidBills = [];
-
-        for (const status of statusBills) {
-            const countResult = await billAdminModel.countBillsWithStatus('Chưa thanh toán', status);
-            const count = countResult[0].so_luong_don_hang;
-            unpaidBills.push({ status, count });
-        }
-        // Đếm đơn với trạng thái chưa thanh toán
-        const unpaidBillsCount = JSON.stringify(unpaidBills.map(item => item.count));
-
-        // Đếm đơn với trạng thái đã thanh toán
         const paidBills = [];
 
         for (const status of statusBills) {
-            const countResult1 = await billAdminModel.countBillsWithStatus('Đã thanh toán', status);
-            const count = countResult1[0].so_luong_don_hang;
-            paidBills.push({ status, count });
+            const countUnpaid = await billAdminModel.countBillsWithStatus('Chưa thanh toán', status);
+            const countPaid = await billAdminModel.countBillsWithStatus('Đã thanh toán', status);
+
+            unpaidBills.push({ status, count: countUnpaid[0].so_luong_don_hang });
+            paidBills.push({ status, count: countPaid[0].so_luong_don_hang });
         }
-        // Đếm đơn với trạng thái chưa thanh toán
+
+        const unpaidBillsCount = JSON.stringify(unpaidBills.map(item => item.count));
         const paidBillsCount = JSON.stringify(paidBills.map(item => item.count));
 
-        // Tính doanh thu 12 tháng năm 2023
-        const annualRevenue = await calculateAnnualRevenue(2023);
-        const annualRevenues = JSON.stringify(annualRevenue);
+        // Chart doanh thu
+        const revenues = await getRevenues();
 
-        res.render("index", { products, tong_ton_kho, billsIsPaid, billsUnConfirm, ratingCount, productStockByGroupStr, unpaidBillsCount, paidBillsCount, annualRevenues });
+        // Chart sản phẩm tồn kho
+        const sumQuantityProductSizes = await getSumQuantityProductSizes();
+
+        // Chart đánh giá
+        const reviewCount = await getReviewCount();
+
+        res.render("index", {
+            productCount,
+            totalInventoryProduct,
+            billPaidCount,
+            billWaitConfirmCount,
+            reviewCount,
+            sumQuantityProductSizes,
+            unpaidBillsCount,
+            paidBillsCount,
+            revenues
+        });
     } catch (error) {
         handleError(res, error);
     }
 }
 
-const calculateAnnualRevenue = async (year) => {
-    const months = Array.from({ length: 12 }, (_, i) => i + 1); // Tạo mảng từ 1 đến 12 để đại diện cho 12 tháng
+// Đếm tổng số lượng sản phẩm
+const getProductCount = async () => {
+    const products = await productAdminModel.getProducts();
+    return products.length;
+}
 
-    var annualRevenue = [];
+// Đếm tổng số lượng tồn kho
+const getTotalInventoryProduct = async () => {
+    const totalInventoryProduct = await productSizeAdminModel.getTotalInventoryProduct();
+    return totalInventoryProduct[0].tong_ton_kho;
+}
 
-    const revenue = await billAdminModel.getRevenue();
-    annualRevenue = revenue;
+// Đếm số lượng đơn hàng ở trạng thái đã thanh toán
+const getBillByStatusPaidCount = async () => {
+    const billsIsPaid = await billAdminModel.getBillsByStatusPay('Đã thanh toán');
+    return billsIsPaid.length;
+}
 
-    return annualRevenue;
-};
+// Đếm số lượng đơn hàng ở trạng thái chờ xác nhận
+const getBillByStatusWaitConfirmCount = async () => {
+    const billsWaitConfirm = await billAdminModel.getBillsByStatusShip('Chờ xác nhận');
+    return billsWaitConfirm.length;
+}
+
+// Tính doanh thu 12 tháng của các năm
+const getRevenues = async () => {
+    const results = await billAdminModel.getRevenue();
+    return JSON.stringify(results);
+}
+
+// Đếm tổng số lượng của mỗi sản phẩm
+const getSumQuantityProductSizes = async () => {
+    const results = await productSizeAdminModel.getSumQuantityProductSizes();
+    return JSON.stringify(results);
+}
+
+// Đếm số lượng đánh giá theo từng mức độ điểm
+const getReviewCount = async () => {
+    const reviews = await reviewAdminModel.getRatingCountsReview();
+    return JSON.stringify(reviews.map(item => item.so_luong));
+}
 
 module.exports = {
     pageAdminOverView
