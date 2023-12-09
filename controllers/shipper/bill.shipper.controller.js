@@ -52,6 +52,9 @@ const updateBill = async (req, res) => {
                 // Lấy thong tin product theo mã sản phẩm và tên kích thước trong đơn hàng chi tiết 
                 const productSizeObject = productSizes.find(productSize => productSize.san_pham_id === productID && productSize.ten_kich_thuoc === nameSize);
                 if (productSizeObject) {
+                    if(productSizeObject.so_luong_ton_kho < 0) {
+                        return;
+                    }
                     const quantity = productSizeObject.so_luong_ton_kho - quantityOrder
                     // Cập nhạt lại số lượng theo productSizeObject đã tìm thấy
                     await productSizeModel.updateQuantityProductSize({
