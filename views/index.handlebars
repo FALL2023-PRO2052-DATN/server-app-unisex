@@ -355,42 +355,49 @@
         $('#zero_config').DataTable();
     </script>
     <script>
-        // Tạo dữ liệu cho biểu đồ
-        const unpaidBillsCounts = {{{ unpaidBillsCount }}}; // Số lượng đánh giá cho mỗi mức đánh giá
-        const paidBillsCounts = {{{ paidBillsCount }}}; // Số lượng đánh giá cho mỗi mức đánh giá
+    // Tạo dữ liệu cho biểu đồ
+    const unpaidBillsCounts = {{{ unpaidBillsCount }}}; // Số lượng đánh giá cho mỗi mức đánh giá
+    const paidBillsCounts = {{{ paidBillsCount }}}; // Số lượng đánh giá cho mỗi mức đánh giá
 
-        const chartData = {
-            labels: ['Chờ xác nhận', 'Chờ lấy hàng', 'Đang giao hàng', 'Đã giao hàng', 'Đã huỷ'],
-            datasets: [
-                {
-                    label: 'Đã thanh toán',
-                    data: paidBillsCounts,
-                    backgroundColor: '#3874ff' // Màu xanh nhạt
-                },
-                {
-                    label: 'Chưa thanh toán',
-                    data: unpaidBillsCounts,
-                    backgroundColor: '#e5edff' // Màu xanh đậm
-                }
-            ],
-        };
-        // Tạo biểu đồ cột xếp chồng
-        // Tạo biểu đồ cột nhóm
-        const ctx = document.getElementById('myChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'bar',
-            data: chartData,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    x: { stacked: true },
-                    y: { beginAtZero: true },
-                },
+    const chartData = {
+        labels: ['Chờ xác nhận', 'Chờ lấy hàng', 'Đang giao hàng', 'Đã giao hàng', 'Đã huỷ'],
+        datasets: [
+            {
+                label: 'Đã thanh toán',
+                data: paidBillsCounts,
+                backgroundColor: '#40AB81', // Màu xanh nhạt
+                barPercentage: 1 // Điều chỉnh chiều rộng của cột
             },
-        });
+            {
+                label: 'Chưa thanh toán',
+                data: unpaidBillsCounts,
+                backgroundColor: '#9FD4BF', // Màu xanh đậm
+                barPercentage: 1 // Điều chỉnh chiều rộng của cột
+            }
+        ],
+    };
 
-    </script>
+    // Tạo biểu đồ cột nhóm
+    const ctx = document.getElementById('myChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: chartData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            indexAxis: 'x', // Đảo chiều hiển thị trục x và y
+            scales: {
+                x: {
+                    beginAtZero: true
+                },
+                y: {
+                    stacked: false // Cột không xếp chồng lên nhau
+                }
+            }
+        },
+    });
+</script>
+
     <script>
         // Function to update the chart based on the selected year
         let chart;
@@ -423,7 +430,7 @@
                         {
                             label: 'Doanh thu 12 tháng năm ' + yearSelected,
                             data: data,
-                            borderColor: '#3874ff',
+                            borderColor: '#40AB81',
                             borderWidth: 2,
                             lineTension: 0.1
                         },
@@ -479,7 +486,7 @@
                 labels: reviewPoints.map(rating => `${rating} sao`),
                 datasets: [{
                     data: reviewCount,
-                    backgroundColor: ['#3874ff', '#00A9FF', '#89CFF3', '#A0E9FF', '#CDF5FD'],
+                    backgroundColor: ['#40AB81', '#66BC9A', '#8CCDB3', '#B3DDCD', '#D9EEE6'],
                 }],
             },
             options: {
@@ -514,7 +521,7 @@
                 datasets: [{
                     label: 'Số lượng tồn kho',
                     data: inventoryCounts, // Số lượng tồn kho
-                    backgroundColor: '#3874ff', // Màu cho cột
+                    backgroundColor: '#40AB81', // Màu cho cột
                 }]
             },
             options: {
