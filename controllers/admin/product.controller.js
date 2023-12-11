@@ -50,16 +50,22 @@ const insertProduct = (req, res) => {
           const idProduct = resultInsertProduct.insertId;
 
           // Kiểm tra size người dùng chọn mảng hay là đối tượng
-          if (!Array.isArray(sizes)) {
-            sizes = [sizes];
-          }
+
 
           // Thực hiện thêm kích thước sản phẩm
-          for (const size of sizes) {
-            const data = { size, idProduct, quantity };
+          if (!sizes) {
+            const data = { size: 0, idProduct, quantity };
             await productSizeModel.insertProductSize(data);
+          } else {
+            if (!Array.isArray(sizes)) {
+              sizes = [sizes];
+            }
+            for (const size of sizes) {
+              const data = { size, idProduct, quantity };
+              await productSizeModel.insertProductSize(data);
+            }
           }
-
+          console.log("🚀 ~ file: product.controller.js:67 ~ upload.single ~ sizes:", sizes)
           req.flash('success', 'Thêm sản phẩm thành công');
           res.status(200).redirect('/admin/product/page-insert');
         }
