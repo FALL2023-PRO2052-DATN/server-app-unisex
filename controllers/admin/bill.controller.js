@@ -31,7 +31,7 @@ const confirmBillFromPageBillDetail = async (req, res) => {
     console.log("🚀 ~ file: bill.controller.js:31 ~ billToConfirm ~ billToConfirm:", billToConfirm)
     const data = {
       content: 'Đơn hàng của bạn đã được xác nhận',
-      imageUrl: 'null',
+      imageUrl: 'https://cdn-icons-png.flaticon.com/512/5610/5610944.png',
       title: 'Đơn hàng ' + id,
       userID: billToConfirm.nguoi_dung_id
     };
@@ -63,7 +63,7 @@ const cancelBillFromPageBillDetail = async (req, res) => {
     });
     const data = {
       content: 'Đơn hàng của bạn đã bị huỷ từ chủ của hàng.',
-      imageUrl: 'null',
+      imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Error.svg/2198px-Error.svg.png',
       title: 'Đơn hàng ' + id,
       userID: billToConfirm.nguoi_dung_id
     };
