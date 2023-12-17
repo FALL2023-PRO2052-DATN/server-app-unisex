@@ -324,7 +324,7 @@
   <script>
     // Kiểm tra tính hợp lệ của tên kích thước
     const isInvalidSizeName = (input) => {
-      var regex = /[0-9-_.!@#$%^&*()<>,?;:{}]+/;
+      var regex = /[-_.!@#$%^&*()<>,?;:{}]+/;
       return regex.test(input);
     };
 
