@@ -5,6 +5,7 @@ const productModel = require('../../models/admin/product.model.js');
 const sizeModel = require('../../models/admin/size.model.js');
 const categoryModel = require('../../models/admin/category.model.js');
 const productSizeModel = require('../../models/admin/product-size.model.js');
+const cartModel = require('../../models/admin/cart.model.js');
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -113,6 +114,7 @@ const updateProduct = async (req, res) => {
       }
 
       await productModel.updateProduct(data);
+      await cartModel.removeCartByProductID(productID);
       req.flash('success', 'Cập nhật thông tin chung thành công.');
       res.status(200).redirect('/admin/product/' + productID);
     } catch (error) {
